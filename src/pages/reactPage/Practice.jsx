@@ -76,7 +76,7 @@ function PracticeReact() {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer sk-proj-ESuY9oJxefj6TOqJ2buAT3BlbkFJtsnDQDVuYkCFFefsf160`,
+                    'Authorization': `Bearer ${import.meta.env.VITE_CHATP_GPT_KEY}``,
                 },
             }
         );

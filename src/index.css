@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ant-card {
+  border: 1px solid black;
+}
+
+/* CSS cho các thẻ h1 đến h6 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.75em;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+h5 {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+h6 {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+/* CSS cho các thẻ ul và li */
+ul {
+  list-style-type: disc; /* Hoặc có thể là circle, square, none tùy vào sở thích */
+  margin: 1em 0;
+  padding-left: 40px;
+}
+
+li {
+  margin-bottom: 0.5em;
+  font-family: 'Arial', sans-serif;
+  font-size: 1em;
+  color: #555;
+}
+
+/* CSS cho thẻ pre */
+pre {
+  background-color: #f5f5f5;
+  padding: 1em;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-family: 'Courier New', Courier, monospace;
+  line-height: 1.6;
+  margin: 1em 0;
+  color: #333;
+}
+
+.ant-collapse-header-text {
+  font-weight: bold;
+}

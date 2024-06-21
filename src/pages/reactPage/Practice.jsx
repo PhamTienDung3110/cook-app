@@ -76,7 +76,7 @@ function PracticeReact() {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer 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`,
+                    'Authorization': `Bearer sk-proj-ESuY9oJxefj6TOqJ2buAT3BlbkFJtsnDQDVuYkCFFefsf160`,
                 },
             }
         );

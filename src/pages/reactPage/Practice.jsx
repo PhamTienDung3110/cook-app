@@ -63,23 +63,7 @@ function PracticeReact() {
     và tôi trả lời ${textValue} bạn hãy trả lời 2 câu hỏi, 1 câu hỏi trên đúng bao nhiêu phần trăm và và cần cải thiện gì ở câu trả lời, trả lời dạng html để tôi để trong <div dangerouslySetInnerHTML={{ __html: listQnA[current].answer }} />, trả lời ngắn gọn tối đa 100 tokens chatgpt
     `
     try {
-        const res = await axios.post(
-            'https://api.openai.com/v1/chat/completions',
-            {
-                model: 'gpt-4o', // Sử dụng mô hình GPT-4
-                messages: [{ role: 'user', content: prompt }], // Sử dụng định dạng tin nhắn cho mô hình trò chuyện
-                max_tokens: 1000,
-                n: 1,
-                stop: null,
-                temperature: 0.7,
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer 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`,
-                },
-            }
-        );
+        const res = await axios.post('https://cook-app-be.vercel.app/chat', { prompt });
         setTextAnswerChatGpt(res.data.choices[0].message.content.trim());
     } catch (error) {
         console.error("There was an error!", error);

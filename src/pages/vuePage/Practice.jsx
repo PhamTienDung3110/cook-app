@@ -1,8 +1,8 @@
 import { Button, Carousel, Collapse } from "antd";
-import React, { useEffect, useState } from "react";
-import QnAReact from "../../data/QAReact";
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import QAVue from "../../data/QAVue";
 
 const contentStyle = {
   margin: 0,
@@ -20,20 +20,22 @@ function shuffleArray(array) {
   }
   return array;
 }
-function PracticeReact() {
+function PracticeVue() {
   const [listQnA, setListQnA] = useState([]);
   const [currentQnA, setCurrentQnA] = useState([{}]);
-  const [textValue, setTextValue] = useState('');
-  const [textAnswerChatGpt, setTextAnswerChatGpt] = useState('');
+  const [textValue, setTextValue] = useState("");
+  const [textAnswerChatGpt, setTextAnswerChatGpt] = useState("");
 
   useEffect(() => {
-    const shuffleQnA = shuffleArray([...QnAReact])
+    const shuffleQnA = shuffleArray([...QAVue]);
     setListQnA(shuffleQnA); // shuffle once and set listQnA
     const currentQnATemp = [
       {
         key: "1",
         label: shuffleQnA[0].question,
-        children: <div dangerouslySetInnerHTML={{ __html: shuffleQnA[0].answer }} />,
+        children: (
+          <div dangerouslySetInnerHTML={{ __html: shuffleQnA[0].answer }} />
+        ),
       },
     ];
     setCurrentQnA(currentQnATemp);
@@ -44,7 +46,9 @@ function PracticeReact() {
       {
         key: "1",
         label: listQnA[current].question,
-        children: <div dangerouslySetInnerHTML={{ __html: listQnA[current].answer }} />,
+        children: (
+          <div dangerouslySetInnerHTML={{ __html: listQnA[current].answer }} />
+        ),
       },
     ];
     setCurrentQnA(currentQnATemp);
@@ -55,24 +59,26 @@ function PracticeReact() {
   };
 
   const handleSubmit = async () => {
-    if(!textValue) {
-        alert('nhập input vào, dùng api mất tiền đấy viết ngắn thôi')
-        return
+    if (!textValue) {
+      alert("nhập input vào, dùng api mất tiền đấy viết ngắn thôi");
+      return;
     }
     const prompt = `ví dụ bạn là người phỏng vấn, tôi là người đi phỏng vấn bạn hỏi câu: ${currentQnA[0].label}
     và tôi trả lời ${textValue} bạn hãy trả lời 2 câu hỏi, 1 câu hỏi trên đúng bao nhiêu phần trăm và và cần cải thiện gì ở câu trả lời, trả lời dạng html để tôi để trong <div dangerouslySetInnerHTML={{ __html: listQnA[current].answer }} />, trả lời ngắn gọn
-    `
+    `;
     try {
-        const res = await axios.post('https://cook-app-be-c.vercel.app/chat', { prompt });
-        setTextAnswerChatGpt(res.data.choices[0].message.content.trim());
+      const res = await axios.post("https://cook-app-be-c.vercel.app/chat", {
+        prompt,
+      });
+      setTextAnswerChatGpt(res.data.choices[0].message.content.trim());
     } catch (error) {
-        console.error("There was an error!", error);
+      console.error("There was an error!", error);
     }
-  }
+  };
 
   return (
     <>
-      <h2 className="text-center text-3xl text-bold my-6">Practice Reactjs</h2>
+      <h2 className="text-center text-3xl text-bold my-6">Practice Vuejs</h2>
       <div className="mx-10 flex gap-5">
         <div className="w-7/12">
           <Carousel
@@ -112,4 +118,4 @@ function PracticeReact() {
   );
 }
 
-export default PracticeReact;
+export default PracticeVue;

@@ -48,8 +48,7 @@ export default {
 `,
   },
   {
-    question:
-      "Method computed trong vuejs là gì?",
+    question: "Method computed trong vuejs là gì?",
     answer: `
     <div>
     <h1>Computed Properties trong Vue.js</h1>
@@ -146,221 +145,149 @@ export default {
 `,
   },
   {
-    question: "useCallBack trong reactjs là gì?",
+    question:
+      "Làm thế nào để bạn xử lý quản lý trạng thái trong các component phức tạp mà không sử dụng Vuex?",
     answer: `
-    <h1>useCallback trong React</h1>
-    
-    <h2>Giới Thiệu</h2>
-    <p><code>useCallback</code> là một hook trong React được sử dụng để ghi nhớ (memoize) các hàm (callbacks). Nó giúp ngăn chặn việc tạo lại các hàm không cần thiết trong mỗi lần render, tối ưu hóa hiệu suất của ứng dụng.</p>
-    
-    <h2>Cách Sử Dụng</h2>
-    <p>Cú pháp của <code>useCallback</code>:</p>
-    <pre><code>const memoizedCallback = useCallback(() => {
-        doSomething(a, b);
-    }, [a, b]);</code></pre>
-    <p>Trong đó:</p>
-    <ul>
-        <li><code>doSomething</code>: Hàm cần được ghi nhớ.</li>
-        <li><code>[a, b]</code>: Danh sách các dependencies. <code>useCallback</code> chỉ tạo lại hàm khi một trong các dependencies thay đổi.</li>
-    </ul>
-    
-    <h2>Ví Dụ</h2>
-    <p>Dưới đây là ví dụ về cách sử dụng <code>useCallback</code> để tối ưu hóa hiệu suất:</p>
-    <pre><code>
-    import React, { useState, useCallback } from 'react';
-    
-    function App() {
-        const [count, setCount] = useState(0);
-        const [inputValue, setInputValue] = useState('');
-    
-        const handleButtonClick = useCallback(() => {
-            console.log('Button clicked:', count);
-        }, [count]);
-    
-        return (
-            &lt;div&gt;
-                &lt;h1&gt;useCallback Example&lt;/h1&gt;
-                &lt;p&gt;Count: {count}&lt;/p&gt;
-                &lt;button onClick={() => setCount(count + 1)}&gt;Increment&lt;/button&gt;
-                &lt;button onClick={handleButtonClick}&gt;Log Count&lt;/button&gt;
-                &lt;input 
-                    type="text" 
-                    value={inputValue} 
-                    onChange={(e) => setInputValue(e.target.value)} 
-                    placeholder="Type something..." 
-                /&gt;
-            &lt;/div&gt;
-        );
-    }
-    
-    export default App;
-    </code></pre>
-    
-    <h2>Tóm Tắt</h2>
-    <ul>
-        <li><code>useCallback</code> giúp ghi nhớ các hàm để tránh tạo lại không cần thiết.</li>
-        <li>Sử dụng khi bạn có các hàm được truyền xuống các component con hoặc các hàm được gọi thường xuyên.</li>
-        <li>Cải thiện hiệu suất của ứng dụng bằng cách ngăn chặn việc tạo lại các hàm không cần thiết.</li>
-    </ul>
+    <div>
+  <p>Quản lý trạng thái trong các component phức tạp của Vue.js mà không sử dụng Vuex có thể được thực hiện thông qua nhiều cách tiếp cận khác nhau. Dưới đây là một số phương pháp bạn có thể sử dụng:</p>
+  <ul>
+    <li><strong>Props và Events:</strong> Truyền dữ liệu xuống các component con thông qua props và sử dụng events để gửi dữ liệu trở lại component cha. Đây là cách tự nhiên nhất trong Vue để các component giao tiếp với nhau.</li>
+    <li><strong>Event Bus:</strong> Tạo một event bus bằng cách sử dụng một instance Vue mới để phát và lắng nghe các sự kiện qua các component không trực tiếp liên kết với nhau.</li>
+    <li><strong>Provide và Inject:</strong> Sử dụng provide để định nghĩa các dữ liệu hoặc phương thức mà bạn muốn cung cấp, và inject trong các component con hoặc cháu để tiếp cận những dữ liệu đó mà không cần truyền props qua nhiều cấp component.</li>
+    <li><strong>Composition API:</strong> Trong Vue 3, bạn có thể sử dụng Composition API để tạo ra các trạng thái có thể tái sử dụng qua các function. Điều này cho phép bạn tạo và quản lý trạng thái bên ngoài component, giúp code dễ dàng bảo trì và tái sử dụng hơn.</li>
+  </ul>
+  <p>Việc lựa chọn phương pháp phù hợp phụ thuộc vào kích thước và độ phức tạp của ứng dụng cũng như sở thích và kinh nghiệm của team phát triển. Trong các ứng dụng lớn và phức tạp, cân nhắc sử dụng một thư viện quản lý trạng thái chuyên biệt như Vuex hoặc Redux có thể là một lựa chọn tốt để đảm bảo tính nhất quán và dễ dàng quản lý.</p>
+</div>
+
     `,
   },
   {
-    question: "so sánh useMemo và useCallback?",
+    question: "vuex là gì, lifecycle của vuex?",
     answer: `
-<h1>So Sánh useMemo và useCallback trong React</h1>
-
-<h2>Giới Thiệu</h2>
-<p>Trong React, <code>useMemo</code> và <code>useCallback</code> đều là các hook được sử dụng để tối ưu hiệu suất bằng cách ghi nhớ (memoize) các giá trị hoặc hàm. Dưới đây là sự khác biệt chính giữa chúng.</p>
-
-<h2>useMemo</h2>
-<p><code>useMemo</code> được sử dụng để ghi nhớ giá trị được tính toán. Nó chỉ tính toán lại giá trị khi một trong các dependencies thay đổi.</p>
-<p><b>Cú pháp:</b></p>
-<pre><code>const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);</code></pre>
-<p><b>Ví dụ:</b></p>
-<pre><code>
-import React, { useState, useMemo } from 'react';
-
-function Example() {
-    const [count, setCount] = useState(0);
-    
-    const memoizedValue = useMemo(() => {
-        return computeExpensiveValue(count);
-    }, [count]);
-
-    return (
-        &lt;div&gt;
-            &lt;p&gt;Memoized Value: {memoizedValue}&lt;/p&gt;
-            &lt;button onClick={() => setCount(count + 1)}&gt;Increment&lt;/button&gt;
-        &lt;/div&gt;
-    );
-}
-</code></pre>
-
-<h2>useCallback</h2>
-<p><code>useCallback</code> được sử dụng để ghi nhớ một hàm (callback). Nó chỉ tạo lại hàm khi một trong các dependencies thay đổi.</p>
-<p><b>Cú pháp:</b></p>
-<pre><code>const memoizedCallback = useCallback(() => {
-    doSomething(a, b);
-}, [a, b]);</code></pre>
-<p><b>Ví dụ:</b></p>
-<pre><code>
-import React, { useState, useCallback } from 'react';
-
-function Example() {
-    const [count, setCount] = useState(0);
-    
-    const memoizedCallback = useCallback(() => {
-        console.log('Button clicked:', count);
-    }, [count]);
-
-    return (
-        &lt;div&gt;
-            &lt;button onClick={memoizedCallback}&gt;Log Count&lt;/button&gt;
-            &lt;button onClick={() => setCount(count + 1)}&gt;Increment&lt;/button&gt;
-        &lt;/div&gt;
-    );
-}
-</code></pre>
-
-<h2>So Sánh</h2>
-<table style="width: 100%; border-collapse: collapse;">
-    <thead>
-        <tr>
-            <th style="border: 1px solid #ddd; padding: 10px;">Đặc điểm</th>
-            <th style="border: 1px solid #ddd; padding: 10px;">useMemo</th>
-            <th style="border: 1px solid #ddd; padding: 10px;">useCallback</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td style="border: 1px solid #ddd; padding: 10px;"><b>Mục đích</b></td>
-            <td style="border: 1px solid #ddd; padding: 10px;">Ghi nhớ giá trị tính toán</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">Ghi nhớ hàm (callback)</td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid #ddd; padding: 10px;"><b>Trả về</b></td>
-            <td style="border: 1px solid #ddd; padding: 10px;">Giá trị đã ghi nhớ</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">Hàm đã ghi nhớ</td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid #ddd; padding: 10px;"><b>Khi nào sử dụng</b></td>
-            <td style="border: 1px solid #ddd; padding: 10px;">Khi cần tối ưu hóa tính toán phức tạp</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">Khi cần tối ưu hóa hàm được truyền xuống component con</td>
-        </tr>
-    </tbody>
-</table>
-
-<h2>Kết Luận</h2>
-<p>Sử dụng <code>useMemo</code> khi bạn cần ghi nhớ giá trị tính toán để tránh tính toán lại không cần thiết. Sử dụng <code>useCallback</code> khi bạn cần ghi nhớ hàm để tránh tạo lại hàm không cần thiết, đặc biệt là khi truyền các hàm xuống các component con.</p>
+<div>
+  <p><strong>Vuex</strong> là một thư viện quản lý trạng thái cho các ứng dụng Vue.js. Nó giúp quản lý trạng thái cho các ứng dụng lớn, nơi việc quản lý trạng thái giữa nhiều component trở nên phức tạp. Vuex sử dụng một cửa hàng trung tâm để lưu trữ tất cả trạng thái ứng dụng và đảm bảo rằng trạng thái này chỉ có thể thay đổi theo cách dự đoán được.</p>
+  <h3>Các Khái niệm Cơ bản của Vuex:</h3>
+  <ul>
+    <li><strong>State</strong>: Trạng thái gốc của ứng dụng, lưu trữ dữ liệu.</li>
+    <li><strong>Getters</strong>: Các hàm được sử dụng để truy xuất trạng thái từ store.</li>
+    <li><strong>Mutations</strong>: Các hàm được sử dụng để thay đổi trạng thái, phải là các hàm đồng bộ.</li>
+    <li><strong>Actions</strong>: Các hàm được sử dụng để thực hiện các hoạt động bất đồng bộ trước khi commit tới các mutations.</li>
+    <li><strong>Modules</strong>: Vuex cho phép phân chia store thành các module nhỏ hơn, mỗi module có trạng thái, mutations, actions, getters riêng.</li>
+  </ul>
+  <h3>Lifecycle của Vuex:</h3>
+  <p>Vuex không có một "lifecycle" trong nghĩa truyền thống như các component trong Vue, nhưng quy trình xử lý trạng thái có thể được mô tả qua các bước sau:</p>
+  <ol>
+    <li><strong>Khởi Tạo Store</strong>: Khi ứng dụng khởi động, Vuex store được tạo và khởi tạo.</li>
+    <li><strong>Thay Đổi State thông qua Mutations</strong>: Khi một hành động yêu cầu thay đổi state, một mutation được gọi để thay đổi trạng thái.</li>
+    <li><strong>Thực Hiện Actions</strong>: Actions xử lý các tác vụ bất đồng bộ hoặc phức tạp trước khi gọi mutation để cập nhật state.</li>
+    <li><strong>Truy Xuất State và Lắng Nghe Thay Đổi thông qua Getters</strong>: Component có thể truy xuất state từ store qua getters hoặc trực tiếp từ state, và các thay đổi sẽ được cập nhật một cách hiệu quả nhờ hệ thống phản ứng của Vue.</li>
+  </ol>
+</div>
 `,
   },
   {
-    question: "Cách hoạt động của redux?",
+    question: "pinia là gì, các thành phần trong pinia?",
     answer: `
-<h1>Cách Hoạt Động của Redux</h1>
+<div>
+  <p><strong>Pinia</strong> là thư viện quản lý trạng thái mới được thiết kế để thay thế Vuex trong các ứng dụng Vue.js. Pinia cung cấp một API đơn giản hơn và hiệu quả hơn so với Vuex, tương thích tốt với Vue Composition API, và được thiết kế để làm cho quản lý trạng thái trong Vue dễ dàng và trực quan hơn.</p>
+  
+  <h3>Các Thành Phần Chính của Pinia:</h3>
+  <ul>
+    <li><strong>Store:</strong> Đây là nơi lưu trữ và quản lý trạng thái. Store trong Pinia được tạo ra thông qua hàm <code>defineStore</code>. Có hai kiểu store:
+      <ul>
+        <li><strong>Options Store:</strong> Sử dụng một đối tượng để định nghĩa state, getters, và actions.</li>
+        <li><strong>Setup Store:</strong> Sử dụng Composition API để định nghĩa state, getters, và actions.</li>
+      </ul>
+    </li>
+    <li><strong>State:</strong> Đây là trạng thái cơ bản của store, nơi lưu trữ các dữ liệu trong ứng dụng.</li>
+    <li><strong>Getters:</strong> Các hàm tính toán được sử dụng để trích xuất và xử lý dữ liệu từ state. Getters có thể truy cập trực tiếp các trạng thái và getters khác trong cùng một store.</li>
+    <li><strong>Actions:</strong> Dùng để xử lý các tác vụ bất đồng bộ hoặc các logic phức tạp trước khi cập nhật trạng thái. Actions có thể gọi các mutation hoặc actions khác và thực hiện bất đồng bộ.</li>
+    <li><strong>Plugins:</strong> Pinia hỗ trợ plugins, cho phép mở rộng và tùy chỉnh chức năng của store, bao gồm cả việc lưu trữ trạng thái vào sessionStorage hoặc localStorage.</li>
+  </ul>
 
-<h2>Giới Thiệu</h2>
-<p>Redux là một thư viện quản lý state cho các ứng dụng JavaScript, thường được sử dụng với React. Nó giúp quản lý state một cách nhất quán và dễ đoán.</p>
+  <h3>Ví Dụ về Pinia Store:</h3>
+  <pre><code>import { defineStore } from 'pinia';
 
-<h2>Kiến Trúc Redux</h2>
-<p>Redux hoạt động dựa trên ba nguyên tắc chính:</p>
-<ul>
-    <li><b>Single Source of Truth</b>: Toàn bộ state của ứng dụng được lưu trữ trong một object duy nhất được gọi là store.</li>
-    <li><b>State is Read-Only</b>: Cách duy nhất để thay đổi state là phát ra một action, một object mô tả những gì đã xảy ra.</li>
-    <li><b>Changes are Made with Pure Functions</b>: Để xác định cách state thay đổi, bạn phải viết các hàm thuần (pure functions) được gọi là reducers.</li>
-</ul>
-
-<h2>Các Thành Phần Chính</h2>
-<p>Redux bao gồm các thành phần chính sau:</p>
-<ul>
-    <li><b>Store</b>: Lưu trữ toàn bộ state của ứng dụng. Chỉ có một store duy nhất trong mỗi ứng dụng Redux.</li>
-    <li><b>Actions</b>: Là các object chứa thông tin về hành động và dữ liệu cần thay đổi. Mỗi action có một thuộc tính <code>type</code> mô tả hành động và có thể có các thuộc tính khác chứa dữ liệu.</li>
-    <li><b>Reducers</b>: Là các hàm thuần nhận vào state hiện tại và action, sau đó trả về state mới.</li>
-    <li><b>Dispatch</b>: Là phương thức được sử dụng để gửi actions tới store.</li>
-</ul>
-
-<h2>Quy Trình Hoạt Động</h2>
-<ol>
-    <li>Một action được phát ra (dispatched) từ UI hoặc từ một sự kiện khác.</li>
-    <li>Store nhận action và chuyển nó tới reducer.</li>
-    <li>Reducer xử lý action và trả về state mới.</li>
-    <li>Store cập nhật state mới và thông báo cho UI về sự thay đổi này.</li>
-</ol>
-
-<h2>Ví Dụ</h2>
-<p>Dưới đây là một ví dụ đơn giản về cách Redux hoạt động:</p>
-<pre><code>
-// Action
-const increment = () => ({
-    type: 'INCREMENT'
-});
-
-// Reducer
-const counter = (state = 0, action) => {
-    switch (action.type) {
-        case 'INCREMENT':
-            return state + 1;
-        default:
-            return state;
+export const useMainStore = defineStore('main', {
+  state: () => {
+    return {
+      count: 0
+    };
+  },
+  getters: {
+    doubleCount: (state) => state.count * 2
+  },
+  actions: {
+    increment() {
+      this.count++;
     }
-};
+  }
+});</code></pre>
+  
+  <p>Pinia được thiết kế để làm cho quản lý trạng thái trở nên hiệu quả và dễ dàng hơn trong các ứng dụng Vue, đặc biệt khi kết hợp với Vue 3 và Composition API. Sự đơn giản và hiệu quả của Pinia làm cho nó trở thành một lựa chọn phổ biến đối với các nhà phát triển Vue trong việc quản lý trạng thái ứng dụng.</p>
+</div>
 
-// Store
-import { createStore } from 'redux';
-const store = createStore(counter);
-
-// Dispatch
-store.dispatch(increment());
-console.log(store.getState()); // 1
-</code></pre>
-
-<h2>Tóm Tắt</h2>
-<ul>
-    <li>Redux giúp quản lý state của ứng dụng một cách nhất quán và dễ đoán.</li>
-    <li>Các thành phần chính bao gồm: store, actions, reducers, và dispatch.</li>
-    <li>Quy trình hoạt động bao gồm: phát ra action, reducer xử lý action, store cập nhật state, và UI nhận thông báo về sự thay đổi.</li>
-</ul>
 `,
+  },
+  {
+    question: "sự khác nhau của vuex và pinia?",
+    answer: `
+    <div>
+  <p>Vuex và Pinia là hai thư viện quản lý trạng thái phổ biến cho các ứng dụng Vue.js, nhưng chúng có một số điểm khác biệt cơ bản trong cách thiết kế và sử dụng:</p>
+
+  <h3>1. Thiết kế và Cách sử dụng API</h3>
+  <ul>
+    <li><strong>Vuex:</strong> Dựa trên Flux, Vuex sử dụng một cấu trúc khá cứng nhắc với các concepts như state, mutations, actions, và getters. Vuex yêu cầu định nghĩa rõ ràng các mutations để thay đổi state, và các actions cho logic bất đồng bộ.</li>
+    <li><strong>Pinia:</strong> Thiết kế hiện đại hơn, Pinia cho phép định nghĩa stores sử dụng cả Options API và Composition API. Pinia không phân biệt rõ ràng giữa mutations và actions, cho phép thực hiện các thay đổi trạng thái trực tiếp trong actions mà không cần mutations.</li>
+  </ul>
+
+  <h3>2. Tính năng và Tính linh hoạt</h3>
+  <ul>
+    <li><strong>Vuex:</strong> Là giải pháp quản lý trạng thái lâu đời và đã được thử nghiệm qua nhiều dự án lớn, nhưng có thể hơi rườm rà khi cần nhanh chóng thay đổi trạng thái hoặc xử lý các logic đơn giản.</li>
+    <li><strong>Pinia:</strong> Cung cấp một cách tiếp cận đơn giản và trực tiếp hơn, dễ dàng tích hợp với Composition API, và cho phép sử dụng cùng lúc nhiều stores một cách linh hoạt hơn.</li>
+  </ul>
+
+  <h3>3. Tích hợp và Cấu hình</h3>
+  <ul>
+    <li><strong>Vuex:</strong> Tích hợp sâu với Vue.js nhưng đòi hỏi cấu hình ban đầu phức tạp hơn và có cú pháp khai báo nhiều hơn.</li>
+    <li><strong>Pinia:</strong> Dễ dàng cài đặt và cấu hình, đặc biệt là trong các ứng dụng Vue.js mới sử dụng Vue 3, nhờ vào API đơn giản và dễ hiểu.</li>
+  </ul>
+
+  <h3>4. Hỗ trợ và Cộng đồng</h3>
+  <ul>
+    <li><strong>Vuex:</strong> Được hỗ trợ rộng rãi và có cộng đồng người dùng lớn, với nhiều tài nguyên và hướng dẫn.</li>
+    <li><strong>Pinia:</strong> Tuy là thư viện mới hơn nhưng đã nhanh chóng nhận được sự chấp nhận của cộng đồng nhờ vào sự đơn giản và hiệu quả của nó, đặc biệt là trong các dự án mới.</li>
+  </ul>
+
+  <p>Tóm lại, Vuex phù hợp cho các dự án lớn yêu cầu một cấu trúc quản lý trạng thái rõ ràng và chặt chẽ, trong khi Pinia là lựa chọn tốt cho những nhà phát triển tìm kiếm sự linh hoạt và đơn giản hơn trong quản lý trạng thái, đặc biệt là khi sử dụng Composition API trong Vue 3.</p>
+</div>
+
+    `,
+  },
+  {
+    question: "Options API và Composition API khác nhau như thế nào?",
+    answer: `
+    <div>
+  <p>Trong Vue.js, <strong>Options API</strong> và <strong>Composition API</strong> là hai cách tiếp cận phổ biến để tạo component và quản lý trạng thái. Mỗi API có đặc điểm và ưu điểm riêng phù hợp với các tình huống khác nhau.</p>
+
+  <h3>Options API</h3>
+  <ul>
+    <li><strong>Định nghĩa:</strong> Options API là cách tiếp cận truyền thống trong Vue.js, nơi bạn sử dụng một đối tượng với các thuộc tính cố định như <code>data</code>, <code>methods</code>, <code>computed</code>, và <code>watch</code> để định nghĩa component.</li>
+    <li><strong>Cấu trúc:</strong> Cấu trúc của Options API rất rõ ràng và dễ hiểu, làm cho nó trở thành lựa chọn tốt cho những người mới bắt đầu hoặc cho các ứng dụng nhỏ hơn với logic ít phức tạp.</li>
+    <li><strong>Hạn chế:</strong> Khi làm việc với các component lớn hoặc phức tạp, việc sử dụng Options API có thể khiến code trở nên khó quản lý vì các logic liên quan đến nhau thường bị phân tán vào các khối lệnh khác nhau.</li>
+  </ul>
+
+  <h3>Composition API</h3>
+  <ul>
+    <li><strong>Định nghĩa:</strong> Composition API, được giới thiệu trong Vue 3, cung cấp một cách tiếp cận linh hoạt hơn để xây dựng component thông qua việc sử dụng các hàm như <code>ref</code>, <code>reactive</code>, <code>computed</code>, và <code>watchEffect</code>.</li>
+    <li><strong>Cấu trúc:</strong> Composition API cho phép tái sử dụng và tổ chức lại code một cách hiệu quả hơn. Bạn có thể dễ dàng gom nhóm các phần logic liên quan đến nhau, giúp component dễ dàng bảo trì và mở rộng hơn.</li>
+    <li><strong>Hạn chế:</strong> Mặc dù mang lại nhiều lợi ích về mặt cấu trúc và tái sử dụng, nhưng Composition API có độ dốc học tập cao hơn và có thể hơi khó tiếp cận đối với những người mới bắt đầu hoặc những người chưa quen với các khái niệm phản ứng.</li>
+  </ul>
+
+  <p>Tùy thuộc vào nhu cầu của dự án và kinh nghiệm của nhóm phát triển, bạn có thể chọn sử dụng Options API cho sự đơn giản và dễ tiếp cận, hoặc chuyển sang Composition API cho khả năng mở rộng và tổ chức code tốt hơn trong các ứng dụng lớn và phức tạp.</p>
+</div>
+
+    `,
   },
 ];
 

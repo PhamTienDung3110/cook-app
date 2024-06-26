@@ -1,6 +1,6 @@
 import { Button, Card, Col, Row } from "antd";
-import QnAReact from "../../data/QAReact";
 import { Link } from "react-router-dom";
+import QAVue from "../../data/QAVue";
 
 function VuePage() {
   return (
@@ -13,7 +13,7 @@ function VuePage() {
             bordered={false}
             extra={<Link to="/vue/practice"><Button type="primary">Practice</Button></Link>}
           >
-            {QnAReact.map((ele) => (
+            {QAVue.map((ele) => (
               <p className="font-bold" key={ele.question}>
                 {ele.question}
               </p>

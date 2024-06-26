@@ -74,7 +74,8 @@ function PracticeReact() {
     <>
       <h2 className="text-center text-3xl text-bold my-6">Practice Reactjs</h2>
       <div className="mx-10 flex gap-5">
-        <div className="w-7/12">
+        {/* <div className="w-7/12"> */}
+        <div>
           <Carousel
             arrows
             dotPosition="left"
@@ -93,7 +94,7 @@ function PracticeReact() {
             <Collapse items={currentQnA} defaultActiveKey={["0"]} />
           </div>
         </div>
-        <div className="w-5/12">
+        {/* <div className="w-5/12">
           <TextArea
             rows={12}
             value={textValue}
@@ -106,7 +107,7 @@ function PracticeReact() {
             </Button>
           </div>
           <div dangerouslySetInnerHTML={{ __html: textAnswerChatGpt }} />;
-        </div>
+        </div> */}
       </div>
     </>
   );

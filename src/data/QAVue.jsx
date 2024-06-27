@@ -289,6 +289,222 @@ export const useMainStore = defineStore('main', {
 
     `,
   },
+  {
+    question: "so sánh provider/injection và eventbus?",
+    answer: `
+    <div>
+    <h3>So Sánh Provider/Injection và EventBus</h3>
+    <table border="1" style="border-collapse: collapse; width: 100%;">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Provider/Injection</th>
+                <th>EventBus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mục Đích Sử Dụng</td>
+                <td>Truyền dữ liệu và phụ thuộc từ component cha xuống con một cách có kiểm soát.</td>
+                <td>Giao tiếp giữa các component mà không cần quan hệ cha-con, qua việc phát và lắng nghe sự kiện.</td>
+            </tr>
+            <tr>
+                <td>Kiểm Soát và Bảo Trì</td>
+                <td>Cung cấp kiểm soát rõ ràng và dễ dàng debug.</td>
+                <td>Có thể khó quản lý và debug khi ứng dụng lớn do không có cấu trúc rõ ràng.</td>
+            </tr>
+            <tr>
+                <td>Phạm Vi Ứng Dụng</td>
+                <td>Phù hợp với việc chia sẻ dữ liệu trong cấu trúc cây component.</td>
+                <td>Hiệu quả trong việc giao tiếp giữa các component độc lập.</td>
+            </tr>
+            <tr>
+                <td>Độ Phức Tạp và Tính Linh Hoạt</td>
+                <td>Có cấu trúc nhưng đòi hỏi hiểu biết rõ về mối quan hệ giữa các component.</td>
+                <td>Cung cấp tính linh hoạt cao nhưng dễ gây hỗn loạn nếu không được quản lý tốt.</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Việc lựa chọn giữa Provider/Injection và EventBus phụ thuộc vào yêu cầu và cấu trúc của ứng dụng. Mỗi phương pháp có ưu và nhược điểm riêng, cần cân nhắc kỹ lưỡng trước khi áp dụng.</p>
+</div>
+    `,
+  },
+  {
+    question: "cách cải thiện performent trong vuejs?",
+    answer: `
+    <div>
+    <h3>Cải Thiện Hiệu Suất trong Vue.js</h3>
+    <p>Việc cải thiện hiệu suất của ứng dụng Vue.js có thể bao gồm nhiều kỹ thuật khác nhau, từ việc tối ưu hoá component đến việc giảm thiểu số lần render không cần thiết. Dưới đây là một số cách hiệu quả:</p>
+    <h4>1. Sử dụng v-once</h4>
+    <p>Khi bạn có dữ liệu trong component mà bạn biết sẽ không thay đổi, bạn có thể sử dụng directive <code>v-once</code> để ngăn Vue cập nhật DOM cho phần dữ liệu đó sau khi nó được render lần đầu. Điều này giúp giảm thiểu công việc phải làm khi ứng dụng cập nhật DOM.</p>
+    <h4>Ví dụ:</h4>
+    <pre>&lt;template&gt;
+    &lt;h1 v-once&gt;Welcome, {{ userName }}&lt;/h1&gt;
+&lt;/template&gt;</pre>
+    <h4>2. Tối ưu hóa v-for</h4>
+    <p>Sử dụng <code>v-for</code> kết hợp với <code>v-if</code> có thể làm chậm ứng dụng của bạn do Vue cần phải kiểm tra từng item riêng biệt. Thay vào đó, hãy xử lý dữ liệu trước và chỉ hiển thị những item cần thiết.</p>
+    <h4>Ví dụ:</h4>
+    <pre>&lt;template&gt;
+    &lt;ul&gt;
+        &lt;li v-for="item in filteredItems"&gt;{{ item.name }}&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default {
+    computed: {
+        filteredItems() {
+            return this.items.filter(item =&gt; item.isActive);
+        }
+    }
+}
+&lt;/script&gt;</pre>
+    <h4>3. Lazy Loading và Code Splitting</h4>
+    <p>Chia nhỏ code của bạn và chỉ tải những thành phần cần thiết khi cần thiết có thể giúp giảm đáng kể thời gian tải ban đầu của ứng dụng. Vue hỗ trợ lazy loading component với Webpack's dynamic <code>import()</code>.</p>
+    <h4>Ví dụ:</h4>
+    <pre>const UserComponent = () =&gt; import('./UserComponent.vue');
+&lt;router-link :to="{ name: 'user' }"&gt;Load User Component&lt;/router-link&gt;
+&lt;router-view&gt;&lt;/router-view&gt;</pre>
+    <h4>4. Dùng Web Workers cho các tác vụ nặng</h4>
+    <p>Nếu ứng dụng của bạn cần xử lý các tác vụ tính toán nặng, cân nhắc việc sử dụng Web Workers. Điều này có thể giúp bạn chạy các tác vụ nặng mà không ảnh hưởng đến hiệu suất của UI chính.</p>
+    <h4>5. Sử dụng Functional Components</h4>
+    <p>Functional components trong Vue không có trạng thái (stateless) và không có đời sống riêng (lifecycle hooks), làm cho chúng nhanh hơn các component có trạng thái đáng kể. Chúng thích hợp cho các component đơn giản như các button, icon, và các label.</p>
+    <h4>Ví dụ:</h4>
+    <pre>&lt;template functional&gt;
+    &lt;div&gt;{{ props.msg }}&lt;/div&gt;
+&lt;/template&gt;</pre>
+    <p>Áp dụng những cách thức này có thể giúp cải thiện hiệu suất của ứng dụng Vue.js của bạn một cách đáng kể, tạo ra trải nghiệm người dùng mượt mà hơn.</p>
+</div>
+
+    `,
+  },
+  {
+    question:
+      "Web Workers trong Ứng Dụng Vue.js giải quyết vấn đề performent như thế nào?",
+    answer: `
+    <div>
+    <h3>Web Workers trong Ứng Dụng Vue.js</h3>
+    <p>Web Workers cho phép thực thi các tác vụ nặng mà không ảnh hưởng đến hiệu suất của UI chính. Sau đây là cách bạn có thể tích hợp Web Workers vào trong ứng dụng Vue.js của mình.</p>
+    <h4>Bước 1: Tạo Web Worker File</h4>
+    <p>Tạo một file JavaScript mới, ví dụ như <code>sortWorker.js</code>, để xử lý các tác vụ nặng mà không làm chậm giao diện người dùng.</p>
+    <pre>
+    // sortWorker.js
+    self.onmessage = function(e) {
+        const sortedArray = e.data.sort((a, b) =&gt; a - b);
+        self.postMessage(sortedArray);
+    };
+    </pre>
+    <h4>Bước 2: Tích Hợp Web Worker vào Vue Component</h4>
+    <p>Trong component Vue của bạn, tạo một instance của Web Worker và giao tiếp với nó.</p>
+    <pre>
+    &lt;template&gt;
+      &lt;div&gt;
+        &lt;button @click="sortData"&gt;Sort Data&lt;/button&gt;
+        &lt;p&gt;Sorted Data: {{ sortedData }}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/template&gt;
+    
+    &lt;script&gt;
+    export default {
+      data() {
+        return {
+          worker: null,
+          sortedData: []
+        };
+      },
+      created() {
+        this.worker = new Worker('path/to/sortWorker.js');
+        this.worker.onmessage = (e) =&gt; {
+          this.sortedData = e.data;
+        };
+      },
+      methods: {
+        sortData() {
+          this.worker.postMessage([...this.dataToSort]); // Assuming dataToSort is the array you need to sort
+        }
+      },
+      beforeDestroy() {
+        this.worker.terminate(); // Important to terminate the worker when the component is destroyed
+      }
+    }
+    &lt;/script&gt;
+    </pre>
+    <h4>Lưu Ý Khi Sử Dụng Web Workers</h4>
+    <ul>
+        <li><strong>Khởi Tạo và Kết Thúc Worker:</strong> Khởi tạo worker khi cần và kết thúc khi không còn sử dụng để giải phóng tài nguyên.</li>
+        <li><strong>Truyền Dữ Liệu:</strong> Lưu ý đến kích thước của dữ liệu khi gửi giữa main thread và worker, vì dữ liệu được sao chép, không chia sẻ.</li>
+        <li><strong>Lỗi và Debugging:</strong> Xử lý lỗi và theo dõi trong worker để đảm bảo ứng dụng chạy ổn định.</li>
+    </ul>
+    <p>Sử dụng Web Workers giúp cải thiện hiệu suất của ứng dụng Vue.js, đặc biệt trong việc xử lý các tác vụ tính toán nặng.</p>
+</div>
+    `,
+  },
+  {
+    question: "nêu quy trình ci/cd trong vuejs?",
+    answer: `
+    <div>
+    <h3>Quy Trình CI/CD cho Vue.js</h3>
+    <p>CI/CD là những thực hành quan trọng trong phát triển phần mềm hiện đại, giúp các nhà phát triển tích hợp và phát triển liên tục các cập nhật sản phẩm. Dưới đây là các bước để thiết lập quy trình CI/CD cho một ứng dụng Vue.js:</p>
+    <h4>Bước 1: Thiết lập Môi trường Phát triển</h4>
+    <ul>
+        <li>Cấu hình kho lưu trữ trên GitHub, GitLab, hoặc Bitbucket.</li>
+        <li>Đảm bảo môi trường phát triển bao gồm Node.js và npm/yarn được cấu hình đúng.</li>
+    </ul>
+    <h4>Bước 2: Tự động Hóa Xây dựng và Kiểm tra</h4>
+    <ul>
+        <li>Sử dụng Jenkins, Travis CI, GitLab CI/CD, hoặc GitHub Actions để thiết lập pipeline CI.</li>
+        <li>Phát triển các bài kiểm tra tự động và cấu hình kịch bản CI để chạy khi có cập nhật mã.</li>
+    </ul>
+    <h4>Bước 3: Cấu hình Phát triển Liên tục</h4>
+    <ul>
+        <li>Thiết lập kịch bản để tự động triển khai lên môi trường staging hoặc production sau khi kiểm tra thành công.</li>
+        <li>Cấu hình môi trường staging để mô phỏng môi trường sản xuất.</li>
+    </ul>
+    <h4>Bước 4: Theo dõi và Tối ưu hóa</h4>
+    <ul>
+        <li>Sử dụng New Relic, Datadog, hoặc Prometheus để giám sát hiệu suất ứng dụng.</li>
+        <li>Thu thập phản hồi để cải tiến liên tục quy trình và sản phẩm.</li>
+    </ul>
+    <h4>Ví dụ về Thiết lập CI/CD bằng GitHub Actions cho Vue.js</h4>
+    <pre>
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+    - name: Install Dependencies
+      run: npm install
+    - name: Run Linter
+      run: npm run lint
+    - name: Run Unit Tests
+      run: npm run test:unit
+    - name: Build
+      run: npm run build
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v2
+    - name: Deploy to Production
+      run: echo "Deploying to production"
+      # Thêm bước triển khai thực tế của bạn ở đây
+    </pre>
+    <p>Quy trình trên giúp đảm bảo rằng mọi thay đổi đều được kiểm tra và phân phối một cách tự động, giảm thiểu nguy cơ lỗi trong sản phẩm cuối và tăng tốc độ phát triển sản phẩm.</p>
+</div>
+    `,
+  },
 ];
 
 export default QAVue;

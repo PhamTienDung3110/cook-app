@@ -73,3 +73,7 @@ pre {
 .ant-collapse-header-text {
   font-weight: bold;
 }
+
+.ant-collapse-content-box {
+  font-size: 18px;
+}

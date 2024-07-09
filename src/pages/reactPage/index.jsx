@@ -9,24 +9,28 @@ function ReactPage() {
       <Row gutter={16}>
         <Col span={8}>
           <Card
-            title="1 năm exp"
+            title="basic"
             bordered={false}
-            extra={<Link to="/react/practice"><Button type="primary">Practice</Button></Link>}
+            extra={<Link to="/react/practice/basic"><Button type="primary">Practice</Button></Link>}
           >
-            {QnAReact.map((ele) => (
-              <p className="font-bold" key={ele.question}>
-                {ele.question}
-              </p>
-            ))}
+            {QnAReact.map((ele) => {
+              if(ele?.type == 'basic') {
+                return (
+                  <p className="font-bold" key={ele.question}>
+                    {ele.question}
+                  </p>
+                )
+              }
+            })}
           </Card>
         </Col>
         <Col span={8}>
-          <Card title="2 năm exp" bordered={false}>
+          <Card title="medium" bordered={false}>
             Card content
           </Card>
         </Col>
         <Col span={8}>
-          <Card title="3 năm exp" bordered={false}>
+          <Card title="hard" bordered={false}>
             Card content
           </Card>
         </Col>

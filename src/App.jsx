@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/react" element={<ReactPage />} />
         <Route path="/vue" element={<VuePage />} />
-        <Route path="/react/practice" element={<PracticeReact />} />
+        <Route path="/react/practice/:type" element={<PracticeReact />} />
         <Route path="/vue/practice" element={<PracticeVue />} />
       </Routes>
     </BrowserRouter>

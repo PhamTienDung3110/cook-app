@@ -1,8 +1,8 @@
-import { Button, Carousel, Collapse } from "antd";
+import { Carousel, Collapse } from "antd";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import QnAReact from "../../data/QAReact";
-import TextArea from "antd/es/input/TextArea";
-import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const contentStyle = {
   margin: 0,
@@ -21,13 +21,17 @@ function shuffleArray(array) {
   return array;
 }
 function PracticeReact() {
+  const { type } = useParams();
+  console.log(type);
+
   const [listQnA, setListQnA] = useState([]);
   const [currentQnA, setCurrentQnA] = useState([{}]);
   const [textValue, setTextValue] = useState('');
   const [textAnswerChatGpt, setTextAnswerChatGpt] = useState('');
 
   useEffect(() => {
-    const shuffleQnA = shuffleArray([...QnAReact])
+    const listQnAByType = QnAReact.filter(ele => ele.type == type)
+    const shuffleQnA = shuffleArray([...listQnAByType])
     setListQnA(shuffleQnA); // shuffle once and set listQnA
     const currentQnATemp = [
       {
@@ -37,7 +41,7 @@ function PracticeReact() {
       },
     ];
     setCurrentQnA(currentQnATemp);
-  }, []);
+  }, [type]);
 
   const handleCarouselChange = (current) => {
     const currentQnATemp = [

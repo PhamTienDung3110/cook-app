@@ -80,6 +80,7 @@ const QnAReact = [
           </li>
         </ul>
     `,
+    type: 'basic'
   },
   {
     question: "Sự khác nhau của props và state?",
@@ -175,6 +176,7 @@ function Counter() {
 <p><b>Props</b>: Dùng để truyền dữ liệu từ component cha sang component con. Không thể thay đổi bên trong component con.</p>
 <p><b>State</b>: Dùng để quản lý dữ liệu thay đổi bên trong component. Có thể thay đổi trong suốt vòng đời của component.</p>
     `,
+    type: 'basic'
   },
   {
     question:
@@ -239,6 +241,7 @@ function MyComponent() {
 
 <p>Sử dụng <code>useEffect</code> giúp quản lý side effects dễ dàng hơn trong các functional component, thay thế cho việc sử dụng các phương thức lifecycle trong class component.</p>
 `,
+    type: 'basic'
   },
   {
     question: "Tại sao bạn lại chọn dùng reactjs thay vì vuejs hay angular?",
@@ -270,6 +273,7 @@ function MyComponent() {
 <h2>Kết Luận</h2>
 <p>Chọn ReactJS vì sự đơn giản, linh hoạt, hiệu suất cao, và cộng đồng hỗ trợ mạnh mẽ, phù hợp với nhiều loại dự án từ nhỏ đến lớn.</p>
 `,
+    type: 'basic'
   },
   {
     question: "useMemo trong React là gì?",
@@ -331,6 +335,7 @@ export default App;
     <li>Cải thiện hiệu suất của ứng dụng bằng cách giảm số lần render không cần thiết.</li>
 </ul>
 `,
+    type: 'basic'
   },
   {
     question: "useCallBack trong reactjs là gì?",
@@ -390,6 +395,7 @@ export default App;
         <li>Cải thiện hiệu suất của ứng dụng bằng cách ngăn chặn việc tạo lại các hàm không cần thiết.</li>
     </ul>
     `,
+    type: 'basic'
   },
   {
     question: "so sánh useMemo và useCallback?",
@@ -480,6 +486,7 @@ function Example() {
 <h2>Kết Luận</h2>
 <p>Sử dụng <code>useMemo</code> khi bạn cần ghi nhớ giá trị tính toán để tránh tính toán lại không cần thiết. Sử dụng <code>useCallback</code> khi bạn cần ghi nhớ hàm để tránh tạo lại hàm không cần thiết, đặc biệt là khi truyền các hàm xuống các component con.</p>
 `,
+    type: 'basic'
   },
   {
     question: "Cách hoạt động của redux?",
@@ -548,6 +555,7 @@ console.log(store.getState()); // 1
     <li>Quy trình hoạt động bao gồm: phát ra action, reducer xử lý action, store cập nhật state, và UI nhận thông báo về sự thay đổi.</li>
 </ul>
 `,
+    type: 'basic'
   },
 ];
 

@@ -505,6 +505,133 @@ jobs:
 </div>
     `,
   },
+  {
+    question: "vue3 hỗ trợ typescript tốt hơn vue2 tại sao?",
+    answer:
+      `
+    <p><strong>Hỗ trợ TypeScript trong Vue 2 và Vue 3</strong></p>
+
+<p><strong>Vue 2 và TypeScript:</strong><br>
+Vue 2 có hỗ trợ TypeScript, nhưng việc tích hợp không phải lúc nào cũng mượt mà và trực tiếp. Dưới đây là một số điểm khó khăn và hạn chế khi sử dụng TypeScript với Vue 2:</p>
+
+<ul>
+  <li><strong>Tích hợp phức tạp:</strong> Để sử dụng TypeScript trong Vue 2, các nhà phát triển thường phải sử dụng nhiều cấu hình bổ sung và các thư viện hỗ trợ như vue-class-component và vue-property-decorator. Điều này làm tăng độ phức tạp trong cấu hình dự án.</li>
+  <li><strong>Hạn chế về Typed API:</strong> Vue 2 không được thiết kế từ đầu với TypeScript, do đó API của nó không hoàn toàn typed, dẫn đến việc các nhà phát triển phải tự định nghĩa các kiểu dữ liệu nhiều hơn.</li>
+  <li><strong>Tương thích kém với Vue CLI:</strong> Vue CLI của Vue 2 có hỗ trợ TypeScript nhưng không đầy đủ và đôi khi gặp khó khăn khi cấu hình và sử dụng.</li>
+</ul>
+
+<p><strong>Vue 3 và TypeScript:</strong><br>
+Vue 3 được thiết kế và tối ưu hóa cho TypeScript ngay từ đầu, mang lại nhiều cải tiến và lợi ích đáng kể cho các nhà phát triển sử dụng TypeScript:</p>
+
+<ul>
+  <li><strong>Thiết kế từ đầu với TypeScript:</strong> Vue 3 được viết hoàn toàn bằng TypeScript, giúp cho API của nó trở nên typed hoàn toàn và cung cấp trải nghiệm lập trình mượt mà hơn. Điều này giúp phát hiện lỗi sớm hơn trong quá trình phát triển.</li>
+  <li><strong>Hỗ trợ tốt hơn trong Vue CLI:</strong> Vue CLI của Vue 3 có hỗ trợ TypeScript tốt hơn, giúp việc cấu hình và bắt đầu một dự án TypeScript dễ dàng hơn nhiều.</li>
+  <li><strong>Cải thiện tính năng intellisense:</strong> Do được thiết kế với TypeScript, Vue 3 cung cấp tính năng intellisense tốt hơn trong các IDE và trình soạn thảo mã như Visual Studio Code. Điều này giúp các nhà phát triển viết mã nhanh hơn và ít lỗi hơn.</li>
+  <li><strong>Composition API và TypeScript:</strong> Composition API của Vue 3 hoạt động rất tốt với TypeScript. Các nhà phát triển có thể dễ dàng sử dụng các tính năng của TypeScript như types, interfaces, và generics với Composition API, giúp mã rõ ràng và dễ bảo trì hơn.</li>
+</ul>
+
+<p><strong>Ví dụ về TypeScript trong Vue 3 với Composition API:</strong></p>
+
+<pre><code>import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const count = ref&lt;number&gt;(0);
+
+    function increment() {
+      count.value++;
+    }
+
+    return {
+      count,
+      increment,
+    };
+  },
+});
+</code></pre>
+
+<p>Trong ví dụ này:<br>
+- <code>ref&lt;number&gt;(0)</code>: Chúng ta định nghĩa biến reactive count với kiểu dữ liệu là number.<br>
+- <code>defineComponent</code>: Được sử dụng để định nghĩa một component, cung cấp hỗ trợ TypeScript tốt hơn.</p>
+
+<p><strong>Kết luận:</strong><br>
+Việc Vue 3 được xây dựng và tối ưu hóa cho TypeScript mang lại nhiều lợi ích cho các nhà phát triển, bao gồm trải nghiệm lập trình mượt mà hơn, hỗ trợ tốt hơn từ các công cụ và IDE, và khả năng tận dụng tối đa các tính năng của TypeScript. Điều này giúp các dự án phát triển nhanh hơn, ít lỗi hơn và dễ dàng bảo trì hơn trong tương lai.</p>
+
+    `
+  },
+  {
+    question: "các thành phần chính và nhiệm vụ của các thành phần trong webRTC?",
+    answer: `
+    <p><strong>Các thành phần chính và nhiệm vụ của các thành phần trong WebRTC</strong></p>
+
+<p>WebRTC (Web Real-Time Communication) là một tập hợp các tiêu chuẩn cho phép trình duyệt và ứng dụng di động giao tiếp theo thời gian thực qua giao thức ngang hàng (peer-to-peer). Dưới đây là các thành phần chính và nhiệm vụ của từng thành phần trong WebRTC:</p>
+
+<ul>
+  <li><strong>PeerConnection:</strong> 
+    <ul>
+      <li><strong>Nhiệm vụ:</strong> Quản lý và duy trì kết nối ngang hàng giữa các trình duyệt. PeerConnection chịu trách nhiệm thiết lập, duy trì, và đóng kết nối P2P.</li>
+      <li><strong>Chi tiết:</strong> 
+        <ul>
+          <li>Thiết lập kết nối: Thông qua quá trình đàm phán (signaling) sử dụng các giao thức như SIP hay XMPP để trao đổi thông tin về kết nối.</li>
+          <li>Truyền dữ liệu: Sau khi kết nối được thiết lập, PeerConnection sử dụng giao thức SRTP (Secure Real-time Transport Protocol) để truyền dữ liệu media một cách an toàn.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  
+  <li><strong>MediaStream (getUserMedia):</strong>
+    <ul>
+      <li><strong>Nhiệm vụ:</strong> Thu thập và quản lý các luồng dữ liệu media như video và audio từ các thiết bị đầu vào của người dùng (camera, microphone).</li>
+      <li><strong>Chi tiết:</strong>
+        <ul>
+          <li>Yêu cầu quyền truy cập: Sử dụng API getUserMedia để yêu cầu quyền truy cập vào camera và microphone của người dùng.</li>
+          <li>Quản lý luồng dữ liệu: MediaStream quản lý và cung cấp các luồng dữ liệu media này cho các thành phần khác như PeerConnection.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  
+  <li><strong>DataChannel:</strong>
+    <ul>
+      <li><strong>Nhiệm vụ:</strong> Cung cấp một kênh truyền dữ liệu hai chiều cho phép các trình duyệt trao đổi dữ liệu tùy ý (chẳng hạn như văn bản, tệp tin) mà không cần thông qua máy chủ trung gian.</li>
+      <li><strong>Chi tiết:</strong>
+        <ul>
+          <li>Truyền dữ liệu: DataChannel sử dụng giao thức SCTP (Stream Control Transmission Protocol) để truyền dữ liệu một cách đáng tin cậy và hiệu quả.</li>
+          <li>Ứng dụng: Có thể được sử dụng cho các ứng dụng như chat, chia sẻ file, hoặc bất kỳ dữ liệu tùy chỉnh nào khác.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  
+  <li><strong>Signaling Server:</strong>
+    <ul>
+      <li><strong>Nhiệm vụ:</strong> Hỗ trợ quá trình đàm phán kết nối (signaling) giữa các trình duyệt, trao đổi thông tin như SDP (Session Description Protocol) và ICE (Interactive Connectivity Establishment).</li>
+      <li><strong>Chi tiết:</strong>
+        <ul>
+          <li>Đàm phán kết nối: Signaling server không phải là một phần của WebRTC mà là một dịch vụ cần thiết để thiết lập kết nối P2P ban đầu.</li>
+          <li>Trao đổi thông tin: Server này trao đổi thông tin về mạng và media để các trình duyệt có thể thiết lập kết nối trực tiếp.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  
+  <li><strong>ICE Framework (Interactive Connectivity Establishment):</strong>
+    <ul>
+      <li><strong>Nhiệm vụ:</strong> Tìm và duy trì các đường truyền mạng tối ưu để truyền dữ liệu giữa các peers.</li>
+      <li><strong>Chi tiết:</strong>
+        <ul>
+          <li>Thu thập và kiểm tra các candidates: ICE thu thập các địa chỉ có thể sử dụng (candidates) và kiểm tra chúng để tìm ra đường truyền tốt nhất.</li>
+          <li>Liên kết với STUN/TURN: Sử dụng các server STUN (Session Traversal Utilities for NAT) và TURN (Traversal Using Relays around NAT) để vượt qua các router và firewall, đảm bảo kết nối ổn định.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Các thành phần này phối hợp với nhau để cung cấp khả năng truyền thông thời gian thực qua mạng một cách hiệu quả và an toàn trong các ứng dụng web và di động.</p>
+
+    `
+  }
 ];
 
 export default QAVue;

@@ -80,7 +80,7 @@ const QnAReact = [
           </li>
         </ul>
     `,
-    type: 'basic'
+    type: "basic",
   },
   {
     question: "Sự khác nhau của props và state?",
@@ -176,7 +176,7 @@ function Counter() {
 <p><b>Props</b>: Dùng để truyền dữ liệu từ component cha sang component con. Không thể thay đổi bên trong component con.</p>
 <p><b>State</b>: Dùng để quản lý dữ liệu thay đổi bên trong component. Có thể thay đổi trong suốt vòng đời của component.</p>
     `,
-    type: 'basic'
+    type: "basic",
   },
   {
     question:
@@ -241,7 +241,7 @@ function MyComponent() {
 
 <p>Sử dụng <code>useEffect</code> giúp quản lý side effects dễ dàng hơn trong các functional component, thay thế cho việc sử dụng các phương thức lifecycle trong class component.</p>
 `,
-    type: 'basic'
+    type: "basic",
   },
   {
     question: "Tại sao bạn lại chọn dùng reactjs thay vì vuejs hay angular?",
@@ -273,7 +273,7 @@ function MyComponent() {
 <h2>Kết Luận</h2>
 <p>Chọn ReactJS vì sự đơn giản, linh hoạt, hiệu suất cao, và cộng đồng hỗ trợ mạnh mẽ, phù hợp với nhiều loại dự án từ nhỏ đến lớn.</p>
 `,
-    type: 'basic'
+    type: "basic",
   },
   {
     question: "useMemo trong React là gì?",
@@ -335,7 +335,7 @@ export default App;
     <li>Cải thiện hiệu suất của ứng dụng bằng cách giảm số lần render không cần thiết.</li>
 </ul>
 `,
-    type: 'basic'
+    type: "basic",
   },
   {
     question: "useCallBack trong reactjs là gì?",
@@ -395,7 +395,7 @@ export default App;
         <li>Cải thiện hiệu suất của ứng dụng bằng cách ngăn chặn việc tạo lại các hàm không cần thiết.</li>
     </ul>
     `,
-    type: 'basic'
+    type: "basic",
   },
   {
     question: "so sánh useMemo và useCallback?",
@@ -486,7 +486,7 @@ function Example() {
 <h2>Kết Luận</h2>
 <p>Sử dụng <code>useMemo</code> khi bạn cần ghi nhớ giá trị tính toán để tránh tính toán lại không cần thiết. Sử dụng <code>useCallback</code> khi bạn cần ghi nhớ hàm để tránh tạo lại hàm không cần thiết, đặc biệt là khi truyền các hàm xuống các component con.</p>
 `,
-    type: 'basic'
+    type: "basic",
   },
   {
     question: "Cách hoạt động của redux?",
@@ -555,7 +555,57 @@ console.log(store.getState()); // 1
     <li>Quy trình hoạt động bao gồm: phát ra action, reducer xử lý action, store cập nhật state, và UI nhận thông báo về sự thay đổi.</li>
 </ul>
 `,
-    type: 'basic'
+    type: "basic",
+  },
+  {
+    question: "Oneway data binding là gì?",
+    answer: `
+    <p>Trong ReactJS, "one-way data binding" (ràng buộc dữ liệu một chiều) là một khái niệm mà trong đó dữ liệu chảy theo một hướng từ cha xuống con trong kiến trúc thành phần. Điều này có nghĩa là các thành phần con không thể trực tiếp thay đổi dữ liệu của thành phần cha, mà chỉ có thể giao tiếp với cha thông qua các hàm callback được truyền như props.</p>
+
+<p>Đây là cách thức React giữ cho mô hình dữ liệu trở nên dễ dàng quản lý và hiểu biết hơn, giảm thiểu các lỗi do trạng thái không mong muốn. Trong React, dữ liệu được xử lý như sau:</p>
+
+<ol>
+<li><strong>State và Props</strong>: Các thành phần trong React được điều khiển bởi "props" và "state". "Props" là những tham số mà thành phần nhận từ cha của nó, trong khi "state" là dữ liệu nội bộ mà thành phần có thể thay đổi.</li>
+<li><strong>Quản lý State</strong>: "State" của thành phần có thể được thay đổi bên trong thành phần đó, nhưng nó không thể được trực tiếp thay đổi bởi thành phần con. Khi "state" thay đổi, React sẽ tự động làm mới giao diện người dùng để phản ánh các thay đổi.</li>
+<li><strong>Flow of Data</strong>: Dữ liệu trong React chảy từ trên xuống dưới (từ cha đến con), và các thành phần con chỉ có thể "gửi thông tin" trở lại cha của chúng thông qua các hàm được định nghĩa bởi cha và truyền xuống như props.</li>
+<li><strong>Updating State</strong>: Khi một thành phần con muốn cập nhật state của cha, nó sẽ gọi một hàm callback được cha cung cấp qua props. Cha sẽ xử lý logic để cập nhật state của mình, và thay đổi này sẽ lan truyền xuống các thành phần con thông qua props.</li>
+</ol>
+
+<p>Ví dụ, nếu bạn có một thành phần <code>Parent</code> có một <code>state</code> tên là <code>value</code>, và bạn muốn cho phép một thành phần <code>Child</code> thay đổi <code>value</code> này, bạn sẽ truyền một hàm callback từ <code>Parent</code> tới <code>Child</code> qua props, và <code>Child</code> sẽ gọi hàm này khi cần thay đổi <code>value</code>.</p>
+
+<p>Điều này giúp đảm bảo rằng kiến trúc ứng dụng của bạn rõ ràng và dễ debug, giảm thiểu lỗi do trạng thái không đồng bộ hoặc các trạng thái không mong đợi.</p>
+
+    `,
+    type: "basic",
+  },
+  {
+    question: "So sánh useEffect và useMemo?",
+    answer: `
+  <h3>1. Mục đích Sử Dụng</h3>
+  <h4>useEffect:</h4>
+  <p>Dùng để thực hiện các side effects (tác vụ phụ) trong một component sau khi render.</p>
+  <p>Thường được sử dụng để gọi API, thiết lập subscriptions, cập nhật DOM, hoặc chạy các phép tính tốn kém cần thực hiện sau mỗi lần render hoặc khi dependencies thay đổi.</p>
+  <h4>useMemo:</h4>
+  <p>Dùng để ghi nhớ (memoize) kết quả của một phép tính phức tạp, nhằm tránh thực hiện lại phép tính đó trong mỗi lần render trừ khi dependencies thay đổi.</p>
+  <p>Thường được sử dụng để tối ưu hóa hiệu suất bằng cách tránh các phép tính lại không cần thiết.</p>
+  <h3>5. Lợi Ích</h3>
+  <h4>useEffect:</h4>
+  <ul>
+    <li>Dễ dàng quản lý các tác vụ phụ, đảm bảo chúng chỉ chạy khi cần thiết.</li>
+    <li>Hỗ trợ việc dọn dẹp (cleanup) khi component unmount hoặc dependencies thay đổi.</li>
+  </ul>
+  <h4>useMemo:</h4>
+  <ul>
+    <li>Tối ưu hóa hiệu suất bằng cách ghi nhớ kết quả của các phép tính tốn kém.</li>
+    <li>Giảm tải cho render, giúp các component không bị render lại không cần thiết.</li>
+  </ul>
+`,
+    type: "basic",
+  },
+  {
+    question: "",
+    answer: ``,
+    type: "",
   },
 ];
 

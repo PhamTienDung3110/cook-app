@@ -16,7 +16,9 @@ function Home() {
       <Card.Grid style={gridStyle}>
         <Link to="/vue">Vue</Link>
       </Card.Grid>
-      <Card.Grid style={gridStyle}>Content</Card.Grid>
+      <Card.Grid style={gridStyle}>
+        <Link to="/javascript">Javascript</Link>
+      </Card.Grid>
       <Card.Grid style={gridStyle}>Content</Card.Grid>
     </Card>
   );

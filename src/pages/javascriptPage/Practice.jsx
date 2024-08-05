@@ -1,7 +1,7 @@
 import { Carousel, Collapse } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import QnAReact from "../../data/QAReact";
+import QAJavascript from "../../data/QAJavascript";
 
 const contentStyle = {
   margin: 0,
@@ -19,7 +19,7 @@ function shuffleArray(array) {
   }
   return array;
 }
-function PracticeReact() {
+function PracticeJavascript() {
   const { type } = useParams();
   console.log(type);
 
@@ -29,7 +29,7 @@ function PracticeReact() {
   // const [textAnswerChatGpt, setTextAnswerChatGpt] = useState('');
 
   useEffect(() => {
-    const listQnAByType = QnAReact.filter(ele => ele.type == type)
+    const listQnAByType = QAJavascript.filter(ele => ele.type == type)
     const shuffleQnA = shuffleArray([...listQnAByType])
     setListQnA(shuffleQnA); // shuffle once and set listQnA
     const currentQnATemp = [
@@ -75,7 +75,7 @@ function PracticeReact() {
 
   return (
     <>
-      <h2 className="text-center text-3xl text-bold my-6">Practice Reactjs</h2>
+      <h2 className="text-center text-3xl text-bold my-6">Practice Javascript</h2>
       <div className="mx-10 flex gap-5">
         {/* <div className="w-7/12"> */}
         <div>
@@ -116,4 +116,4 @@ function PracticeReact() {
   );
 }
 
-export default PracticeReact;
+export default PracticeJavascript;

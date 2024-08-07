@@ -9,15 +9,15 @@ const gridStyle = {
 
 function Home() {
   return (
-    <Card title="Cook">
+    <Card title="hehe">
       <Card.Grid style={gridStyle}>
-        <Link to="/react">React</Link>
+        <Link to="/javascript">Javascript</Link>
       </Card.Grid>
       <Card.Grid style={gridStyle}>
         <Link to="/vue">Vue</Link>
       </Card.Grid>
       <Card.Grid style={gridStyle}>
-        <Link to="/javascript">Javascript</Link>
+        <Link to="/react">React</Link>
       </Card.Grid>
       <Card.Grid style={gridStyle}>Content</Card.Grid>
     </Card>

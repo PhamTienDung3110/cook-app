@@ -1,4 +1,4 @@
-import { Carousel, Collapse } from "antd";
+import { Carousel, Collapse, Switch } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import QAJavascript from "../../data/QAJavascript";
@@ -25,60 +25,49 @@ function PracticeJavascript() {
 
   const [listQnA, setListQnA] = useState([]);
   const [currentQnA, setCurrentQnA] = useState([{}]);
-  // const [textValue, setTextValue] = useState('');
+  const [isVn, setIsVn] = useState(true);
   // const [textAnswerChatGpt, setTextAnswerChatGpt] = useState('');
 
   useEffect(() => {
-    const listQnAByType = QAJavascript.filter(ele => ele.type == type)
-    const shuffleQnA = shuffleArray([...listQnAByType])
+    const listQnAByType = QAJavascript.filter((ele) => ele.type == type);
+    const shuffleQnA = shuffleArray([...listQnAByType]);
     setListQnA(shuffleQnA); // shuffle once and set listQnA
     const currentQnATemp = [
       {
         key: "1",
-        label: shuffleQnA[0].question,
-        children: <div dangerouslySetInnerHTML={{ __html: shuffleQnA[0].answer }} />,
+        label: isVn ? shuffleQnA[0].question : shuffleQnA[0].questionENG,
+        children: (
+          <div dangerouslySetInnerHTML={{ __html: isVn ? shuffleQnA[0].answer :  shuffleQnA[0].answerENG }} />
+        ),
       },
     ];
     setCurrentQnA(currentQnATemp);
-  }, [type]);
+  }, [type, isVn]);
 
   const handleCarouselChange = (current) => {
     const currentQnATemp = [
       {
         key: "1",
-        label: listQnA[current].question,
-        children: <div dangerouslySetInnerHTML={{ __html: listQnA[current].answer }} />,
+        label: isVn ? listQnA[current].question : listQnA[current].questionENG,
+        children: (
+          <div dangerouslySetInnerHTML={{ __html: isVn ? listQnA[current].answer : listQnA[current].answerENG }} />
+        ),
       },
     ];
     setCurrentQnA(currentQnATemp);
   };
 
-  // const handleTextChange = (e) => {
-  //   setTextValue(e.target.value);
-  // };
-
-  // const handleSubmit = async () => {
-  //   if(!textValue) {
-  //       alert('nhập input vào, dùng api mất tiền đấy viết ngắn thôi')
-  //       return
-  //   }
-  //   const prompt = `ví dụ bạn là người phỏng vấn, tôi là người đi phỏng vấn bạn hỏi câu: ${currentQnA[0].label}
-  //   và tôi trả lời ${textValue} bạn hãy trả lời 2 câu hỏi, 1 câu hỏi trên đúng bao nhiêu phần trăm và và cần cải thiện gì ở câu trả lời, trả lời dạng html để tôi để trong <div dangerouslySetInnerHTML={{ __html: listQnA[current].answer }} />, trả lời ngắn gọn
-  //   `
-  //   try {
-  //       const res = await axios.post('https://cook-app-be-c.vercel.app/chat', { prompt });
-  //       setTextAnswerChatGpt(res.data.choices[0].message.content.trim());
-  //   } catch (error) {
-  //       console.error("There was an error!", error);
-  //   }
-  // }
-
   return (
     <>
-      <h2 className="text-center text-3xl text-bold my-6">Practice Javascript</h2>
+      <div className="flex items-center justify-between px-10">
+        <h2 className=" text-center text-3xl text-bold my-6">
+          Practice Javascript
+        </h2>
+        <Switch checkedChildren="VN" unCheckedChildren="ENG" value={isVn} onChange={(e) => setIsVn(e)} />
+      </div>
       <div className="mx-10 flex gap-5">
         {/* <div className="w-7/12"> */}
-        <div>
+        <div className="w-screen">
           <Carousel
             arrows
             dotPosition="left"
@@ -88,7 +77,7 @@ function PracticeJavascript() {
             {listQnA.map((ele) => (
               <div key={ele.question}>
                 <h3 className="text-2xl" style={contentStyle}>
-                  {ele.question}
+                  {isVn ? ele.question : ele.questionENG}
                 </h3>
               </div>
             ))}

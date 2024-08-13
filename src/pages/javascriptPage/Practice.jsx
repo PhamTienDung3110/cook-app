@@ -35,6 +35,7 @@ function PracticeJavascript() {
     const currentQnATemp = [
       {
         key: "1",
+        id: shuffleQnA[0]?.id,
         label: isVn ? shuffleQnA[0].question : shuffleQnA[0].questionENG,
         children: (
           <div dangerouslySetInnerHTML={{ __html: isVn ? shuffleQnA[0].answer :  shuffleQnA[0].answerENG }} />
@@ -42,12 +43,28 @@ function PracticeJavascript() {
       },
     ];
     setCurrentQnA(currentQnATemp);
-  }, [type, isVn]);
+  }, [type]);
+
+  useEffect(() => {
+    const abcde = listQnA.find(ele => ele.id == currentQnA[0].id);
+    if(abcde) {
+      const currr = [{
+        key: "1",
+        id: abcde?.id,
+        label: isVn ? abcde?.question : abcde?.questionENG,
+        children: (
+          <div dangerouslySetInnerHTML={{ __html: isVn ? abcde?.answer :  abcde?.answerENG }} />
+        ),
+      }]
+      setCurrentQnA(currr);
+    }
+  },[isVn])
 
   const handleCarouselChange = (current) => {
     const currentQnATemp = [
       {
         key: "1",
+        id: listQnA[current].id,
         label: isVn ? listQnA[current].question : listQnA[current].questionENG,
         children: (
           <div dangerouslySetInnerHTML={{ __html: isVn ? listQnA[current].answer : listQnA[current].answerENG }} />

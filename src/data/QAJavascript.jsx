@@ -1,5 +1,6 @@
 const QAJavascript = [
   {
+    id: 1,
     question: "Event loop trong javascript là gì",
     questionENG: "What is the event loop in JavaScript and how does the event loop operate?",
     answer: `
@@ -43,6 +44,32 @@ const QAJavascript = [
     <li><strong>Repeat the Process:</strong> This process repeats continuously, ensuring that all tasks are handled promptly.</li>
   </ol>
   <p>This process allows JavaScript to handle asynchronous tasks, update the UI, and respond to user interactions efficiently.</p>
+</div>
+        `,
+    type: "basic",
+  },
+  {
+    id: 2,
+    question: "Ba trạng thái của Promise?",
+    questionENG: "What are the three states of a Promise?",
+    answer: `
+<div>
+  <h3>Three States of a JavaScript Promise</h3>
+  <ul>
+    <li><strong>Pending:</strong> The initial state of a Promise. It remains in this state while awaiting resolution or rejection, with the outcome still unknown.</li>
+    <li><strong>Fulfilled:</strong> This state is reached when the asynchronous task within the Promise is successfully completed. In this state, the registered 'then' callback is invoked, passing the resulting value from the asynchronous task as an argument.</li>
+    <li><strong>Rejected:</strong> If the asynchronous task fails, the Promise transitions to this state. The registered 'catch' callback is called in this state, receiving the reason for rejection (typically an error object) as an argument.</li>
+  </ul>
+</div>
+        `,
+    answerENG: `
+<div>
+  <h3>Three States of a JavaScript Promise</h3>
+  <ul>
+    <li><strong>Pending:</strong> The initial state of a Promise. It remains in this state while awaiting resolution or rejection, with the outcome still unknown.</li>
+    <li><strong>Fulfilled:</strong> This state is reached when the asynchronous task within the Promise is successfully completed. In this state, the registered 'then' callback is invoked, passing the resulting value from the asynchronous task as an argument.</li>
+    <li><strong>Rejected:</strong> If the asynchronous task fails, the Promise transitions to this state. The registered 'catch' callback is called in this state, receiving the reason for rejection (typically an error object) as an argument.</li>
+  </ul>
 </div>
         `,
     type: "basic",

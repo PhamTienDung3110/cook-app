@@ -1,5 +1,6 @@
 const QAVue = [
   {
+    id: 1,
     question: "Trình bày về lifecycle của vuejs?",
     answer: `<div>
     <h1>Lifecycle của Vue.js</h1>
@@ -19,6 +20,7 @@ const QAVue = [
 `,
   },
   {
+    id: 2,
     question: "Method watch trong vuejs là gì?",
     answer: `<div>
     <h1>Method Watch trong Vue.js</h1>
@@ -48,6 +50,7 @@ export default {
 `,
   },
   {
+    id: 3,
     question: "Method computed trong vuejs là gì?",
     answer: `
     <div>
@@ -80,6 +83,7 @@ export default {
     `,
   },
   {
+    id: 4,
     question: "So sánh watch và computed trong vuejs ?",
     answer: `<div>
     <h1>So sánh Watch và Computed trong Vue.js</h1>
@@ -125,6 +129,7 @@ export default {
 `,
   },
   {
+    id: 5,
     question: "So sánh vue2 và vue3?",
     answer: `<div>
     <h1>So sánh Vue 2 và Vue 3</h1>
@@ -145,6 +150,7 @@ export default {
 `,
   },
   {
+    id: 6,
     question:
       "Làm thế nào để bạn xử lý quản lý trạng thái trong các component phức tạp mà không sử dụng Vuex?",
     answer: `
@@ -162,6 +168,7 @@ export default {
     `,
   },
   {
+    id: 7,
     question: "vuex là gì, lifecycle của vuex?",
     answer: `
 <div>
@@ -186,6 +193,7 @@ export default {
 `,
   },
   {
+    id: 8,
     question: "pinia là gì, các thành phần trong pinia?",
     answer: `
 <div>
@@ -230,6 +238,7 @@ export const useMainStore = defineStore('main', {
 `,
   },
   {
+    id: 9,
     question: "sự khác nhau của vuex và pinia?",
     answer: `
     <div>
@@ -265,6 +274,7 @@ export const useMainStore = defineStore('main', {
     `,
   },
   {
+    id: 10,
     question: "Options API và Composition API khác nhau như thế nào?",
     answer: `
     <div>
@@ -290,6 +300,7 @@ export const useMainStore = defineStore('main', {
     `,
   },
   {
+    id: 11,
     question: "so sánh provider/injection và eventbus?",
     answer: `
     <div>
@@ -330,6 +341,7 @@ export const useMainStore = defineStore('main', {
     `,
   },
   {
+    id: 12,
     question: "cách cải thiện performent trong vuejs?",
     answer: `
     <div>
@@ -378,6 +390,7 @@ export default {
     `,
   },
   {
+    id: 13,
     question:
       "Web Workers trong Ứng Dụng Vue.js giải quyết vấn đề performent như thế nào?",
     answer: `
@@ -439,6 +452,7 @@ export default {
     `,
   },
   {
+    id: 14,
     question: "nêu quy trình ci/cd trong vuejs?",
     answer: `
     <div>
@@ -506,6 +520,7 @@ jobs:
     `,
   },
   {
+    id: 15,
     question: "vue3 hỗ trợ typescript tốt hơn vue2 tại sao?",
     answer:
       `
@@ -560,6 +575,7 @@ Việc Vue 3 được xây dựng và tối ưu hóa cho TypeScript mang lại n
     `
   },
   {
+    id: 16,
     question: "các thành phần chính và nhiệm vụ của các thành phần trong webRTC?",
     answer: `
     <p><strong>Các thành phần chính và nhiệm vụ của các thành phần trong WebRTC</strong></p>
@@ -631,7 +647,45 @@ Việc Vue 3 được xây dựng và tối ưu hóa cho TypeScript mang lại n
 <p>Các thành phần này phối hợp với nhau để cung cấp khả năng truyền thông thời gian thực qua mạng một cách hiệu quả và an toàn trong các ứng dụng web và di động.</p>
 
     `
-  }
+  },
+  {
+    id: 17,
+    question: "so sánh v-if, v-once, v-show trong vuejs?",
+    answer: `
+<div>
+  <p><strong>v-if:</strong> Chỉ thêm phần tử vào DOM nếu điều kiện là true. Nếu điều kiện là false, phần tử sẽ bị xóa khỏi DOM. Phù hợp cho các phần tử không cần hiển thị thường xuyên, giúp giảm tải DOM.</p>
+  <p><strong>v-show:</strong> Luôn giữ phần tử trong DOM nhưng ẩn qua CSS nếu điều kiện là false. Thích hợp cho các phần tử cần ẩn hiện nhiều lần, nhanh chóng thay đổi trạng thái hiển thị.</p>
+  <p><strong>v-once:</strong> Render phần tử chỉ một lần và không cập nhật trong các re-render sau. Dùng cho nội dung không đổi, tối ưu hiệu suất bằng cách giảm số lượng cập nhật.</p>
+</div>
+    `,
+    type: "basic",
+  },
+  {
+    id: 18,
+    question: "tại sao vue 3 lại hỗ trợ typesctipt tốt hơn vue2 ?",
+    answer: `
+<div>
+  <p><strong>Rewrite bằng TypeScript:</strong> Vue 3 được viết lại hoàn toàn bằng TypeScript, đảm bảo tích hợp sâu với kiểu dữ liệu và tính năng của TypeScript.</p>
+  <p><strong>Composition API:</strong> Giới thiệu API mới cho phép làm việc linh hoạt và tự nhiên hơn với TypeScript, cải thiện suy luận kiểu và tái sử dụng logic.</p>
+  <p><strong>Improved Type Inference:</strong> Cải tiến suy luận kiểu trong Options API và Composition API, làm giảm nhu cầu về annotations mà vẫn giữ được kiểm soát kiểu chặt chẽ.</p>
+  <p><strong>Better Tooling Support:</strong> Cải thiện công cụ và tích hợp, làm cho quá trình phát triển với TypeScript mượt mà hơn.</p>
+</div>
+    `,
+    type: "basic",
+  },
+  {
+    id: 19,
+    question: "composable trong vue3 là gì?",
+    answer: `
+<div>
+  <p><strong>Rewrite bằng TypeScript:</strong> Vue 3 được viết lại hoàn toàn bằng TypeScript, đảm bảo tích hợp sâu với kiểu dữ liệu và tính năng của TypeScript.</p>
+  <p><strong>Composition API:</strong> Giới thiệu API mới cho phép làm việc linh hoạt và tự nhiên hơn với TypeScript, cải thiện suy luận kiểu và tái sử dụng logic.</p>
+  <p><strong>Improved Type Inference:</strong> Cải tiến suy luận kiểu trong Options API và Composition API, làm giảm nhu cầu về annotations mà vẫn giữ được kiểm soát kiểu chặt chẽ.</p>
+  <p><strong>Better Tooling Support:</strong> Cải thiện công cụ và tích hợp, làm cho quá trình phát triển với TypeScript mượt mà hơn.</p>
+</div>
+    `,
+    type: "basic",
+  },
 ];
 
 export default QAVue;

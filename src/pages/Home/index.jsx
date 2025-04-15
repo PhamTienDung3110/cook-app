@@ -11,6 +11,9 @@ function Home() {
   return (
     <Card title="hehe">
       <Card.Grid style={gridStyle}>
+        <Link to="/css">CSS</Link>
+      </Card.Grid>
+      <Card.Grid style={gridStyle}>
         <Link to="/javascript">Javascript</Link>
       </Card.Grid>
       <Card.Grid style={gridStyle}>
@@ -19,7 +22,6 @@ function Home() {
       <Card.Grid style={gridStyle}>
         <Link to="/react">React</Link>
       </Card.Grid>
-      <Card.Grid style={gridStyle}>Content</Card.Grid>
     </Card>
   );
 }

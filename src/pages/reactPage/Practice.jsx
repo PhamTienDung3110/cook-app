@@ -23,6 +23,22 @@ function PracticeReact() {
   const { type } = useParams();
   console.log(type);
 
+  // Mapping từ type key sang tên hiển thị ngắn gọn
+  const getTopicName = (topicKey) => {
+    const topicNames = {
+      "react-rendering": "Rendering",
+      "hooks-advanced": "Hooks",
+      "performance-optimization": "Performance",
+      "data-fetching": "Data Fetching",
+      "state-management": "State Management",
+      "auth-security": "Security",
+      "testing-quality": "Testing",
+      "architecture-leadership": "Architecture",
+      "system-design": "System Design"
+    };
+    return topicNames[topicKey] || topicKey;
+  };
+
   const [listQnA, setListQnA] = useState([]);
   const [currentQnA, setCurrentQnA] = useState([{}]);
   // const [textValue, setTextValue] = useState('');
@@ -36,7 +52,7 @@ function PracticeReact() {
       {
         key: "1",
         label: shuffleQnA[0].question,
-        children: <div dangerouslySetInnerHTML={{ __html: shuffleQnA[0].answer }} />,
+        children: <div className="answer-content" dangerouslySetInnerHTML={{ __html: shuffleQnA[0].answer }} />,
       },
     ];
     setCurrentQnA(currentQnATemp);
@@ -47,7 +63,7 @@ function PracticeReact() {
       {
         key: "1",
         label: listQnA[current].question,
-        children: <div dangerouslySetInnerHTML={{ __html: listQnA[current].answer }} />,
+        children: <div className="answer-content" dangerouslySetInnerHTML={{ __html: listQnA[current].answer }} />,
       },
     ];
     setCurrentQnA(currentQnATemp);
@@ -75,7 +91,33 @@ function PracticeReact() {
 
   return (
     <>
-      <h2 className="text-center text-3xl text-bold my-6">Practice Reactjs</h2>
+      <style>{`
+        .answer-content h1 { 
+          margin-top: 0.5rem !important; 
+          margin-bottom: 0.5rem !important; 
+        }
+        .answer-content h2 { 
+          margin-top: 0.5rem !important; 
+          margin-bottom: 0.5rem !important; 
+        }
+        .answer-content h3 { 
+          margin-top: 0.4rem !important; 
+          margin-bottom: 0.4rem !important; 
+        }
+        .answer-content h4 { 
+          margin-top: 0.35rem !important; 
+          margin-bottom: 0.35rem !important; 
+        }
+        .answer-content h5 { 
+          margin-top: 0.3rem !important; 
+          margin-bottom: 0.3rem !important; 
+        }
+        .answer-content h6 { 
+          margin-top: 0.25rem !important; 
+          margin-bottom: 0.25rem !important; 
+        }
+      `}</style>
+      <h2 className="text-center text-3xl text-bold my-6">Practice: {getTopicName(type)}</h2>
       <div className="mx-10 flex gap-5">
         {/* <div className="w-7/12"> */}
         <div>

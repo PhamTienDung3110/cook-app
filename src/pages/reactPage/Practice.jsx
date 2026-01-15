@@ -24,7 +24,10 @@ function PracticeReact() {
   const { type } = useParams();
   const [searchParams] = useSearchParams();
   const rolesParam = searchParams.get("roles") || "senior";
-  const roles = rolesParam.split(',').filter(role => role.trim());
+  const roles = useMemo(
+    () => rolesParam.split(",").filter((role) => role.trim()),
+    [rolesParam]
+  );
 
   // Merge tất cả questions từ senior và middle
   const allQuestions = useMemo(() => {

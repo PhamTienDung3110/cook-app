@@ -1,7 +1,8 @@
 import { Carousel, Collapse } from "antd";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import QnAReact from "../../data/QAReact";
+import { useEffect, useState, useMemo } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { QnAReact as QnAReactSenior } from "../../data/react/senior";
+import { QnAReact as QnAReactMiddle } from "../../data/react/middle";
 
 const contentStyle = {
   margin: 0,
@@ -21,7 +22,14 @@ function shuffleArray(array) {
 }
 function PracticeReact() {
   const { type } = useParams();
-  console.log(type);
+  const [searchParams] = useSearchParams();
+  const rolesParam = searchParams.get("roles") || "senior";
+  const roles = rolesParam.split(',').filter(role => role.trim());
+
+  // Merge tất cả questions từ senior và middle
+  const allQuestions = useMemo(() => {
+    return [...QnAReactSenior, ...QnAReactMiddle];
+  }, []);
 
   // Mapping từ type key sang tên hiển thị ngắn gọn
   const getTopicName = (topicKey) => {
@@ -45,18 +53,43 @@ function PracticeReact() {
   // const [textAnswerChatGpt, setTextAnswerChatGpt] = useState('');
 
   useEffect(() => {
-    const listQnAByType = QnAReact.filter(ele => ele.type == type)
-    const shuffleQnA = shuffleArray([...listQnAByType])
-    setListQnA(shuffleQnA); // shuffle once and set listQnA
-    const currentQnATemp = [
-      {
-        key: "1",
-        label: shuffleQnA[0].question,
-        children: <div className="answer-content" dangerouslySetInnerHTML={{ __html: shuffleQnA[0].answer }} />,
-      },
-    ];
-    setCurrentQnA(currentQnATemp);
-  }, [type]);
+    // Filter theo type và roles được chọn
+    let listQnAByType = allQuestions.filter(ele => {
+      if (ele.type !== type) return false;
+
+      // Nếu roles bao gồm senior và question không có role hoặc role là senior
+      if (roles.includes('senior') && (!ele.role || ele.role === "senior")) return true;
+
+      // Nếu roles bao gồm middle và question có role là middle
+      if (roles.includes('middle') && ele.role === "middle") return true;
+
+      // Nếu roles bao gồm junior và question có role là junior
+      if (roles.includes('junior') && ele.role === "junior") return true;
+
+      return false;
+    });
+
+    // Nếu không có câu hỏi nào, fallback về senior
+    if (listQnAByType.length === 0) {
+      listQnAByType = allQuestions.filter(ele =>
+        ele.type === type && (!ele.role || ele.role === "senior")
+      );
+    }
+
+    const shuffleQnA = shuffleArray([...listQnAByType]);
+    setListQnA(shuffleQnA);
+
+    if (shuffleQnA.length > 0) {
+      const currentQnATemp = [
+        {
+          key: "1",
+          label: shuffleQnA[0].question,
+          children: <div className="answer-content" dangerouslySetInnerHTML={{ __html: shuffleQnA[0].answer }} />,
+        },
+      ];
+      setCurrentQnA(currentQnATemp);
+    }
+  }, [type, roles, allQuestions]);
 
   const handleCarouselChange = (current) => {
     const currentQnATemp = [
@@ -92,52 +125,94 @@ function PracticeReact() {
   return (
     <>
       <style>{`
-        .answer-content h1 { 
-          margin-top: 0.5rem !important; 
-          margin-bottom: 0.5rem !important; 
+        .answer-content h1 {
+          margin-top: 0.5rem !important;
+          margin-bottom: 0.5rem !important;
         }
-        .answer-content h2 { 
-          margin-top: 0.5rem !important; 
-          margin-bottom: 0.5rem !important; 
+        .answer-content h2 {
+          margin-top: 0.5rem !important;
+          margin-bottom: 0.5rem !important;
         }
-        .answer-content h3 { 
-          margin-top: 0.4rem !important; 
-          margin-bottom: 0.4rem !important; 
+        .answer-content h3 {
+          margin-top: 0.4rem !important;
+          margin-bottom: 0.4rem !important;
         }
-        .answer-content h4 { 
-          margin-top: 0.35rem !important; 
-          margin-bottom: 0.35rem !important; 
+        .answer-content h4 {
+          margin-top: 0.35rem !important;
+          margin-bottom: 0.35rem !important;
         }
-        .answer-content h5 { 
-          margin-top: 0.3rem !important; 
-          margin-bottom: 0.3rem !important; 
+        .answer-content h5 {
+          margin-top: 0.3rem !important;
+          margin-bottom: 0.3rem !important;
         }
-        .answer-content h6 { 
-          margin-top: 0.25rem !important; 
-          margin-bottom: 0.25rem !important; 
+        .answer-content h6 {
+          margin-top: 0.25rem !important;
+          margin-bottom: 0.25rem !important;
+        }
+
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: #c1c1c1;
+          border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: #a8a8a8;
+        }
+
+        ::-webkit-scrollbar-corner {
+          background: #f1f1f1;
+        }
+
+        /* Firefox scrollbar */
+        * {
+          scrollbar-width: thin;
+          scrollbar-color: #c1c1c1 #f1f1f1;
         }
       `}</style>
-      <h2 className="text-center text-3xl text-bold my-6">Practice: {getTopicName(type)}</h2>
+      <h2 className="text-center text-3xl text-bold my-6">
+        Practice: {getTopicName(type)} ({roles.map(role => role.charAt(0).toUpperCase() + role.slice(1)).join(', ')})
+      </h2>
       <div className="mx-10 flex gap-5">
         {/* <div className="w-7/12"> */}
         <div>
-          <Carousel
-            arrows
-            dotPosition="left"
-            infinite={false}
-            afterChange={handleCarouselChange}
-          >
-            {listQnA.map((ele) => (
-              <div key={ele.question}>
-                <h3 className="text-2xl" style={contentStyle}>
-                  {ele.question}
-                </h3>
+          {listQnA.length > 0 ? (
+            <>
+              <Carousel
+                arrows
+                dotPosition="left"
+                infinite={false}
+                afterChange={handleCarouselChange}
+              >
+                {listQnA.map((ele) => (
+                  <div key={ele.question}>
+                    <h3 className="text-2xl" style={contentStyle}>
+                      {ele.question}
+                    </h3>
+                  </div>
+                ))}
+              </Carousel>
+              <div className="mt-5">
+                <Collapse items={currentQnA} defaultActiveKey={["0"]} />
               </div>
-            ))}
-          </Carousel>
-          <div className="mt-5">
-            <Collapse items={currentQnA} defaultActiveKey={["0"]} />
-          </div>
+            </>
+          ) : (
+            <div className="text-center py-10">
+              <p className="text-lg text-gray-500">
+                Không có câu hỏi nào cho cấp độ {roles} trong chủ đề này.
+              </p>
+            </div>
+          )}
         </div>
         {/* <div className="w-5/12">
           <TextArea

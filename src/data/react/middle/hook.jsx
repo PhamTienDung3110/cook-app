@@ -304,6 +304,246 @@ function Counter() {
     role: "middle",
     type: "hooks-advanced",
   },
+
+  {
+    question: "useReducer khi nào nên dùng thay useState?",
+    answer: `
+<h3>useReducer – Quản lý state phức tạp</h3>
+
+<h4>1) Khi nào dùng useReducer?</h4>
+<ul>
+  <li><b>State có nhiều sub-values liên quan</b> (object/array phức tạp)</li>
+  <li><b>State transition phụ thuộc vào action type</b> (add, remove, update, reset)</li>
+  <li><b>Logic update phức tạp</b> cần tách riêng khỏi component</li>
+  <li><b>Testing dễ hơn</b> vì reducer là pure function</li>
+</ul>
+
+<h4>2) Basic syntax</h4>
+<pre><code>const initialState = { count: 0, step: 1 };
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { ...state, count: state.count + state.step };
+    case 'DECREMENT':
+      return { ...state, count: state.count - state.step };
+    case 'SET_STEP':
+      return { ...state, step: action.payload };
+    case 'RESET':
+      return initialState;
+    default:
+      throw new Error(\`Unknown action: \${action.type}\`);
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {state.count} (step: {state.step})&lt;/p&gt;
+      &lt;button onClick={() =&gt; dispatch({ type: 'INCREMENT' })}&gt;+&lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({ type: 'DECREMENT' })}&gt;-&lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({ type: 'RESET' })}&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+<h4>3) useReducer vs useState</h4>
+<table>
+  <tr>
+    <th>useState</th>
+    <th>useReducer</th>
+  </tr>
+  <tr>
+    <td>State đơn giản (string, number, boolean)</td>
+    <td>State phức tạp (object, array với nhiều action)</td>
+  </tr>
+  <tr>
+    <td>Ít state transitions</td>
+    <td>Nhiều action types khác nhau</td>
+  </tr>
+  <tr>
+    <td>Logic update đơn giản</td>
+    <td>Logic update phức tạp, cần tách riêng</td>
+  </tr>
+</table>
+
+<h4>4) Kết hợp useReducer + Context</h4>
+<pre><code>const TodoContext = createContext();
+
+function TodoProvider({ children }) {
+  const [state, dispatch] = useReducer(todoReducer, { todos: [] });
+
+  return (
+    &lt;TodoContext.Provider value={{ state, dispatch }}&gt;
+      {children}
+    &lt;/TodoContext.Provider&gt;
+  );
+}
+</code></pre>
+`,
+    role: "middle",
+    type: "hooks-advanced",
+  },
+
+  {
+    question: "useLayoutEffect khác gì useEffect?",
+    answer: `
+<h3>useLayoutEffect vs useEffect</h3>
+
+<h4>1) Thứ tự thực thi</h4>
+<pre><code>// useEffect: chạy SAU khi browser paint
+useEffect(() =&gt; {
+  console.log('useEffect - sau paint');
+}, []);
+
+// useLayoutEffect: chạy TRƯỚC khi browser paint
+useLayoutEffect(() =&gt; {
+  console.log('useLayoutEffect - trước paint');
+}, []);
+</code></pre>
+
+<h4>2) Timeline</h4>
+<ol>
+  <li>React renders component (virtual DOM)</li>
+  <li>React updates real DOM</li>
+  <li><b>useLayoutEffect runs</b> (synchronous, blocks paint)</li>
+  <li>Browser paints screen</li>
+  <li><b>useEffect runs</b> (asynchronous, after paint)</li>
+</ol>
+
+<h4>3) Khi nào dùng useLayoutEffect?</h4>
+<ul>
+  <li><b>Đo DOM elements</b>: getBoundingClientRect(), offsetWidth</li>
+  <li><b>Scroll position</b>: cần set scroll trước khi user thấy</li>
+  <li><b>Tránh visual flicker</b>: khi cần thay đổi DOM ngay lập tức</li>
+  <li><b>Tooltips/Popovers</b>: tính position trước khi hiển thị</li>
+</ul>
+
+<pre><code>function Tooltip({ targetRef, children }) {
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const tooltipRef = useRef();
+
+  // Dùng useLayoutEffect để tránh flicker
+  useLayoutEffect(() =&gt; {
+    const rect = targetRef.current.getBoundingClientRect();
+    setPosition({
+      top: rect.bottom + 8,
+      left: rect.left
+    });
+  }, [targetRef]);
+
+  return (
+    &lt;div ref={tooltipRef} style={{ position: 'fixed', ...position }}&gt;
+      {children}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+<h4>4) Lưu ý quan trọng</h4>
+<ul>
+  <li><b>Mặc định dùng useEffect</b> – hầu hết trường hợp không cần useLayoutEffect</li>
+  <li><b>useLayoutEffect blocks painting</b> – nếu logic nặng sẽ làm UI lag</li>
+  <li><b>SSR warning</b>: useLayoutEffect không chạy trên server, sẽ có warning</li>
+</ul>
+`,
+    role: "middle",
+    type: "hooks-advanced",
+  },
+
+  {
+    question: "useTransition và useDeferredValue trong React 18?",
+    answer: `
+<h3>Concurrent Features – React 18</h3>
+
+<h4>1) useTransition</h4>
+<p><b>Đánh dấu state update là "non-urgent"</b>, cho phép React ưu tiên render urgent updates trước.</p>
+
+<pre><code>import { useState, useTransition } from 'react';
+
+function SearchPage() {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const [isPending, startTransition] = useTransition();
+
+  const handleChange = (e) =&gt; {
+    // Urgent: update input ngay lập tức
+    setQuery(e.target.value);
+
+    // Non-urgent: filter results có thể chậm hơn
+    startTransition(() =&gt; {
+      const filtered = filterLargeList(e.target.value);
+      setResults(filtered);
+    });
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;input value={query} onChange={handleChange} /&gt;
+      {isPending &amp;&amp; &lt;div&gt;Updating...&lt;/div&gt;}
+      &lt;ResultsList results={results} /&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+<h4>2) useDeferredValue</h4>
+<p><b>Tạo "deferred" version của một value</b> – React sẽ render với giá trị cũ trước, rồi re-render với giá trị mới ở background.</p>
+
+<pre><code>import { useState, useDeferredValue, memo } from 'react';
+
+function SearchResults({ query }) {
+  const deferredQuery = useDeferredValue(query);
+  const isStale = query !== deferredQuery;
+
+  return (
+    &lt;div style={{ opacity: isStale ? 0.5 : 1 }}&gt;
+      &lt;HeavyList query={deferredQuery} /&gt;
+    &lt;/div&gt;
+  );
+}
+
+const HeavyList = memo(function HeavyList({ query }) {
+  // Component nặng, chỉ re-render khi deferredQuery thay đổi
+  const items = filterItems(query);
+  return items.map(item =&gt; &lt;div key={item.id}&gt;{item.name}&lt;/div&gt;);
+});
+</code></pre>
+
+<h4>3) useTransition vs useDeferredValue</h4>
+<table>
+  <tr>
+    <th>useTransition</th>
+    <th>useDeferredValue</th>
+  </tr>
+  <tr>
+    <td>Wrap state <b>setter</b></td>
+    <td>Wrap <b>value</b> (thường là props)</td>
+  </tr>
+  <tr>
+    <td>Có isPending flag</td>
+    <td>So sánh value cũ vs mới</td>
+  </tr>
+  <tr>
+    <td>Kiểm soát update nào là non-urgent</td>
+    <td>Component con tự defer giá trị nhận được</td>
+  </tr>
+</table>
+
+<h4>4) Use cases phổ biến</h4>
+<ul>
+  <li><b>Search/filter</b> danh sách lớn</li>
+  <li><b>Tab switching</b> – chuyển tab mà không lag input</li>
+  <li><b>Charts/visualizations</b> – render heavy components</li>
+  <li><b>Autocomplete</b> – giữ input responsive</li>
+</ul>
+`,
+    role: "middle",
+    type: "hooks-advanced",
+  },
 ]
 
 export default hook

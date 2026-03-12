@@ -975,6 +975,257 @@ test.skip(isCI, 'skip in CI', () => {
     role: "middle",
     type: "testing-quality",
   },
+
+  {
+    question: "Snapshot testing: khi nào nên và không nên dùng?",
+    answer: `
+<h3>Snapshot Testing</h3>
+
+<h4>1) Snapshot testing là gì?</h4>
+<pre><code>import { render } from '@testing-library/react';
+import Button from './Button';
+
+test('renders correctly', () => {
+  const { container } = render(
+    &lt;Button variant="primary" size="md"&gt;Click me&lt;/Button&gt;
+  );
+
+  expect(container).toMatchSnapshot();
+  // Lần đầu: tạo snapshot file
+  // Lần sau: so sánh với snapshot đã lưu
+});
+</code></pre>
+
+<h4>2) Khi nào nên dùng?</h4>
+<ul>
+  <li><b>UI components ổn định</b>: Button, Card, Badge</li>
+  <li><b>Phát hiện unintended changes</b>: CSS class, HTML structure</li>
+  <li><b>Documentation</b>: Snapshot như spec cho component output</li>
+</ul>
+
+<h4>3) Khi nào KHÔNG nên dùng?</h4>
+<ul>
+  <li><b>Components thay đổi thường xuyên</b>: Snapshot luôn fail</li>
+  <li><b>Large snapshots</b>: Khó review, dễ rubber-stamp accept</li>
+  <li><b>Dynamic content</b>: Timestamps, random IDs</li>
+  <li><b>Thay thế cho behavioral tests</b>: Snapshot chỉ test output, không test logic</li>
+</ul>
+
+<h4>4) Inline snapshots (better)</h4>
+<pre><code>test('renders greeting', () => {
+  const { container } = render(&lt;Greeting name="John" /&gt;);
+
+  // Inline snapshot - dễ review hơn
+  expect(container.innerHTML).toMatchInlineSnapshot(
+    \`"&lt;h1&gt;Hello, John!&lt;/h1&gt;"\`
+  );
+});
+</code></pre>
+
+<h4>5) Best practices</h4>
+<ul>
+  <li><b>Focused snapshots</b>: Snapshot phần cần test, không cả component</li>
+  <li><b>Review kỹ snapshot changes</b>: Đừng auto-accept</li>
+  <li><b>Dùng kèm behavioral tests</b>: Snapshot không thay thế unit tests</li>
+  <li><b>Update command</b>: <code>jest --updateSnapshot</code> khi thay đổi intentional</li>
+</ul>
+`,
+    role: "middle",
+    type: "testing-quality",
+  },
+
+  {
+    question: "Testing patterns và best practices cho React?",
+    answer: `
+<h3>React Testing Best Practices</h3>
+
+<h4>1) Testing Trophy (Kent C. Dodds)</h4>
+<ul>
+  <li><b>Static analysis</b> (TypeScript, ESLint): Nhiều nhất</li>
+  <li><b>Unit tests</b>: Utility functions, hooks</li>
+  <li><b>Integration tests</b>: Nhiều nhất – test user flows</li>
+  <li><b>E2E tests</b>: Ít nhất – critical paths only</li>
+</ul>
+
+<h4>2) Test user behavior, not implementation</h4>
+<pre><code>// ❌ Testing implementation details
+test('sets state', () => {
+  const { result } = renderHook(() => useCounter());
+  // Testing internal state shape
+  expect(result.current.state.count).toBe(0);
+});
+
+// ✅ Testing user behavior
+test('user can increment counter', async () => {
+  const user = userEvent.setup();
+  render(&lt;Counter /&gt;);
+
+  await user.click(screen.getByRole('button', { name: 'Increment' }));
+  expect(screen.getByText('Count: 1')).toBeInTheDocument();
+});
+</code></pre>
+
+<h4>3) Query priority (RTL)</h4>
+<ol>
+  <li><b>getByRole</b>: Accessible, recommended default</li>
+  <li><b>getByLabelText</b>: Form elements</li>
+  <li><b>getByPlaceholderText</b>: Input elements</li>
+  <li><b>getByText</b>: Non-interactive elements</li>
+  <li><b>getByTestId</b>: Last resort</li>
+</ol>
+
+<h4>4) Arrange-Act-Assert pattern</h4>
+<pre><code>test('user can add item to cart', async () => {
+  // Arrange
+  const user = userEvent.setup();
+  render(&lt;ProductPage product={mockProduct} /&gt;);
+
+  // Act
+  await user.click(screen.getByRole('button', { name: 'Add to Cart' }));
+
+  // Assert
+  expect(screen.getByText('Added to cart!')).toBeInTheDocument();
+  expect(screen.getByTestId('cart-count')).toHaveTextContent('1');
+});
+</code></pre>
+
+<h4>5) Test utilities</h4>
+<pre><code>// Custom render with providers
+function renderWithProviders(ui, options = {}) {
+  const { initialState, ...renderOptions } = options;
+
+  function Wrapper({ children }) {
+    return (
+      &lt;QueryClientProvider client={new QueryClient()}&gt;
+        &lt;ThemeProvider&gt;
+          &lt;BrowserRouter&gt;
+            {children}
+          &lt;/BrowserRouter&gt;
+        &lt;/ThemeProvider&gt;
+      &lt;/QueryClientProvider&gt;
+    );
+  }
+
+  return render(ui, { wrapper: Wrapper, ...renderOptions });
+}
+
+// Usage
+test('renders page', () => {
+  renderWithProviders(&lt;MyPage /&gt;);
+});
+</code></pre>
+`,
+    role: "middle",
+    type: "testing-quality",
+  },
+
+  {
+    question: "Mocking strategies trong React testing?",
+    answer: `
+<h3>Mocking Strategies</h3>
+
+<h4>1) Module mocking</h4>
+<pre><code>// Mock entire module
+jest.mock('./api', () => ({
+  fetchUsers: jest.fn(),
+  createUser: jest.fn(),
+}));
+
+// Mock specific implementation per test
+import { fetchUsers } from './api';
+
+test('displays users on success', async () => {
+  fetchUsers.mockResolvedValue([
+    { id: 1, name: 'John' },
+    { id: 2, name: 'Jane' },
+  ]);
+
+  render(&lt;UserList /&gt;);
+
+  await waitFor(() => {
+    expect(screen.getByText('John')).toBeInTheDocument();
+  });
+});
+
+test('shows error on failure', async () => {
+  fetchUsers.mockRejectedValue(new Error('Server error'));
+
+  render(&lt;UserList /&gt;);
+
+  await waitFor(() => {
+    expect(screen.getByText('Failed to load')).toBeInTheDocument();
+  });
+});
+</code></pre>
+
+<h4>2) MSW (Mock Service Worker) – recommended</h4>
+<pre><code>import { http, HttpResponse } from 'msw';
+import { setupServer } from 'msw/node';
+
+const server = setupServer(
+  http.get('/api/users', () => {
+    return HttpResponse.json([
+      { id: 1, name: 'John' },
+    ]);
+  }),
+
+  http.post('/api/users', async ({ request }) => {
+    const body = await request.json();
+    return HttpResponse.json({ id: 3, ...body }, { status: 201 });
+  }),
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+// Override per test
+test('handles server error', async () => {
+  server.use(
+    http.get('/api/users', () => {
+      return HttpResponse.json(
+        { error: 'Server error' },
+        { status: 500 }
+      );
+    }),
+  );
+
+  render(&lt;UserList /&gt;);
+  // ...
+});
+</code></pre>
+
+<h4>3) Timer mocking</h4>
+<pre><code>test('debounced search', async () => {
+  jest.useFakeTimers();
+  const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+
+  render(&lt;SearchInput /&gt;);
+
+  await user.type(screen.getByRole('textbox'), 'react');
+
+  // Fast-forward debounce delay
+  act(() => {
+    jest.advanceTimersByTime(300);
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText('Results for: react')).toBeInTheDocument();
+  });
+
+  jest.useRealTimers();
+});
+</code></pre>
+
+<h4>4) Khi nào mock vs khi nào không?</h4>
+<ul>
+  <li><b>Mock</b>: External APIs, timers, browser APIs, third-party libraries</li>
+  <li><b>Không mock</b>: Business logic, utility functions, child components (trong integration tests)</li>
+</ul>
+`,
+    role: "middle",
+    type: "testing-quality",
+  },
 ]
 
 export default testQuality

@@ -1744,6 +1744,334 @@ test('optimistic message update', async () => {
     role: "middle",
     type: "system-design",
   },
+
+  {
+    question: "Micro-frontends architecture là gì?",
+    answer: `
+<h3>Micro-Frontends</h3>
+
+<h4>1) Khái niệm</h4>
+<p><b>Chia frontend monolith</b> thành nhiều ứng dụng nhỏ, độc lập, mỗi team sở hữu một phần.</p>
+
+<h4>2) Khi nào cần Micro-frontends?</h4>
+<ul>
+  <li><b>Nhiều teams</b> cùng làm việc trên một frontend lớn</li>
+  <li><b>Independent deployments</b>: Mỗi team deploy riêng</li>
+  <li><b>Different tech stacks</b>: Teams dùng framework khác nhau</li>
+  <li><b>Legacy migration</b>: Migrate từng phần dần dần</li>
+</ul>
+
+<h4>3) Integration approaches</h4>
+
+<h5>Module Federation (Webpack 5)</h5>
+<pre><code>// Remote app (Team A) - webpack.config.js
+new ModuleFederationPlugin({
+  name: 'team_a',
+  filename: 'remoteEntry.js',
+  exposes: {
+    './ProductPage': './src/ProductPage',
+  },
+  shared: ['react', 'react-dom'],
+});
+
+// Host app - webpack.config.js
+new ModuleFederationPlugin({
+  name: 'host',
+  remotes: {
+    team_a: 'team_a@https://team-a.example.com/remoteEntry.js',
+  },
+  shared: ['react', 'react-dom'],
+});
+
+// Usage in host
+const ProductPage = React.lazy(() => import('team_a/ProductPage'));
+</code></pre>
+
+<h5>iframe-based (simple but limited)</h5>
+<pre><code>&lt;iframe src="https://team-a.example.com/product" /&gt;
+</code></pre>
+
+<h4>4) Communication between micro-frontends</h4>
+<pre><code>// Custom events
+// Team A dispatches
+window.dispatchEvent(new CustomEvent('cart:add', {
+  detail: { productId: 123, quantity: 1 }
+}));
+
+// Team B listens
+useEffect(() => {
+  const handler = (e) => addToCart(e.detail);
+  window.addEventListener('cart:add', handler);
+  return () => window.removeEventListener('cart:add', handler);
+}, []);
+</code></pre>
+
+<h4>5) Challenges</h4>
+<ul>
+  <li><b>Shared dependencies</b>: React version conflicts</li>
+  <li><b>Consistent UX</b>: Cần shared design system</li>
+  <li><b>Performance</b>: Multiple bundles, duplicate code</li>
+  <li><b>Testing</b>: Integration testing phức tạp hơn</li>
+</ul>
+`,
+    role: "middle",
+    type: "system-design",
+  },
+
+  {
+    question: "Design tokens và theming architecture?",
+    answer: `
+<h3>Design Tokens & Theming</h3>
+
+<h4>1) Design tokens là gì?</h4>
+<p><b>Atomic values</b> của design system: colors, spacing, typography, shadows, etc.</p>
+
+<h4>2) Token structure</h4>
+<pre><code>// tokens.js
+export const tokens = {
+  colors: {
+    // Primitive tokens
+    blue: { 50: '#eff6ff', 500: '#3b82f6', 900: '#1e3a8a' },
+    gray: { 50: '#f9fafb', 500: '#6b7280', 900: '#111827' },
+
+    // Semantic tokens (reference primitives)
+    primary: 'var(--color-blue-500)',
+    background: 'var(--color-gray-50)',
+    text: 'var(--color-gray-900)',
+    error: 'var(--color-red-500)',
+  },
+
+  spacing: {
+    xs: '0.25rem',  // 4px
+    sm: '0.5rem',   // 8px
+    md: '1rem',     // 16px
+    lg: '1.5rem',   // 24px
+    xl: '2rem',     // 32px
+  },
+
+  typography: {
+    fontFamily: {
+      sans: 'Inter, system-ui, sans-serif',
+      mono: 'JetBrains Mono, monospace',
+    },
+    fontSize: {
+      sm: '0.875rem',
+      base: '1rem',
+      lg: '1.125rem',
+      xl: '1.25rem',
+    },
+  },
+
+  borderRadius: {
+    sm: '0.25rem',
+    md: '0.375rem',
+    lg: '0.5rem',
+    full: '9999px',
+  },
+};
+</code></pre>
+
+<h4>3) CSS Variables theming</h4>
+<pre><code>// Theme provider with CSS variables
+function ThemeProvider({ theme = 'light', children }) {
+  const themes = {
+    light: {
+      '--color-bg': '#ffffff',
+      '--color-text': '#1a1a1a',
+      '--color-primary': '#3b82f6',
+      '--color-surface': '#f3f4f6',
+    },
+    dark: {
+      '--color-bg': '#0f172a',
+      '--color-text': '#f1f5f9',
+      '--color-primary': '#60a5fa',
+      '--color-surface': '#1e293b',
+    },
+  };
+
+  return (
+    &lt;div style={themes[theme]}&gt;
+      {children}
+    &lt;/div&gt;
+  );
+}
+
+// CSS usage
+.card {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+}
+</code></pre>
+
+<h4>4) Multi-platform tokens</h4>
+<pre><code>// Style Dictionary để generate tokens cho mọi platform
+// tokens.json → CSS variables, JS object, iOS, Android
+
+// style-dictionary.config.js
+module.exports = {
+  source: ['tokens/**/*.json'],
+  platforms: {
+    css: {
+      transformGroup: 'css',
+      buildPath: 'build/css/',
+      files: [{ destination: 'variables.css', format: 'css/variables' }],
+    },
+    js: {
+      transformGroup: 'js',
+      buildPath: 'build/js/',
+      files: [{ destination: 'tokens.js', format: 'javascript/es6' }],
+    },
+  },
+};
+</code></pre>
+
+<h4>5) Best practices</h4>
+<ul>
+  <li><b>Primitive → Semantic → Component tokens</b>: Layer tokens</li>
+  <li><b>CSS Variables</b>: Runtime theming, no JS overhead</li>
+  <li><b>Single source of truth</b>: Tokens define in one place</li>
+  <li><b>Auto-generate</b>: Dùng tools như Style Dictionary</li>
+</ul>
+`,
+    role: "middle",
+    type: "system-design",
+  },
+
+  {
+    question: "Accessibility (a11y) architecture trong React?",
+    answer: `
+<h3>Accessibility Architecture</h3>
+
+<h4>1) Semantic HTML trong React</h4>
+<pre><code>// ❌ Div soup
+&lt;div className="header"&gt;
+  &lt;div className="nav"&gt;
+    &lt;div className="link" onClick={handleClick}&gt;Home&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+// ✅ Semantic elements
+&lt;header&gt;
+  &lt;nav aria-label="Main navigation"&gt;
+    &lt;a href="/"&gt;Home&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+</code></pre>
+
+<h4>2) ARIA attributes</h4>
+<pre><code>// Accessible modal
+function Modal({ isOpen, onClose, title, children }) {
+  return isOpen ? (
+    &lt;div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
+    &gt;
+      &lt;h2 id="modal-title"&gt;{title}&lt;/h2&gt;
+      &lt;div id="modal-description"&gt;{children}&lt;/div&gt;
+      &lt;button onClick={onClose} aria-label="Close dialog"&gt;✕&lt;/button&gt;
+    &lt;/div&gt;
+  ) : null;
+}
+
+// Accessible form
+&lt;label htmlFor="email"&gt;Email&lt;/label&gt;
+&lt;input
+  id="email"
+  type="email"
+  aria-required="true"
+  aria-invalid={!!errors.email}
+  aria-describedby={errors.email ? 'email-error' : undefined}
+/&gt;
+{errors.email && (
+  &lt;span id="email-error" role="alert"&gt;{errors.email}&lt;/span&gt;
+)}
+</code></pre>
+
+<h4>3) Focus management</h4>
+<pre><code>// Focus trap for modals
+function useFocusTrap(isActive) {
+  const containerRef = useRef();
+
+  useEffect(() => {
+    if (!isActive) return;
+
+    const container = containerRef.current;
+    const focusableElements = container.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+
+    const first = focusableElements[0];
+    const last = focusableElements[focusableElements.length - 1];
+
+    first?.focus();
+
+    const handleTab = (e) => {
+      if (e.key === 'Tab') {
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    container.addEventListener('keydown', handleTab);
+    return () => container.removeEventListener('keydown', handleTab);
+  }, [isActive]);
+
+  return containerRef;
+}
+</code></pre>
+
+<h4>4) Screen reader announcements</h4>
+<pre><code>// Live region cho dynamic content
+function StatusMessage({ message }) {
+  return (
+    &lt;div role="status" aria-live="polite" className="sr-only"&gt;
+      {message}
+    &lt;/div&gt;
+  );
+}
+
+// CSS cho sr-only (screen reader only)
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+</code></pre>
+
+<h4>5) Testing accessibility</h4>
+<pre><code>// jest-axe
+import { axe, toHaveNoViolations } from 'jest-axe';
+expect.extend(toHaveNoViolations);
+
+test('component is accessible', async () => {
+  const { container } = render(&lt;MyComponent /&gt;);
+  expect(await axe(container)).toHaveNoViolations();
+});
+
+// eslint-plugin-jsx-a11y
+// .eslintrc
+{
+  "extends": ["plugin:jsx-a11y/recommended"]
+}
+</code></pre>
+`,
+    role: "middle",
+    type: "system-design",
+  },
 ]
 
 export default systemDesign

@@ -426,6 +426,239 @@ if (process.env.NODE_ENV === 'development') {
     role: "middle",
     type: "performance-optimization",
   },
+
+  {
+    question: "Web Workers trong React dùng khi nào?",
+    answer: `
+<h3>Web Workers trong React</h3>
+
+<h4>1) Web Worker là gì?</h4>
+<ul>
+  <li><b>Background thread</b> riêng biệt với main thread</li>
+  <li>Xử lý <b>heavy computation</b> mà không block UI</li>
+  <li>Giao tiếp với main thread qua <b>postMessage</b></li>
+  <li>Không có access tới DOM</li>
+</ul>
+
+<h4>2) Khi nào cần Web Worker?</h4>
+<ul>
+  <li><b>Data processing</b>: Parse CSV/JSON lớn</li>
+  <li><b>Image processing</b>: Resize, filter, compress</li>
+  <li><b>Sorting/filtering</b>: Danh sách hàng nghìn items</li>
+  <li><b>Encryption</b>: Encrypt/decrypt data</li>
+  <li><b>Complex calculations</b>: Math-heavy operations</li>
+</ul>
+
+<h4>3) Basic implementation</h4>
+<pre><code>// worker.js
+self.addEventListener('message', (e) => {
+  const { data, type } = e.data;
+
+  if (type === 'SORT') {
+    const sorted = data.sort((a, b) => a.value - b.value);
+    self.postMessage({ type: 'SORTED', result: sorted });
+  }
+});
+
+// useWorker.js - Custom hook
+function useWorker(workerPath) {
+  const workerRef = useRef(null);
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    workerRef.current = new Worker(workerPath);
+
+    workerRef.current.onmessage = (e) => {
+      setResult(e.data.result);
+      setLoading(false);
+    };
+
+    return () => workerRef.current?.terminate();
+  }, [workerPath]);
+
+  const postMessage = useCallback((message) => {
+    setLoading(true);
+    workerRef.current?.postMessage(message);
+  }, []);
+
+  return { result, loading, postMessage };
+}
+</code></pre>
+
+<h4>4) Libraries hỗ trợ</h4>
+<ul>
+  <li><b>comlink</b>: Simplified Worker API</li>
+  <li><b>workerize-loader</b>: Webpack loader for Workers</li>
+  <li><b>use-worker</b>: React hook for Web Workers</li>
+</ul>
+`,
+    role: "middle",
+    type: "performance-optimization",
+  },
+
+  {
+    question: "React.memo với custom comparison function?",
+    answer: `
+<h3>React.memo – Custom Comparison</h3>
+
+<h4>1) Default behavior</h4>
+<pre><code>// Mặc định: shallow comparison tất cả props
+const MyComponent = React.memo(function MyComponent({ user, items }) {
+  return &lt;div&gt;{user.name} - {items.length} items&lt;/div&gt;;
+});
+
+// Re-render khi:
+// - user reference thay đổi (kể cả nếu content giống nhau)
+// - items reference thay đổi
+</code></pre>
+
+<h4>2) Custom comparison function</h4>
+<pre><code>// Tham số thứ 2: arePropsEqual function
+const UserCard = React.memo(
+  function UserCard({ user, onSelect, theme }) {
+    return (
+      &lt;div className={theme}&gt;
+        &lt;h3&gt;{user.name}&lt;/h3&gt;
+        &lt;p&gt;{user.email}&lt;/p&gt;
+        &lt;button onClick={() =&gt; onSelect(user.id)}&gt;Select&lt;/button&gt;
+      &lt;/div&gt;
+    );
+  },
+  // Return true nếu KHÔNG cần re-render
+  (prevProps, nextProps) => {
+    return (
+      prevProps.user.id === nextProps.user.id &&
+      prevProps.user.name === nextProps.user.name &&
+      prevProps.theme === nextProps.theme
+      // Bỏ qua onSelect reference changes
+    );
+  }
+);
+</code></pre>
+
+<h4>3) Khi nào dùng custom comparison?</h4>
+<ul>
+  <li><b>Props là object/array</b> với identity thay đổi nhưng content giống</li>
+  <li><b>Callback props</b>: Muốn bỏ qua function reference thay đổi</li>
+  <li><b>Chỉ một vài props quan trọng</b>: So sánh subset của props</li>
+</ul>
+
+<h4>4) Pitfalls cần tránh</h4>
+<ul>
+  <li><b>Deep comparison tốn kém</b>: Có thể chậm hơn re-render</li>
+  <li><b>Quên so sánh props quan trọng</b>: Gây bug stale data</li>
+  <li><b>Overuse</b>: Không phải mọi component đều cần memo</li>
+</ul>
+
+<pre><code>// ❌ Bad: Deep comparison cho large objects
+(prev, next) => JSON.stringify(prev) === JSON.stringify(next)
+
+// ✅ Good: So sánh only relevant fields
+(prev, next) => prev.id === next.id && prev.updatedAt === next.updatedAt
+</code></pre>
+
+<h4>5) Alternative: Restructure props</h4>
+<pre><code>// Thay vì custom comparison, truyền primitive props
+// ❌
+&lt;UserCard user={user} /&gt;
+
+// ✅ Tách primitive để shallow compare work
+&lt;UserCard userId={user.id} userName={user.name} /&gt;
+</code></pre>
+`,
+    role: "middle",
+    type: "performance-optimization",
+  },
+
+  {
+    question: "Cách phòng tránh memory leak trong React?",
+    answer: `
+<h3>Memory Leak Prevention trong React</h3>
+
+<h4>1) Nguyên nhân phổ biến</h4>
+<ul>
+  <li><b>Event listeners</b> không được cleanup</li>
+  <li><b>Timers</b> (setTimeout, setInterval) không cleared</li>
+  <li><b>Subscriptions</b> không unsubscribe</li>
+  <li><b>Async operations</b> set state sau khi component unmount</li>
+  <li><b>Closures</b> giữ tham chiếu tới objects không cần thiết</li>
+</ul>
+
+<h4>2) Cleanup trong useEffect</h4>
+<pre><code>// ✅ Cleanup event listeners
+useEffect(() => {
+  const handleResize = () => setWidth(window.innerWidth);
+  window.addEventListener('resize', handleResize);
+
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
+// ✅ Cleanup timers
+useEffect(() => {
+  const timer = setInterval(() => {
+    setCount(c => c + 1);
+  }, 1000);
+
+  return () => clearInterval(timer);
+}, []);
+
+// ✅ Cleanup subscriptions
+useEffect(() => {
+  const subscription = eventEmitter.subscribe('event', handler);
+  return () => subscription.unsubscribe();
+}, []);
+</code></pre>
+
+<h4>3) AbortController cho async operations</h4>
+<pre><code>useEffect(() => {
+  const controller = new AbortController();
+
+  async function fetchData() {
+    try {
+      const response = await fetch('/api/data', {
+        signal: controller.signal
+      });
+      const data = await response.json();
+      setData(data); // Safe: request cancelled if unmounted
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        setError(error);
+      }
+    }
+  }
+
+  fetchData();
+  return () => controller.abort();
+}, []);
+</code></pre>
+
+<h4>4) WebSocket cleanup</h4>
+<pre><code>useEffect(() => {
+  const ws = new WebSocket('wss://api.example.com');
+
+  ws.onmessage = (event) => {
+    setMessages(prev => [...prev, JSON.parse(event.data)]);
+  };
+
+  return () => {
+    ws.close(); // ✅ Close connection on unmount
+  };
+}, []);
+</code></pre>
+
+<h4>5) Best practices</h4>
+<ul>
+  <li><b>Luôn return cleanup function</b> trong useEffect có side effects</li>
+  <li><b>Dùng AbortController</b> cho mọi fetch request</li>
+  <li><b>Set state conditionally</b>: Check mounted trước khi setState</li>
+  <li><b>React DevTools Profiler</b>: Monitor component mounts/unmounts</li>
+  <li><b>Chrome DevTools Memory tab</b>: Detect memory leaks</li>
+</ul>
+`,
+    role: "middle",
+    type: "performance-optimization",
+  },
 ]
 
 export default performance

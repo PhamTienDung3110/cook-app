@@ -599,6 +599,309 @@ onError: (error, variables, context) => {
     role: "middle",
     type: "data-fetching",
   },
+
+  {
+    question: "SWR vs React Query (TanStack Query)?",
+    answer: `
+<h3>SWR vs React Query</h3>
+
+<h4>1) SWR (Stale-While-Revalidate)</h4>
+<pre><code>import useSWR from 'swr';
+
+const fetcher = (url) => fetch(url).then(r => r.json());
+
+function UserProfile({ userId }) {
+  const { data, error, isLoading, mutate } = useSWR(
+    \`/api/users/\${userId}\`,
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+      dedupingInterval: 2000,
+    }
+  );
+
+  if (isLoading) return &lt;div&gt;Loading...&lt;/div&gt;;
+  if (error) return &lt;div&gt;Error&lt;/div&gt;;
+  return &lt;div&gt;{data.name}&lt;/div&gt;;
+}
+</code></pre>
+
+<h4>2) So sánh</h4>
+<table>
+  <tr>
+    <th>Feature</th>
+    <th>SWR</th>
+    <th>React Query</th>
+  </tr>
+  <tr>
+    <td>Bundle size</td>
+    <td>~4KB (nhẹ hơn)</td>
+    <td>~13KB</td>
+  </tr>
+  <tr>
+    <td>Caching</td>
+    <td>Simple key-based</td>
+    <td>Advanced query keys</td>
+  </tr>
+  <tr>
+    <td>Mutations</td>
+    <td>mutate() đơn giản</td>
+    <td>useMutation() mạnh hơn</td>
+  </tr>
+  <tr>
+    <td>DevTools</td>
+    <td>Không có built-in</td>
+    <td>DevTools mạnh mẽ</td>
+  </tr>
+  <tr>
+    <td>Optimistic updates</td>
+    <td>Manual</td>
+    <td>Built-in support</td>
+  </tr>
+  <tr>
+    <td>Infinite scroll</td>
+    <td>useSWRInfinite</td>
+    <td>useInfiniteQuery</td>
+  </tr>
+</table>
+
+<h4>3) Khi nào chọn cái nào?</h4>
+<ul>
+  <li><b>SWR</b>: App nhỏ-trung, cần nhẹ, ít mutations</li>
+  <li><b>React Query</b>: App lớn, nhiều mutations, cần devtools, optimistic updates</li>
+</ul>
+`,
+    role: "middle",
+    type: "data-fetching",
+  },
+
+  {
+    question: "WebSocket và real-time data trong React?",
+    answer: `
+<h3>WebSocket & Real-time Data</h3>
+
+<h4>1) Basic WebSocket hook</h4>
+<pre><code>function useWebSocket(url) {
+  const [messages, setMessages] = useState([]);
+  const [isConnected, setIsConnected] = useState(false);
+  const wsRef = useRef(null);
+
+  useEffect(() => {
+    const ws = new WebSocket(url);
+
+    ws.onopen = () => setIsConnected(true);
+    ws.onclose = () => setIsConnected(false);
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      setMessages(prev => [...prev, data]);
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    wsRef.current = ws;
+
+    return () => {
+      ws.close();
+    };
+  }, [url]);
+
+  const sendMessage = useCallback((message) => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify(message));
+    }
+  }, []);
+
+  return { messages, isConnected, sendMessage };
+}
+</code></pre>
+
+<h4>2) Reconnection logic</h4>
+<pre><code>function useWebSocketWithReconnect(url, maxRetries = 5) {
+  const [retryCount, setRetryCount] = useState(0);
+  const wsRef = useRef(null);
+
+  const connect = useCallback(() => {
+    const ws = new WebSocket(url);
+
+    ws.onopen = () => setRetryCount(0);
+
+    ws.onclose = () => {
+      if (retryCount < maxRetries) {
+        const delay = Math.min(1000 * 2 ** retryCount, 30000);
+        setTimeout(() => {
+          setRetryCount(prev => prev + 1);
+          connect(); // Reconnect
+        }, delay);
+      }
+    };
+
+    wsRef.current = ws;
+  }, [url, retryCount, maxRetries]);
+
+  useEffect(() => {
+    connect();
+    return () => wsRef.current?.close();
+  }, [connect]);
+}
+</code></pre>
+
+<h4>3) Server-Sent Events (SSE) alternative</h4>
+<pre><code>function useSSE(url) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const eventSource = new EventSource(url);
+
+    eventSource.onmessage = (event) => {
+      setData(JSON.parse(event.data));
+    };
+
+    eventSource.onerror = () => {
+      eventSource.close();
+    };
+
+    return () => eventSource.close();
+  }, [url]);
+
+  return data;
+}
+</code></pre>
+
+<h4>4) WebSocket vs SSE vs Polling</h4>
+<table>
+  <tr>
+    <th>WebSocket</th>
+    <th>SSE</th>
+    <th>Polling</th>
+  </tr>
+  <tr>
+    <td>Bidirectional</td>
+    <td>Server → Client only</td>
+    <td>Client → Server repeated</td>
+  </tr>
+  <tr>
+    <td>Chat, games</td>
+    <td>Notifications, feeds</td>
+    <td>Simple dashboards</td>
+  </tr>
+</table>
+`,
+    role: "middle",
+    type: "data-fetching",
+  },
+
+  {
+    question: "Pagination patterns trong React?",
+    answer: `
+<h3>Pagination Patterns</h3>
+
+<h4>1) Offset-based pagination</h4>
+<pre><code>function usePagination(fetchFn, pageSize = 10) {
+  const [page, setPage] = useState(1);
+  const [data, setData] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchFn({ page, limit: pageSize })
+      .then(result => {
+        setData(result.items);
+        setTotal(result.total);
+      })
+      .finally(() => setLoading(false));
+  }, [page, pageSize]);
+
+  const totalPages = Math.ceil(total / pageSize);
+
+  return {
+    data, loading, page, totalPages,
+    nextPage: () => setPage(p => Math.min(p + 1, totalPages)),
+    prevPage: () => setPage(p => Math.max(p - 1, 1)),
+    goToPage: setPage,
+  };
+}
+</code></pre>
+
+<h4>2) Cursor-based pagination</h4>
+<pre><code>function useCursorPagination(fetchFn) {
+  const [data, setData] = useState([]);
+  const [cursor, setCursor] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
+
+  const loadMore = async () => {
+    const result = await fetchFn({ cursor, limit: 20 });
+    setData(prev => [...prev, ...result.items]);
+    setCursor(result.nextCursor);
+    setHasMore(result.hasMore);
+  };
+
+  return { data, loadMore, hasMore };
+}
+</code></pre>
+
+<h4>3) Infinite scroll với React Query</h4>
+<pre><code>import { useInfiniteQuery } from '@tanstack/react-query';
+
+function InfiniteList() {
+  const {
+    data, fetchNextPage, hasNextPage,
+    isFetchingNextPage, isLoading
+  } = useInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: ({ pageParam = 1 }) =>
+      fetch(\`/api/posts?page=\${pageParam}\`).then(r => r.json()),
+    getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
+  });
+
+  // Intersection Observer cho auto-load
+  const observerRef = useRef();
+  const lastItemRef = useCallback(node => {
+    if (isFetchingNextPage) return;
+    if (observerRef.current) observerRef.current.disconnect();
+
+    observerRef.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasNextPage) {
+        fetchNextPage();
+      }
+    });
+
+    if (node) observerRef.current.observe(node);
+  }, [isFetchingNextPage, hasNextPage, fetchNextPage]);
+
+  return (
+    &lt;div&gt;
+      {data?.pages.map((page, i) =&gt;
+        page.items.map((item, j) =&gt; {
+          const isLast = i === data.pages.length - 1
+            && j === page.items.length - 1;
+          return (
+            &lt;div key={item.id} ref={isLast ? lastItemRef : null}&gt;
+              {item.title}
+            &lt;/div&gt;
+          );
+        })
+      )}
+      {isFetchingNextPage && &lt;div&gt;Loading more...&lt;/div&gt;}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+<h4>4) Khi nào dùng kiểu nào?</h4>
+<ul>
+  <li><b>Offset</b>: Admin dashboards, data tables, cần jump to page</li>
+  <li><b>Cursor</b>: Social feeds, real-time data, performance tốt hơn</li>
+  <li><b>Infinite scroll</b>: Mobile apps, social media, content discovery</li>
+</ul>
+`,
+    role: "middle",
+    type: "data-fetching",
+  },
 ]
 
 export default dataFetching

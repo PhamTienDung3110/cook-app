@@ -818,6 +818,295 @@ function getWithExpiry(key) {
     role: "middle",
     type: "auth-security",
   },
+
+  {
+    question: "OAuth 2.0 và OpenID Connect trong React?",
+    answer: `
+<h3>OAuth 2.0 & OpenID Connect</h3>
+
+<h4>1) OAuth 2.0 flow trong SPA</h4>
+<ul>
+  <li><b>Authorization Code + PKCE</b>: Recommended cho SPA (Single Page App)</li>
+  <li><b>Implicit flow</b>: Deprecated, không nên dùng</li>
+</ul>
+
+<h4>2) PKCE Flow</h4>
+<pre><code>// 1. Generate code verifier & challenge
+function generateCodeVerifier() {
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return btoa(String.fromCharCode(...array))
+    .replace(/=/g, '').replace(/\\+/g, '-').replace(/\\//g, '_');
+}
+
+async function generateCodeChallenge(verifier) {
+  const hash = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(verifier)
+  );
+  return btoa(String.fromCharCode(...new Uint8Array(hash)))
+    .replace(/=/g, '').replace(/\\+/g, '-').replace(/\\//g, '_');
+}
+
+// 2. Redirect to authorization server
+function login() {
+  const verifier = generateCodeVerifier();
+  sessionStorage.setItem('code_verifier', verifier);
+
+  const challenge = await generateCodeChallenge(verifier);
+  const authUrl = \`https://auth.example.com/authorize?
+    response_type=code&
+    client_id=\${CLIENT_ID}&
+    redirect_uri=\${REDIRECT_URI}&
+    scope=openid profile&
+    code_challenge=\${challenge}&
+    code_challenge_method=S256\`;
+
+  window.location.href = authUrl;
+}
+</code></pre>
+
+<h4>3) Callback handling</h4>
+<pre><code>// 3. Handle callback & exchange code for tokens
+function CallbackPage() {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const verifier = sessionStorage.getItem('code_verifier');
+
+    if (code) {
+      exchangeCodeForTokens(code, verifier);
+    }
+  }, []);
+
+  async function exchangeCodeForTokens(code, verifier) {
+    const response = await fetch('https://auth.example.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code,
+        redirect_uri: REDIRECT_URI,
+        client_id: CLIENT_ID,
+        code_verifier: verifier,
+      }),
+    });
+
+    const { access_token, id_token, refresh_token } = await response.json();
+    // Store tokens securely
+  }
+}
+</code></pre>
+
+<h4>4) Libraries phổ biến</h4>
+<ul>
+  <li><b>@auth0/auth0-react</b>: Auth0 SDK</li>
+  <li><b>next-auth</b>: Authentication cho Next.js</li>
+  <li><b>oidc-client-ts</b>: Generic OIDC client</li>
+  <li><b>react-oauth/google</b>: Google Sign-In</li>
+</ul>
+`,
+    role: "middle",
+    type: "auth-security",
+  },
+
+  {
+    question: "Content Security Policy (CSP) trong React app?",
+    answer: `
+<h3>Content Security Policy</h3>
+
+<h4>1) CSP là gì?</h4>
+<p><b>HTTP header</b> chỉ định browser sources nào được phép load resources (scripts, styles, images, etc.)</p>
+
+<h4>2) Cấu hình CSP header</h4>
+<pre><code>// Server-side (Express)
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; " +
+    "script-src 'self' 'nonce-abc123'; " +
+    "style-src 'self' 'unsafe-inline' fonts.googleapis.com; " +
+    "img-src 'self' data: https:; " +
+    "font-src 'self' fonts.gstatic.com; " +
+    "connect-src 'self' api.example.com; " +
+    "frame-ancestors 'none';"
+  );
+  next();
+});
+</code></pre>
+
+<h4>3) CSP với React</h4>
+<ul>
+  <li><b>Inline scripts</b>: CRA dùng inline script → cần 'unsafe-inline' hoặc nonce</li>
+  <li><b>Styled-components</b>: Inject CSS inline → cần cấu hình nonce</li>
+  <li><b>Next.js</b>: Hỗ trợ nonce-based CSP tốt hơn</li>
+</ul>
+
+<pre><code>// Next.js middleware cho CSP
+// middleware.ts
+import { NextResponse } from 'next/server';
+
+export function middleware(request) {
+  const nonce = crypto.randomUUID();
+  const response = NextResponse.next();
+
+  response.headers.set(
+    'Content-Security-Policy',
+    \`script-src 'self' 'nonce-\${nonce}'; style-src 'self' 'nonce-\${nonce}';\`
+  );
+
+  return response;
+}
+</code></pre>
+
+<h4>4) CSP directives quan trọng</h4>
+<table>
+  <tr>
+    <th>Directive</th>
+    <th>Mục đích</th>
+  </tr>
+  <tr>
+    <td>default-src</td>
+    <td>Fallback cho tất cả resource types</td>
+  </tr>
+  <tr>
+    <td>script-src</td>
+    <td>JavaScript sources</td>
+  </tr>
+  <tr>
+    <td>style-src</td>
+    <td>CSS sources</td>
+  </tr>
+  <tr>
+    <td>connect-src</td>
+    <td>API endpoints (fetch, XHR, WebSocket)</td>
+  </tr>
+  <tr>
+    <td>frame-ancestors</td>
+    <td>Ai được phép embed trang (chống clickjacking)</td>
+  </tr>
+</table>
+
+<h4>5) Report-Only mode</h4>
+<pre><code>// Test CSP mà không block content
+Content-Security-Policy-Report-Only:
+  default-src 'self';
+  report-uri /csp-report;
+</code></pre>
+`,
+    role: "middle",
+    type: "auth-security",
+  },
+
+  {
+    question: "Secure form handling trong React?",
+    answer: `
+<h3>Secure Form Handling</h3>
+
+<h4>1) Input sanitization</h4>
+<pre><code>import DOMPurify from 'dompurify';
+
+function CommentForm() {
+  const [comment, setComment] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Sanitize trước khi gửi/hiển thị
+    const cleanComment = DOMPurify.sanitize(comment, {
+      ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a'],
+      ALLOWED_ATTR: ['href']
+    });
+
+    // Gửi cleanComment tới server
+    submitComment(cleanComment);
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;textarea
+        value={comment}
+        onChange={(e) =&gt; setComment(e.target.value)}
+        maxLength={500}
+      /&gt;
+      &lt;button type="submit"&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}
+</code></pre>
+
+<h4>2) Validation (client + server)</h4>
+<pre><code>import { z } from 'zod';
+
+// Schema validation
+const loginSchema = z.object({
+  email: z.string().email('Email không hợp lệ'),
+  password: z.string()
+    .min(8, 'Tối thiểu 8 ký tự')
+    .regex(/[A-Z]/, 'Cần ít nhất 1 chữ hoa')
+    .regex(/[0-9]/, 'Cần ít nhất 1 số'),
+});
+
+function LoginForm() {
+  const [errors, setErrors] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    const result = loginSchema.safeParse(data);
+    if (!result.success) {
+      setErrors(result.error.flatten().fieldErrors);
+      return;
+    }
+
+    // Safe to submit
+    login(result.data);
+  };
+}
+</code></pre>
+
+<h4>3) Prevent form abuse</h4>
+<ul>
+  <li><b>Rate limiting</b>: Giới hạn số lần submit</li>
+  <li><b>CAPTCHA</b>: reCAPTCHA cho forms public</li>
+  <li><b>Honeypot fields</b>: Hidden fields để bắt bots</li>
+  <li><b>Double submit prevention</b>: Disable button sau khi click</li>
+</ul>
+
+<pre><code>// Double submit prevention
+function SubmitButton({ isSubmitting }) {
+  return (
+    &lt;button
+      type="submit"
+      disabled={isSubmitting}
+    &gt;
+      {isSubmitting ? 'Đang gửi...' : 'Gửi'}
+    &lt;/button&gt;
+  );
+}
+
+// Honeypot field (bots sẽ fill, users không thấy)
+&lt;input
+  name="website"
+  style={{ display: 'none' }}
+  tabIndex={-1}
+  autoComplete="off"
+/&gt;
+</code></pre>
+
+<h4>4) Password handling</h4>
+<ul>
+  <li><b>Không lưu password</b> trong state lâu hơn cần thiết</li>
+  <li><b>autocomplete="new-password"</b> cho change password forms</li>
+  <li><b>Mask/unmask toggle</b> cho UX tốt hơn</li>
+  <li><b>Client validation only</b>: Không tin tưởng, server phải validate lại</li>
+</ul>
+`,
+    role: "middle",
+    type: "auth-security",
+  },
 ]
 
 export default authSecurity

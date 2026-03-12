@@ -862,6 +862,232 @@ module.exports = {
     role: "middle",
     type: "architecture-leadership",
   },
+
+  {
+    question: "Monorepo cho React projects: tools và quản lý?",
+    answer: `
+<h3>Monorepo Management</h3>
+
+<h4>1) Tại sao dùng Monorepo?</h4>
+<ul>
+  <li><b>Code sharing</b>: Shared components, utils, types giữa các projects</li>
+  <li><b>Consistent tooling</b>: Cùng ESLint, Prettier, TypeScript config</li>
+  <li><b>Atomic changes</b>: Update shared code + consumers trong 1 PR</li>
+  <li><b>Simplified dependency management</b>: Một node_modules</li>
+</ul>
+
+<h4>2) Tools phổ biến</h4>
+<ul>
+  <li><b>Turborepo</b>: Fast builds, caching, Vercel ecosystem</li>
+  <li><b>Nx</b>: Feature-rich, computation caching, dependency graph</li>
+  <li><b>pnpm workspaces</b>: Built-in workspace support</li>
+  <li><b>Lerna</b>: Package publishing, versioning</li>
+</ul>
+
+<h4>3) Turborepo structure</h4>
+<pre><code>monorepo/
+  apps/
+    web/              # Next.js app
+    admin/            # Admin dashboard
+    mobile/           # React Native
+  packages/
+    ui/               # Shared components
+    config/           # Shared ESLint, TS configs
+    utils/            # Shared utility functions
+    types/            # Shared TypeScript types
+  turbo.json
+  package.json
+</code></pre>
+
+<h4>4) turbo.json configuration</h4>
+<pre><code>{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "test": {
+      "dependsOn": ["build"]
+    },
+    "lint": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
+</code></pre>
+
+<h4>5) Best practices</h4>
+<ul>
+  <li><b>Internal packages</b>: Dùng "internal" protocol cho shared packages</li>
+  <li><b>Caching</b>: Enable remote caching cho CI/CD</li>
+  <li><b>Dependency constraints</b>: Quy tắc rõ ràng package nào depend package nào</li>
+  <li><b>Scoped packages</b>: Dùng @company/package-name</li>
+</ul>
+`,
+    role: "middle",
+    type: "architecture-leadership",
+  },
+
+  {
+    question: "Feature flags trong React: triển khai và quản lý?",
+    answer: `
+<h3>Feature Flags</h3>
+
+<h4>1) Feature flags là gì?</h4>
+<p><b>Toggles</b> cho phép bật/tắt features mà không cần deploy code mới.</p>
+
+<h4>2) Implementation cơ bản</h4>
+<pre><code>// Feature flag context
+const FeatureFlagContext = createContext({});
+
+function FeatureFlagProvider({ children }) {
+  const [flags, setFlags] = useState({});
+
+  useEffect(() => {
+    // Fetch from server/service
+    fetch('/api/feature-flags')
+      .then(r => r.json())
+      .then(setFlags);
+  }, []);
+
+  return (
+    &lt;FeatureFlagContext.Provider value={flags}&gt;
+      {children}
+    &lt;/FeatureFlagContext.Provider&gt;
+  );
+}
+
+function useFeatureFlag(flagName) {
+  const flags = useContext(FeatureFlagContext);
+  return flags[flagName] ?? false;
+}
+
+// Usage
+function Dashboard() {
+  const showNewChart = useFeatureFlag('new-chart-widget');
+
+  return (
+    &lt;div&gt;
+      {showNewChart ? &lt;NewChart /&gt; : &lt;OldChart /&gt;}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+<h4>3) Feature flag component</h4>
+<pre><code>function FeatureGate({ flag, fallback = null, children }) {
+  const isEnabled = useFeatureFlag(flag);
+  return isEnabled ? children : fallback;
+}
+
+// Usage
+&lt;FeatureGate flag="dark-mode" fallback={&lt;LightTheme /&gt;}&gt;
+  &lt;DarkTheme /&gt;
+&lt;/FeatureGate&gt;
+</code></pre>
+
+<h4>4) Services phổ biến</h4>
+<ul>
+  <li><b>LaunchDarkly</b>: Enterprise-grade, A/B testing</li>
+  <li><b>Unleash</b>: Open-source, self-hosted</li>
+  <li><b>Split</b>: Feature flags + experimentation</li>
+  <li><b>Flagsmith</b>: Open-source, remote config</li>
+</ul>
+
+<h4>5) Best practices</h4>
+<ul>
+  <li><b>Clean up old flags</b>: Xóa flags sau khi feature stable</li>
+  <li><b>Default values</b>: Luôn có fallback khi flag service unavailable</li>
+  <li><b>Testing</b>: Test cả enabled và disabled states</li>
+  <li><b>Naming convention</b>: team-feature-description (e.g., dashboard-new-chart)</li>
+</ul>
+`,
+    role: "middle",
+    type: "architecture-leadership",
+  },
+
+  {
+    question: "CI/CD pipeline cho React app?",
+    answer: `
+<h3>CI/CD cho React Applications</h3>
+
+<h4>1) CI Pipeline stages</h4>
+<pre><code># .github/workflows/ci.yml
+name: CI Pipeline
+on: [push, pull_request]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run type-check
+      - run: npm run test -- --coverage
+      - run: npm run build
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npm run test:e2e
+</code></pre>
+
+<h4>2) Key CI checks</h4>
+<ul>
+  <li><b>Linting</b>: ESLint + Prettier check</li>
+  <li><b>Type checking</b>: TypeScript compilation</li>
+  <li><b>Unit/Integration tests</b>: Jest + RTL</li>
+  <li><b>Build verification</b>: Production build succeeds</li>
+  <li><b>Bundle size check</b>: Không vượt quá budget</li>
+  <li><b>E2E tests</b>: Critical user flows</li>
+  <li><b>Accessibility check</b>: axe-core, Lighthouse</li>
+</ul>
+
+<h4>3) CD deployment strategies</h4>
+<ul>
+  <li><b>Preview deployments</b>: Mỗi PR có preview URL (Vercel, Netlify)</li>
+  <li><b>Staging environment</b>: Test trước khi production</li>
+  <li><b>Rolling deployments</b>: Gradually replace old version</li>
+  <li><b>Canary deployments</b>: Deploy cho % nhỏ users trước</li>
+</ul>
+
+<h4>4) Bundle size monitoring</h4>
+<pre><code># Check bundle size trong CI
+- name: Bundle Size Check
+  uses: andresz1/size-limit-action@v1
+  with:
+    github_token: \${{ secrets.GITHUB_TOKEN }}
+    # Fail if bundle > 200KB
+</code></pre>
+
+<h4>5) Environment management</h4>
+<pre><code># Environment variables per stage
+# .env.development
+REACT_APP_API_URL=http://localhost:3001
+
+# .env.staging
+REACT_APP_API_URL=https://staging-api.example.com
+
+# .env.production
+REACT_APP_API_URL=https://api.example.com
+</code></pre>
+`,
+    role: "middle",
+    type: "architecture-leadership",
+  },
 ]
 
 export default architectureLeadership

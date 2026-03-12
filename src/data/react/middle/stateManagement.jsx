@@ -665,6 +665,244 @@ const { data: users } = useQuery(['users'], fetchUsers);
     role: "middle",
     type: "state-management",
   },
+
+  {
+    question: "Immer giúp gì khi quản lý state trong React?",
+    answer: `
+<h3>Immer – Immutable State dễ dàng hơn</h3>
+
+<h4>1) Vấn đề với immutable updates</h4>
+<pre><code>// ❌ Nested update phức tạp
+setState(prev => ({
+  ...prev,
+  user: {
+    ...prev.user,
+    address: {
+      ...prev.user.address,
+      city: 'Hanoi'
+    }
+  }
+}));
+
+// ✅ Với Immer – viết như mutate nhưng vẫn immutable
+import { produce } from 'immer';
+
+setState(produce(draft => {
+  draft.user.address.city = 'Hanoi';
+}));
+</code></pre>
+
+<h4>2) useImmerReducer</h4>
+<pre><code>import { useImmerReducer } from 'use-immer';
+
+function todoReducer(draft, action) {
+  switch (action.type) {
+    case 'ADD':
+      draft.push({ id: Date.now(), text: action.text, done: false });
+      break;
+    case 'TOGGLE':
+      const todo = draft.find(t => t.id === action.id);
+      if (todo) todo.done = !todo.done;
+      break;
+    case 'DELETE':
+      return draft.filter(t => t.id !== action.id);
+  }
+}
+
+function TodoApp() {
+  const [todos, dispatch] = useImmerReducer(todoReducer, []);
+  // ...
+}
+</code></pre>
+
+<h4>3) Immer với Redux Toolkit</h4>
+<pre><code>// Redux Toolkit tích hợp Immer sẵn
+const todosSlice = createSlice({
+  name: 'todos',
+  initialState: [],
+  reducers: {
+    // Có thể "mutate" trực tiếp – Immer handles
+    addTodo: (state, action) => {
+      state.push(action.payload);
+    },
+    toggleTodo: (state, action) => {
+      const todo = state.find(t => t.id === action.payload);
+      if (todo) todo.completed = !todo.completed;
+    }
+  }
+});
+</code></pre>
+
+<h4>4) Khi nào dùng Immer?</h4>
+<ul>
+  <li><b>Nested objects/arrays</b>: Deep updates trở nên đơn giản</li>
+  <li><b>Reducers phức tạp</b>: Code ngắn và dễ đọc hơn</li>
+  <li><b>Redux Toolkit</b>: Đã tích hợp sẵn, không cần install thêm</li>
+</ul>
+`,
+    role: "middle",
+    type: "state-management",
+  },
+
+  {
+    question: "State machines (XState) trong React?",
+    answer: `
+<h3>State Machines với XState</h3>
+
+<h4>1) Tại sao cần state machines?</h4>
+<ul>
+  <li><b>Loại bỏ impossible states</b>: Không thể vừa loading vừa error</li>
+  <li><b>Explicit transitions</b>: Chỉ chuyển state theo quy tắc định trước</li>
+  <li><b>Dễ visualize</b>: Diagram trực quan cho team</li>
+  <li><b>Predictable</b>: Behavior hoàn toàn deterministic</li>
+</ul>
+
+<h4>2) Basic XState example</h4>
+<pre><code>import { createMachine, assign } from 'xstate';
+import { useMachine } from '@xstate/react';
+
+const fetchMachine = createMachine({
+  id: 'fetch',
+  initial: 'idle',
+  context: { data: null, error: null },
+  states: {
+    idle: {
+      on: { FETCH: 'loading' }
+    },
+    loading: {
+      invoke: {
+        src: 'fetchData',
+        onDone: {
+          target: 'success',
+          actions: assign({ data: (_, event) => event.data })
+        },
+        onError: {
+          target: 'failure',
+          actions: assign({ error: (_, event) => event.data })
+        }
+      }
+    },
+    success: {
+      on: { REFETCH: 'loading' }
+    },
+    failure: {
+      on: { RETRY: 'loading' }
+    }
+  }
+});
+</code></pre>
+
+<h4>3) Usage trong React</h4>
+<pre><code>function DataComponent() {
+  const [state, send] = useMachine(fetchMachine, {
+    services: {
+      fetchData: () => fetch('/api/data').then(r => r.json())
+    }
+  });
+
+  if (state.matches('idle')) return &lt;button onClick={() => send('FETCH')}&gt;Load&lt;/button&gt;;
+  if (state.matches('loading')) return &lt;div&gt;Loading...&lt;/div&gt;;
+  if (state.matches('failure')) return &lt;button onClick={() => send('RETRY')}&gt;Retry&lt;/button&gt;;
+  if (state.matches('success')) return &lt;div&gt;{state.context.data}&lt;/div&gt;;
+}
+</code></pre>
+
+<h4>4) Khi nào dùng state machines?</h4>
+<ul>
+  <li><b>Multi-step forms</b>: Wizard với nhiều bước</li>
+  <li><b>Authentication flows</b>: Login → MFA → Dashboard</li>
+  <li><b>Complex UI states</b>: Media player, file upload</li>
+  <li><b>Business logic phức tạp</b>: Checkout, booking</li>
+</ul>
+`,
+    role: "middle",
+    type: "state-management",
+  },
+
+  {
+    question: "URL state management là gì và dùng khi nào?",
+    answer: `
+<h3>URL State Management</h3>
+
+<h4>1) URL state là gì?</h4>
+<p><b>Lưu trữ application state trong URL</b> (query params, hash, pathname) thay vì chỉ trong memory.</p>
+
+<h4>2) Tại sao dùng URL state?</h4>
+<ul>
+  <li><b>Shareable</b>: User có thể chia sẻ link với state hiện tại</li>
+  <li><b>Bookmarkable</b>: Lưu URL = lưu state</li>
+  <li><b>Browser history</b>: Back/forward hoạt động đúng</li>
+  <li><b>SEO</b>: Search engines index được state khác nhau</li>
+  <li><b>Server-side</b>: Server có thể đọc state từ URL</li>
+</ul>
+
+<h4>3) useSearchParams (React Router)</h4>
+<pre><code>import { useSearchParams } from 'react-router-dom';
+
+function ProductList() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const category = searchParams.get('category') || 'all';
+  const sort = searchParams.get('sort') || 'newest';
+  const page = parseInt(searchParams.get('page') || '1');
+
+  const handleCategoryChange = (newCategory) => {
+    setSearchParams(prev => {
+      prev.set('category', newCategory);
+      prev.set('page', '1'); // Reset page
+      return prev;
+    });
+  };
+
+  // URL: /products?category=electronics&sort=price&page=2
+}
+</code></pre>
+
+<h4>4) Khi nào dùng URL state?</h4>
+
+<h5>Nên dùng URL state:</h5>
+<ul>
+  <li><b>Search/filter</b>: Query, filters, sort order</li>
+  <li><b>Pagination</b>: Current page, page size</li>
+  <li><b>Tab selection</b>: Active tab</li>
+  <li><b>Modal/dialog state</b>: Open/close state</li>
+</ul>
+
+<h5>Không nên dùng URL state:</h5>
+<ul>
+  <li><b>Form input values</b> (đang gõ)</li>
+  <li><b>Sensitive data</b> (passwords, tokens)</li>
+  <li><b>Ephemeral UI state</b> (hover, focus)</li>
+  <li><b>Large data</b> (URL có giới hạn length)</li>
+</ul>
+
+<h4>5) Custom hook cho URL state</h4>
+<pre><code>function useQueryParam(key, defaultValue) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const value = searchParams.get(key) ?? defaultValue;
+
+  const setValue = (newValue) => {
+    setSearchParams(prev => {
+      if (newValue === defaultValue) {
+        prev.delete(key);
+      } else {
+        prev.set(key, newValue);
+      }
+      return prev;
+    });
+  };
+
+  return [value, setValue];
+}
+
+// Usage
+const [sort, setSort] = useQueryParam('sort', 'newest');
+</code></pre>
+`,
+    role: "middle",
+    type: "state-management",
+  },
 ]
 
 export default stateManagement

@@ -438,6 +438,244 @@ function ListWithKeys({ items }) {
     role: "middle",
     type: "react-rendering",
   },
+
+  {
+    question: "React Fiber architecture hoạt động thế nào?",
+    answer: `
+<h3>React Fiber Architecture</h3>
+
+<h4>1) Fiber là gì?</h4>
+<ul>
+  <li><b>Fiber</b> là unit of work trong React reconciliation engine</li>
+  <li>Mỗi React element tương ứng với một <b>Fiber node</b></li>
+  <li>Fiber cho phép React <b>chia nhỏ rendering</b> thành nhiều chunks</li>
+  <li>Có thể <b>pause, resume, abort</b> rendering work</li>
+</ul>
+
+<h4>2) Tại sao cần Fiber?</h4>
+<ul>
+  <li><b>Stack reconciler cũ</b>: Render đồng bộ, block main thread</li>
+  <li><b>Fiber reconciler mới</b>: Render async, chia nhỏ work units</li>
+  <li><b>Priority-based rendering</b>: User interactions ưu tiên hơn background updates</li>
+</ul>
+
+<h4>3) Fiber node structure</h4>
+<pre><code>// Mỗi Fiber node chứa:
+{
+  type: 'div',            // Element type
+  key: null,              // Key for reconciliation
+  child: fiberNode,       // First child
+  sibling: fiberNode,     // Next sibling
+  return: fiberNode,      // Parent
+  stateNode: domElement,  // DOM element
+  pendingProps: {},       // New props
+  memoizedProps: {},      // Current props
+  memoizedState: {},      // Current state
+  effectTag: 'UPDATE',    // Side effect type
+  alternate: fiberNode,   // Work-in-progress ↔ current
+}
+</code></pre>
+
+<h4>4) Two phases of rendering</h4>
+
+<h5>Phase 1: Render (Reconciliation) – interruptible</h5>
+<ul>
+  <li>Xây dựng work-in-progress tree</li>
+  <li>Diff virtual DOM cũ vs mới</li>
+  <li>Có thể bị interrupt bởi higher priority work</li>
+</ul>
+
+<h5>Phase 2: Commit – synchronous, không thể interrupt</h5>
+<ul>
+  <li>Apply thay đổi xuống real DOM</li>
+  <li>Chạy lifecycle methods (componentDidMount, useEffect)</li>
+  <li>Phải chạy liên tục để đảm bảo UI consistency</li>
+</ul>
+
+<h4>5) Concurrent Mode (React 18+)</h4>
+<ul>
+  <li><b>Time slicing</b>: Chia rendering work thành chunks nhỏ</li>
+  <li><b>Priority lanes</b>: Urgent vs non-urgent updates</li>
+  <li><b>Suspense</b>: Pause rendering chờ data</li>
+  <li><b>useTransition</b>: Mark non-urgent updates</li>
+</ul>
+`,
+    role: "middle",
+    type: "react-rendering",
+  },
+
+  {
+    question: "Reconciliation algorithm của React hoạt động ra sao?",
+    answer: `
+<h3>React Reconciliation Algorithm</h3>
+
+<h4>1) Hai giả định chính</h4>
+<ul>
+  <li><b>Hai elements khác type</b> → tạo cây hoàn toàn mới</li>
+  <li><b>Key prop</b> giúp xác định element nào stable qua các lần render</li>
+</ul>
+
+<h4>2) Diffing by element type</h4>
+<pre><code>// Khác type → unmount cây cũ, mount cây mới
+// Before:
+&lt;div&gt;&lt;Counter /&gt;&lt;/div&gt;
+
+// After:
+&lt;span&gt;&lt;Counter /&gt;&lt;/span&gt;
+// → Counter bị unmount rồi mount lại (state mất)
+</code></pre>
+
+<h4>3) Same type → update props</h4>
+<pre><code>// Cùng type → React keep DOM node, chỉ update attributes
+// Before:
+&lt;div className="old" title="hello" /&gt;
+
+// After:
+&lt;div className="new" title="hello" /&gt;
+// → Chỉ update className, giữ nguyên DOM node
+</code></pre>
+
+<h4>4) List diffing với Keys</h4>
+<pre><code>// ❌ Không có key → React so sánh theo index
+// Thêm item đầu list → re-render toàn bộ list
+&lt;ul&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;  // Changed from Item 1 → New Item
+  &lt;li&gt;Item 2&lt;/li&gt;  // Changed from Item 2 → Item 1
+  &lt;li&gt;Item 3&lt;/li&gt;  // New element
+&lt;/ul&gt;
+
+// ✅ Có key → React biết item nào thêm/xóa/di chuyển
+&lt;ul&gt;
+  {items.map(item =&gt; (
+    &lt;li key={item.id}&gt;{item.name}&lt;/li&gt;
+  ))}
+&lt;/ul&gt;
+</code></pre>
+
+<h4>5) Key prop best practices</h4>
+<ul>
+  <li><b>Dùng stable, unique ID</b> (database ID, UUID)</li>
+  <li><b>Tránh dùng index</b> nếu list có thể reorder/filter</li>
+  <li><b>Index OK khi</b>: list static, không reorder, không filter</li>
+  <li><b>Key phải unique trong siblings</b>, không cần global unique</li>
+</ul>
+
+<h4>6) Performance tips từ reconciliation</h4>
+<ul>
+  <li><b>Giữ component type ổn định</b>: Không define component trong render</li>
+  <li><b>Key ổn định</b>: Tránh random key (Math.random())</li>
+  <li><b>Cấu trúc cây ổn định</b>: Tránh thay đổi nesting level</li>
+</ul>
+`,
+    role: "middle",
+    type: "react-rendering",
+  },
+
+  {
+    question: "Error Boundaries trong React hoạt động thế nào?",
+    answer: `
+<h3>Error Boundaries</h3>
+
+<h4>1) Error Boundaries là gì?</h4>
+<ul>
+  <li><b>React component</b> bắt JavaScript errors ở component con</li>
+  <li>Hiển thị <b>fallback UI</b> thay vì crash toàn bộ app</li>
+  <li>Chỉ catch được errors trong <b>rendering, lifecycle, constructors</b></li>
+  <li><b>Phải dùng class component</b> (chưa có hook API)</li>
+</ul>
+
+<h4>2) Implementation</h4>
+<pre><code>class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  // Update state khi error xảy ra
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  // Log error (gửi tới error tracking service)
+  componentDidCatch(error, errorInfo) {
+    console.error('Error caught:', error);
+    console.error('Component stack:', errorInfo.componentStack);
+    // Send to Sentry, LogRocket, etc.
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || (
+        &lt;div&gt;
+          &lt;h2&gt;Đã xảy ra lỗi&lt;/h2&gt;
+          &lt;button onClick={() =&gt; this.setState({ hasError: false })}&gt;
+            Thử lại
+          &lt;/button&gt;
+        &lt;/div&gt;
+      );
+    }
+    return this.props.children;
+  }
+}
+</code></pre>
+
+<h4>3) Cách sử dụng</h4>
+<pre><code>// Wrap từng section riêng biệt
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;ErrorBoundary fallback={&lt;div&gt;Header error&lt;/div&gt;}&gt;
+        &lt;Header /&gt;
+      &lt;/ErrorBoundary&gt;
+
+      &lt;ErrorBoundary fallback={&lt;div&gt;Content error&lt;/div&gt;}&gt;
+        &lt;MainContent /&gt;
+      &lt;/ErrorBoundary&gt;
+
+      &lt;ErrorBoundary fallback={&lt;div&gt;Sidebar error&lt;/div&gt;}&gt;
+        &lt;Sidebar /&gt;
+      &lt;/ErrorBoundary&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+<h4>4) Không catch được</h4>
+<ul>
+  <li><b>Event handlers</b> → dùng try/catch trong handler</li>
+  <li><b>Async code</b> (setTimeout, fetch) → dùng try/catch</li>
+  <li><b>Server-side rendering</b></li>
+  <li><b>Errors trong chính Error Boundary</b></li>
+</ul>
+
+<h4>5) react-error-boundary (recommended)</h4>
+<pre><code>import { ErrorBoundary } from 'react-error-boundary';
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Something went wrong: {error.message}&lt;/p&gt;
+      &lt;button onClick={resetErrorBoundary}&gt;Try again&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onReset={() =&gt; { /* reset state */ }}
+      onError={(error) =&gt; logErrorToService(error)}
+    &gt;
+      &lt;MyComponent /&gt;
+    &lt;/ErrorBoundary&gt;
+  );
+}
+</code></pre>
+`,
+    role: "middle",
+    type: "react-rendering",
+  },
 ]
 
 export default rendering

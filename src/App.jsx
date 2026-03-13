@@ -8,6 +8,7 @@ import JavascriptPage from "./pages/javascriptPage";
 import PracticeJavascript from "./pages/javascriptPage/Practice";
 import CSSPage from "./pages/cssPage";
 import PracticeCSS from "./pages/cssPage/Practice";
+import QuizPage from "./pages/Quiz";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/react/practice/:type" element={<PracticeReact />} />
         <Route path="/javascript/practice/:type" element={<PracticeJavascript />} />
         <Route path="/vue/practice" element={<PracticeVue />} />
+        <Route path="/quiz" element={<QuizPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,0 +1,2102 @@
+[
+  {
+    "id": 1,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Biến nào có block scope?",
+    "options": [
+      "var",
+      "let",
+      "function",
+      "this"
+    ],
+    "correctAnswer": "let",
+    "explanation": "`let` có block scope, còn `var` có function scope."
+  },
+  {
+    "id": 2,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Kết quả của `console.log(typeof null)` là gì?",
+    "options": [
+      "null",
+      "undefined",
+      "object",
+      "string"
+    ],
+    "correctAnswer": "object",
+    "explanation": "`typeof null` trả về `object`, đây là một đặc điểm lịch sử của JavaScript."
+  },
+  {
+    "id": 3,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Toán tử nào so sánh nghiêm ngặt cả giá trị và kiểu dữ liệu?",
+    "options": [
+      "==",
+      "===",
+      "=",
+      "!="
+    ],
+    "correctAnswer": "===",
+    "explanation": "`===` so sánh cả giá trị và kiểu dữ liệu."
+  },
+  {
+    "id": 4,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Phương thức nào tạo mảng mới bằng cách biến đổi từng phần tử?",
+    "options": [
+      "filter()",
+      "map()",
+      "find()",
+      "some()"
+    ],
+    "correctAnswer": "map()",
+    "explanation": "`map()` dùng để biến đổi từng phần tử và trả về mảng mới."
+  },
+  {
+    "id": 5,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Phương thức nào dùng để lọc các phần tử thỏa điều kiện?",
+    "options": [
+      "reduce()",
+      "filter()",
+      "map()",
+      "forEach()"
+    ],
+    "correctAnswer": "filter()",
+    "explanation": "`filter()` trả về mảng mới chứa các phần tử thỏa điều kiện."
+  },
+  {
+    "id": 6,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "`const` có nghĩa là gì?",
+    "options": [
+      "Biến không bị hoisting",
+      "Biến không thể gán lại reference",
+      "Object không thể thay đổi",
+      "Biến có global scope"
+    ],
+    "correctAnswer": "Biến không thể gán lại reference",
+    "explanation": "`const` không cho phép gán lại biến, nhưng nếu là object/array thì vẫn có thể thay đổi nội dung bên trong."
+  },
+  {
+    "id": 7,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Kết quả của `console.log(a); var a = 10;` là gì?",
+    "options": [
+      "10",
+      "undefined",
+      "null",
+      "Error"
+    ],
+    "correctAnswer": "undefined",
+    "explanation": "`var` bị hoisting và có giá trị `undefined` trước khi được gán."
+  },
+  {
+    "id": 8,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Microtask queue thường chứa gì?",
+    "options": [
+      "setTimeout callback",
+      "DOM event",
+      "Promise callback",
+      "setInterval callback"
+    ],
+    "correctAnswer": "Promise callback",
+    "explanation": "Callback của Promise được đưa vào microtask queue."
+  },
+  {
+    "id": 9,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "`async/await` được xây dựng dựa trên cái gì?",
+    "options": [
+      "Callback",
+      "Promise",
+      "Closure",
+      "Generator only"
+    ],
+    "correctAnswer": "Promise",
+    "explanation": "`async/await` là cú pháp sugar dựa trên Promise."
+  },
+  {
+    "id": 10,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Closure là gì?",
+    "options": [
+      "Hàm không có tham số",
+      "Hàm ghi nhớ scope bên ngoài",
+      "Hàm chạy đồng bộ",
+      "Hàm không return"
+    ],
+    "correctAnswer": "Hàm ghi nhớ scope bên ngoài",
+    "explanation": "Closure cho phép function truy cập biến ở lexical scope bên ngoài."
+  },
+  {
+    "id": 11,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Phương thức nào trả về phần tử đầu tiên thỏa điều kiện?",
+    "options": [
+      "filter()",
+      "find()",
+      "map()",
+      "every()"
+    ],
+    "correctAnswer": "find()",
+    "explanation": "`find()` trả về phần tử đầu tiên thỏa điều kiện."
+  },
+  {
+    "id": 12,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Phương thức nào dùng để kiểm tra mọi phần tử đều thỏa điều kiện?",
+    "options": [
+      "some()",
+      "every()",
+      "find()",
+      "reduce()"
+    ],
+    "correctAnswer": "every()",
+    "explanation": "`every()` trả về true nếu mọi phần tử đều thỏa điều kiện."
+  },
+  {
+    "id": 13,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Phương thức nào dùng để kiểm tra có ít nhất một phần tử thỏa điều kiện?",
+    "options": [
+      "every()",
+      "some()",
+      "map()",
+      "sort()"
+    ],
+    "correctAnswer": "some()",
+    "explanation": "`some()` trả về true nếu có ít nhất một phần tử thỏa điều kiện."
+  },
+  {
+    "id": 14,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "`NaN === NaN` cho kết quả gì?",
+    "options": [
+      "true",
+      "false",
+      "undefined",
+      "Error"
+    ],
+    "correctAnswer": "false",
+    "explanation": "`NaN` không bằng chính nó khi dùng toán tử so sánh thông thường."
+  },
+  {
+    "id": 15,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Giá trị falsy nào sau đây là đúng?",
+    "options": [
+      "[]",
+      "{}",
+      "'0'",
+      "0"
+    ],
+    "correctAnswer": "0",
+    "explanation": "`0` là falsy, còn `[]`, `{}`, và `'0'` là truthy."
+  },
+  {
+    "id": 16,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Từ khóa nào dùng để khai báo hàm bất đồng bộ?",
+    "options": [
+      "defer",
+      "await",
+      "async",
+      "promise"
+    ],
+    "correctAnswer": "async",
+    "explanation": "Dùng `async` trước function để khai báo hàm bất đồng bộ."
+  },
+  {
+    "id": 17,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Kết quả của `typeof undefined` là gì?",
+    "options": [
+      "null",
+      "undefined",
+      "object",
+      "string"
+    ],
+    "correctAnswer": "undefined",
+    "explanation": "`typeof undefined` trả về `undefined`."
+  },
+  {
+    "id": 18,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "`Array.isArray([])` trả về gì?",
+    "options": [
+      "false",
+      "true",
+      "undefined",
+      "Error"
+    ],
+    "correctAnswer": "true",
+    "explanation": "`Array.isArray()` dùng để kiểm tra giá trị có phải mảng hay không."
+  },
+  {
+    "id": 19,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Câu nào đúng về `forEach()`?",
+    "options": [
+      "Trả về mảng mới",
+      "Dừng được bằng break",
+      "Không trả về mảng mới",
+      "Luôn async"
+    ],
+    "correctAnswer": "Không trả về mảng mới",
+    "explanation": "`forEach()` không trả về mảng mới và cũng không hỗ trợ `break` như vòng lặp truyền thống."
+  },
+  {
+    "id": 20,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Kết quả của `Boolean('')` là gì?",
+    "options": [
+      "true",
+      "false",
+      "null",
+      "undefined"
+    ],
+    "correctAnswer": "false",
+    "explanation": "Chuỗi rỗng là falsy."
+  },
+  {
+    "id": 21,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Spread operator cho mảng là ký hiệu nào?",
+    "options": [
+      "***",
+      "...",
+      "=>",
+      "::"
+    ],
+    "correctAnswer": "...",
+    "explanation": "Spread operator dùng ký hiệu `...`."
+  },
+  {
+    "id": 22,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Destructuring dùng để làm gì?",
+    "options": [
+      "Tạo class",
+      "Tách giá trị từ object hoặc array",
+      "Gộp mảng",
+      "Ép kiểu"
+    ],
+    "correctAnswer": "Tách giá trị từ object hoặc array",
+    "explanation": "Destructuring giúp lấy nhanh giá trị từ object/array."
+  },
+  {
+    "id": 23,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "`JSON.stringify()` dùng để làm gì?",
+    "options": [
+      "Parse JSON string",
+      "Chuyển object thành chuỗi JSON",
+      "Clone DOM",
+      "Tạo array"
+    ],
+    "correctAnswer": "Chuyển object thành chuỗi JSON",
+    "explanation": "`JSON.stringify()` chuyển object JavaScript thành chuỗi JSON."
+  },
+  {
+    "id": 24,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "`JSON.parse()` dùng để làm gì?",
+    "options": [
+      "Chuyển object thành chuỗi",
+      "Chuyển chuỗi JSON thành object",
+      "Tạo Promise",
+      "Format HTML"
+    ],
+    "correctAnswer": "Chuyển chuỗi JSON thành object",
+    "explanation": "`JSON.parse()` chuyển chuỗi JSON thành object JavaScript."
+  },
+  {
+    "id": 25,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Toán tử nào dùng để gán giá trị mặc định khi bên trái là null hoặc undefined?",
+    "options": [
+      "||",
+      "&&",
+      "??",
+      "?: "
+    ],
+    "correctAnswer": "??",
+    "explanation": "`??` là nullish coalescing operator."
+  },
+  {
+    "id": 26,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Optional chaining dùng ký hiệu nào?",
+    "options": [
+      "..",
+      "?.",
+      "::",
+      "??"
+    ],
+    "correctAnswer": "?.",
+    "explanation": "`?.` giúp truy cập an toàn thuộc tính lồng nhau."
+  },
+  {
+    "id": 27,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Kết quả của `[] == false` là gì?",
+    "options": [
+      "true",
+      "false",
+      "Error",
+      "undefined"
+    ],
+    "correctAnswer": "true",
+    "explanation": "Do ép kiểu, `[] == false` cho kết quả true."
+  },
+  {
+    "id": 28,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Kết quả của `0 == false` là gì?",
+    "options": [
+      "true",
+      "false",
+      "undefined",
+      "Error"
+    ],
+    "correctAnswer": "true",
+    "explanation": "`==` có ép kiểu nên `0 == false` là true."
+  },
+  {
+    "id": 29,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Cách nào tạo shallow copy của object?",
+    "options": [
+      "Object.assign({}, obj)",
+      "JSON.parse(obj)",
+      "obj.clone()",
+      "copy(obj)"
+    ],
+    "correctAnswer": "Object.assign({}, obj)",
+    "explanation": "`Object.assign({}, obj)` hoặc spread đều tạo shallow copy."
+  },
+  {
+    "id": 30,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Sự khác nhau giữa `null` và `undefined` là gì?",
+    "options": [
+      "Không khác nhau",
+      "`undefined` là chưa gán, `null` là gán rỗng có chủ đích",
+      "`null` là số",
+      "`undefined` là object"
+    ],
+    "correctAnswer": "`undefined` là chưa gán, `null` là gán rỗng có chủ đích",
+    "explanation": "`undefined` thường là chưa được gán giá trị, còn `null` là giá trị rỗng do lập trình viên chủ động đặt."
+  },
+  {
+    "id": 31,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Template literal dùng ký tự nào?",
+    "options": [
+      "'",
+      "\"",
+      "`",
+      "//"
+    ],
+    "correctAnswer": "`",
+    "explanation": "Template literal dùng dấu backtick."
+  },
+  {
+    "id": 32,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Hàm `setTimeout(fn, 0)` có nghĩa là gì?",
+    "options": [
+      "Chạy ngay lập tức trước mọi code khác",
+      "Đưa callback vào hàng chờ sau khi call stack rỗng",
+      "Dừng thread",
+      "Tạo microtask"
+    ],
+    "correctAnswer": "Đưa callback vào hàng chờ sau khi call stack rỗng",
+    "explanation": "`setTimeout(..., 0)` không chạy ngay lập tức mà vào macrotask queue."
+  },
+  {
+    "id": 33,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Phương thức nào gộp mảng thành một giá trị duy nhất?",
+    "options": [
+      "map()",
+      "reduce()",
+      "filter()",
+      "find()"
+    ],
+    "correctAnswer": "reduce()",
+    "explanation": "`reduce()` dùng để gom mảng thành một giá trị."
+  },
+  {
+    "id": 34,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Kết quả của `'5' + 1` là gì?",
+    "options": [
+      "6",
+      "51",
+      "Error",
+      "undefined"
+    ],
+    "correctAnswer": "51",
+    "explanation": "Khi cộng với chuỗi, JavaScript ép kiểu sang chuỗi."
+  },
+  {
+    "id": 35,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Kết quả của `'5' - 1` là gì?",
+    "options": [
+      "4",
+      "51",
+      "Error",
+      "undefined"
+    ],
+    "correctAnswer": "4",
+    "explanation": "Toán tử `-` ép chuỗi số sang number."
+  },
+  {
+    "id": 36,
+    "category": "JavaScript",
+    "difficulty": "medium",
+    "question": "Trong arrow function, `this` được xác định như thế nào?",
+    "options": [
+      "Tự tạo mới",
+      "Lexical this từ scope bên ngoài",
+      "Luôn là window",
+      "Luôn là undefined"
+    ],
+    "correctAnswer": "Lexical this từ scope bên ngoài",
+    "explanation": "Arrow function không có `this` riêng, nó dùng `this` từ scope bên ngoài."
+  },
+  {
+    "id": 37,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "React là gì?",
+    "options": [
+      "Ngôn ngữ lập trình",
+      "Framework backend",
+      "Thư viện JavaScript xây dựng UI",
+      "Cơ sở dữ liệu"
+    ],
+    "correctAnswer": "Thư viện JavaScript xây dựng UI",
+    "explanation": "React là thư viện JavaScript để xây dựng giao diện người dùng."
+  },
+  {
+    "id": 38,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "JSX là gì?",
+    "options": [
+      "Một file CSS",
+      "Cú pháp mở rộng cho JavaScript để mô tả UI",
+      "JSON nâng cao",
+      "Cơ chế routing"
+    ],
+    "correctAnswer": "Cú pháp mở rộng cho JavaScript để mô tả UI",
+    "explanation": "JSX giúp viết UI gần giống HTML trong JavaScript."
+  },
+  {
+    "id": 39,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Props trong React là gì?",
+    "options": [
+      "State nội bộ",
+      "Dữ liệu truyền từ cha xuống con",
+      "Hook",
+      "DOM thật"
+    ],
+    "correctAnswer": "Dữ liệu truyền từ cha xuống con",
+    "explanation": "Props là dữ liệu truyền từ component cha sang component con."
+  },
+  {
+    "id": 40,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "State trong React là gì?",
+    "options": [
+      "Dữ liệu nội bộ có thể thay đổi",
+      "Dữ liệu đọc-only từ cha",
+      "Một loại CSS",
+      "Một method"
+    ],
+    "correctAnswer": "Dữ liệu nội bộ có thể thay đổi",
+    "explanation": "State là dữ liệu nội bộ của component và có thể thay đổi."
+  },
+  {
+    "id": 41,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Hook nào dùng để tạo state trong functional component?",
+    "options": [
+      "useRef",
+      "useState",
+      "useMemo",
+      "useEffect"
+    ],
+    "correctAnswer": "useState",
+    "explanation": "`useState` dùng để quản lý state trong functional component."
+  },
+  {
+    "id": 42,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`useEffect(() => {}, [])` sẽ chạy khi nào?",
+    "options": [
+      "Mỗi lần render",
+      "Sau lần render đầu tiên",
+      "Khi mọi state thay đổi",
+      "Không bao giờ"
+    ],
+    "correctAnswer": "Sau lần render đầu tiên",
+    "explanation": "Dependency array rỗng khiến effect chỉ chạy một lần sau mount."
+  },
+  {
+    "id": 43,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`useEffect` thường dùng để làm gì?",
+    "options": [
+      "Render UI",
+      "Xử lý side effect",
+      "Khai báo CSS",
+      "Tạo route"
+    ],
+    "correctAnswer": "Xử lý side effect",
+    "explanation": "`useEffect` dùng cho call API, timer, event listener, ..."
+  },
+  {
+    "id": 44,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`key` trong list dùng để làm gì?",
+    "options": [
+      "Tạo style",
+      "Giúp React nhận diện phần tử trong danh sách",
+      "Bắt sự kiện",
+      "Gọi API"
+    ],
+    "correctAnswer": "Giúp React nhận diện phần tử trong danh sách",
+    "explanation": "`key` giúp React tối ưu quá trình diff khi render list."
+  },
+  {
+    "id": 45,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Cách nào đúng để render list?",
+    "options": [
+      "forEach()",
+      "map()",
+      "filter()",
+      "reduce()"
+    ],
+    "correctAnswer": "map()",
+    "explanation": "Trong React thường dùng `map()` để render danh sách."
+  },
+  {
+    "id": 46,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Functional component nên return gì?",
+    "options": [
+      "Một object",
+      "Một số",
+      "JSX/React element",
+      "Chỉ string"
+    ],
+    "correctAnswer": "JSX/React element",
+    "explanation": "Component React thường return JSX hoặc `null`."
+  },
+  {
+    "id": 47,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`useRef` thường dùng để làm gì?",
+    "options": [
+      "Tạo state",
+      "Lưu ref DOM hoặc giá trị không gây re-render",
+      "Tạo context",
+      "Force update"
+    ],
+    "correctAnswer": "Lưu ref DOM hoặc giá trị không gây re-render",
+    "explanation": "`useRef` hữu ích khi cần thao tác DOM hoặc giữ mutable value."
+  },
+  {
+    "id": 48,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`useMemo` dùng để làm gì?",
+    "options": [
+      "Nhớ hàm",
+      "Nhớ giá trị tính toán",
+      "Tạo state",
+      "Gọi API"
+    ],
+    "correctAnswer": "Nhớ giá trị tính toán",
+    "explanation": "`useMemo` memoize giá trị."
+  },
+  {
+    "id": 49,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`useCallback` dùng để làm gì?",
+    "options": [
+      "Nhớ hàm",
+      "Nhớ object",
+      "Tạo effect",
+      "Thay props"
+    ],
+    "correctAnswer": "Nhớ hàm",
+    "explanation": "`useCallback` memoize function."
+  },
+  {
+    "id": 50,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Khi nào `useEffect` có thể gây infinite loop?",
+    "options": [
+      "Khi không return JSX",
+      "Khi effect cập nhật state làm dependency đổi liên tục",
+      "Khi dùng CSS module",
+      "Khi có nhiều component con"
+    ],
+    "correctAnswer": "Khi effect cập nhật state làm dependency đổi liên tục",
+    "explanation": "Nếu effect setState và dependency liên quan thay đổi liên tục thì có thể gây lặp vô hạn."
+  },
+  {
+    "id": 51,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`useContext` dùng để làm gì?",
+    "options": [
+      "Chia sẻ dữ liệu xuyên nhiều component",
+      "Tạo animation",
+      "Tạo request",
+      "Thay router"
+    ],
+    "correctAnswer": "Chia sẻ dữ liệu xuyên nhiều component",
+    "explanation": "`useContext` giúp tránh prop drilling cho dữ liệu chung."
+  },
+  {
+    "id": 52,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Custom hook là gì?",
+    "options": [
+      "Hook do React cung cấp",
+      "Hàm dùng lại logic hook, thường bắt đầu bằng `use`",
+      "Class component",
+      "Middleware"
+    ],
+    "correctAnswer": "Hàm dùng lại logic hook, thường bắt đầu bằng `use`",
+    "explanation": "Custom hook giúp tái sử dụng logic giữa các component."
+  },
+  {
+    "id": 53,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Virtual DOM là gì?",
+    "options": [
+      "DOM thật",
+      "Bản mô phỏng DOM trong bộ nhớ",
+      "Cơ chế CSS",
+      "Server render"
+    ],
+    "correctAnswer": "Bản mô phỏng DOM trong bộ nhớ",
+    "explanation": "React dùng Virtual DOM để so sánh và cập nhật hiệu quả."
+  },
+  {
+    "id": 54,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`React.memo` dùng để làm gì?",
+    "options": [
+      "Cache API",
+      "Tránh re-render không cần thiết nếu props không đổi",
+      "Tạo context",
+      "Tạo store"
+    ],
+    "correctAnswer": "Tránh re-render không cần thiết nếu props không đổi",
+    "explanation": "`React.memo` giúp tối ưu child component."
+  },
+  {
+    "id": 55,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Component React re-render khi nào?",
+    "options": [
+      "Chỉ khi reload trang",
+      "Khi props/state/context thay đổi",
+      "Chỉ khi click",
+      "Chỉ khi gọi API"
+    ],
+    "correctAnswer": "Khi props/state/context thay đổi",
+    "explanation": "Các thay đổi này có thể khiến component re-render."
+  },
+  {
+    "id": 56,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Tại sao không nên dùng index làm key nếu list có reorder?",
+    "options": [
+      "Vì React cấm",
+      "Có thể gây bug render và state sai item",
+      "CSS lỗi",
+      "Build fail"
+    ],
+    "correctAnswer": "Có thể gây bug render và state sai item",
+    "explanation": "Index không ổn định khi list bị thêm/xóa/sắp xếp lại."
+  },
+  {
+    "id": 57,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Controlled component là gì?",
+    "options": [
+      "Input do DOM tự quản",
+      "Input do React state quản lý",
+      "Input chỉ đọc",
+      "Input không có onChange"
+    ],
+    "correctAnswer": "Input do React state quản lý",
+    "explanation": "Controlled input dùng `value` và `onChange`."
+  },
+  {
+    "id": 58,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Uncontrolled component thường dùng gì để lấy giá trị?",
+    "options": [
+      "state",
+      "props",
+      "ref",
+      "context"
+    ],
+    "correctAnswer": "ref",
+    "explanation": "Uncontrolled input thường lấy dữ liệu thông qua ref."
+  },
+  {
+    "id": 59,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Lifting state up là gì?",
+    "options": [
+      "Đưa state lên component cha gần nhất",
+      "Xóa state",
+      "Tạo state global",
+      "Dùng Redux"
+    ],
+    "correctAnswer": "Đưa state lên component cha gần nhất",
+    "explanation": "Khi nhiều component con cần dùng chung state, ta đưa state lên cha."
+  },
+  {
+    "id": 60,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Fragment trong React dùng để làm gì?",
+    "options": [
+      "Bọc nhiều phần tử mà không thêm node thừa",
+      "Tạo state",
+      "Tạo CSS",
+      "Tạo hook"
+    ],
+    "correctAnswer": "Bọc nhiều phần tử mà không thêm node thừa",
+    "explanation": "Fragment giúp return nhiều phần tử mà không tạo DOM node không cần thiết."
+  },
+  {
+    "id": 61,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Hook có được gọi bên trong `if` không?",
+    "options": [
+      "Có",
+      "Không",
+      "Chỉ với useEffect",
+      "Chỉ trong class"
+    ],
+    "correctAnswer": "Không",
+    "explanation": "Hooks phải được gọi ở top level để giữ thứ tự ổn định giữa các lần render."
+  },
+  {
+    "id": 62,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Câu nào đúng về props?",
+    "options": [
+      "Có thể mutate trực tiếp",
+      "Read-only",
+      "Là state toàn cục",
+      "Chỉ dùng cho class"
+    ],
+    "correctAnswer": "Read-only",
+    "explanation": "Props không nên bị sửa trực tiếp."
+  },
+  {
+    "id": 63,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Câu nào đúng về state update?",
+    "options": [
+      "Luôn synchronous ngay lập tức",
+      "Có thể được batch",
+      "Không làm re-render",
+      "Chỉ có ở class"
+    ],
+    "correctAnswer": "Có thể được batch",
+    "explanation": "React có thể batch nhiều lần cập nhật state."
+  },
+  {
+    "id": 64,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`setState` hoặc setter từ `useState` nên dùng callback khi nào?",
+    "options": [
+      "Khi state mới phụ thuộc state cũ",
+      "Khi set CSS",
+      "Khi render list",
+      "Khi import component"
+    ],
+    "correctAnswer": "Khi state mới phụ thuộc state cũ",
+    "explanation": "Dạng callback giúp dùng đúng giá trị state trước đó."
+  },
+  {
+    "id": 65,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Dependency array của `useEffect` dùng để làm gì?",
+    "options": [
+      "Khai báo route",
+      "Xác định khi nào effect chạy lại",
+      "Tạo state",
+      "Tạo JSX"
+    ],
+    "correctAnswer": "Xác định khi nào effect chạy lại",
+    "explanation": "Effect sẽ chạy lại khi giá trị trong dependency thay đổi."
+  },
+  {
+    "id": 66,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Cleanup trong `useEffect` dùng để làm gì?",
+    "options": [
+      "Xóa JSX",
+      "Dọn timer/event/subscription",
+      "Reset props",
+      "Build production"
+    ],
+    "correctAnswer": "Dọn timer/event/subscription",
+    "explanation": "Cleanup chạy trước khi effect chạy lại hoặc khi unmount."
+  },
+  {
+    "id": 67,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`useLayoutEffect` khác `useEffect` ở điểm nào?",
+    "options": [
+      "Không khác",
+      "`useLayoutEffect` chạy đồng bộ trước paint",
+      "`useLayoutEffect` chỉ dùng cho class",
+      "`useEffect` chạy trước DOM update"
+    ],
+    "correctAnswer": "`useLayoutEffect` chạy đồng bộ trước paint",
+    "explanation": "`useLayoutEffect` chạy sau DOM update nhưng trước khi trình duyệt paint."
+  },
+  {
+    "id": 68,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Portal trong React dùng để làm gì?",
+    "options": [
+      "Render component ra ngoài cây DOM cha hiện tại",
+      "Tạo API",
+      "Tạo route",
+      "Tạo context"
+    ],
+    "correctAnswer": "Render component ra ngoài cây DOM cha hiện tại",
+    "explanation": "Portal thường dùng cho modal, tooltip."
+  },
+  {
+    "id": 69,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Error Boundary dùng để làm gì?",
+    "options": [
+      "Bắt lỗi runtime của component tree",
+      "Bắt lỗi API backend",
+      "Bắt lỗi CSS",
+      "Thay unit test"
+    ],
+    "correctAnswer": "Bắt lỗi runtime của component tree",
+    "explanation": "Error Boundary giúp hiển thị fallback UI khi component con lỗi."
+  },
+  {
+    "id": 70,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Error Boundary có thể tạo bằng gì trong React truyền thống?",
+    "options": [
+      "Functional component thuần",
+      "Class component với lifecycle phù hợp",
+      "useEffect",
+      "Context"
+    ],
+    "correctAnswer": "Class component với lifecycle phù hợp",
+    "explanation": "Error Boundary truyền thống thường dùng class component."
+  },
+  {
+    "id": 71,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`dangerouslySetInnerHTML` dùng để làm gì?",
+    "options": [
+      "Thêm className",
+      "Render HTML raw vào DOM",
+      "Tạo state",
+      "Chạy useEffect"
+    ],
+    "correctAnswer": "Render HTML raw vào DOM",
+    "explanation": "Nó cho phép render HTML string, cần cẩn thận vấn đề XSS."
+  },
+  {
+    "id": 72,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "SSR là viết tắt của gì?",
+    "options": [
+      "Single State Render",
+      "Server-Side Rendering",
+      "Static Server Route",
+      "State Sync Render"
+    ],
+    "correctAnswer": "Server-Side Rendering",
+    "explanation": "SSR là render HTML trên server trước khi gửi về client."
+  },
+  {
+    "id": 73,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Hydration trong React là gì?",
+    "options": [
+      "Làm sạch state",
+      "Gắn event và kích hoạt app lên HTML đã render sẵn",
+      "Xóa DOM cũ",
+      "Tạo CSS"
+    ],
+    "correctAnswer": "Gắn event và kích hoạt app lên HTML đã render sẵn",
+    "explanation": "Hydration xảy ra khi app React gắn vào HTML được render từ server."
+  },
+  {
+    "id": 74,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Khi nào nên dùng `useMemo`?",
+    "options": [
+      "Mọi lúc",
+      "Khi có phép tính nặng hoặc cần giữ reference ổn định",
+      "Chỉ khi gọi API",
+      "Để thay useState"
+    ],
+    "correctAnswer": "Khi có phép tính nặng hoặc cần giữ reference ổn định",
+    "explanation": "Lạm dụng `useMemo` có thể không hiệu quả."
+  },
+  {
+    "id": 75,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Khi nào nên dùng `useCallback`?",
+    "options": [
+      "Mọi function",
+      "Khi cần giữ reference hàm ổn định, nhất là truyền xuống child memoized",
+      "Thay cho event listener DOM",
+      "Để gọi API"
+    ],
+    "correctAnswer": "Khi cần giữ reference hàm ổn định, nhất là truyền xuống child memoized",
+    "explanation": "`useCallback` hữu ích khi tối ưu re-render."
+  },
+  {
+    "id": 76,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "State update với object/array nên làm thế nào?",
+    "options": [
+      "Mutate trực tiếp",
+      "Tạo bản sao mới rồi cập nhật",
+      "Chỉ dùng push()",
+      "Chỉ dùng splice()"
+    ],
+    "correctAnswer": "Tạo bản sao mới rồi cập nhật",
+    "explanation": "React cần reference mới để nhận biết thay đổi."
+  },
+  {
+    "id": 77,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Prop drilling là gì?",
+    "options": [
+      "Truyền props qua nhiều tầng trung gian không cần thiết",
+      "Drill dữ liệu từ API",
+      "Tối ưu render",
+      "Pattern của Redux"
+    ],
+    "correctAnswer": "Truyền props qua nhiều tầng trung gian không cần thiết",
+    "explanation": "Context giúp giảm prop drilling."
+  },
+  {
+    "id": 78,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Rule of Hooks nào đúng?",
+    "options": [
+      "Gọi hook ở bất cứ đâu",
+      "Chỉ gọi hook trong loop",
+      "Gọi hook ở top level của React function",
+      "Chỉ gọi hook trong class"
+    ],
+    "correctAnswer": "Gọi hook ở top level của React function",
+    "explanation": "Đây là rule quan trọng để hooks hoạt động đúng."
+  },
+  {
+    "id": 79,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Câu nào đúng về `children` prop?",
+    "options": [
+      "Không tồn tại trong React",
+      "Là nội dung lồng bên trong component",
+      "Chỉ dùng cho class",
+      "Là state đặc biệt"
+    ],
+    "correctAnswer": "Là nội dung lồng bên trong component",
+    "explanation": "`children` cho phép component bọc nội dung bên trong."
+  },
+  {
+    "id": 80,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`className` trong JSX tương đương với gì trong HTML?",
+    "options": [
+      "class",
+      "style",
+      "id",
+      "name"
+    ],
+    "correctAnswer": "class",
+    "explanation": "Trong JSX dùng `className` thay cho `class`."
+  },
+  {
+    "id": 81,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào dùng để gắn style inline trong JSX?",
+    "options": [
+      "style='color:red'",
+      "style={{ color: 'red' }}",
+      "css='red'",
+      "styles={color:red}"
+    ],
+    "correctAnswer": "style={{ color: 'red' }}",
+    "explanation": "Inline style trong JSX là object JavaScript."
+  },
+  {
+    "id": 82,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Cách bắt sự kiện click trong React là gì?",
+    "options": [
+      "onclick",
+      "onClick",
+      "on-click",
+      "click"
+    ],
+    "correctAnswer": "onClick",
+    "explanation": "Event trong JSX dùng camelCase."
+  },
+  {
+    "id": 83,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Khi render có điều kiện, cách nào phổ biến trong JSX?",
+    "options": [
+      "if trong return trực tiếp HTML thuần",
+      "ternary hoặc &&",
+      "switch trong attribute",
+      "while"
+    ],
+    "correctAnswer": "ternary hoặc &&",
+    "explanation": "React thường dùng ternary hoặc `&&` để render có điều kiện."
+  },
+  {
+    "id": 84,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Câu nào đúng về `default export`?",
+    "options": [
+      "Có thể có nhiều default export trong 1 file",
+      "Mỗi file chỉ nên có 1 default export",
+      "Không thể import đổi tên",
+      "Chỉ dùng cho CSS"
+    ],
+    "correctAnswer": "Mỗi file chỉ nên có 1 default export",
+    "explanation": "Mỗi module chỉ có một default export."
+  },
+  {
+    "id": 85,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Câu nào đúng về named export?",
+    "options": [
+      "Chỉ có một export",
+      "Có thể export nhiều tên",
+      "Không thể import riêng lẻ",
+      "Chỉ dùng cho component"
+    ],
+    "correctAnswer": "Có thể export nhiều tên",
+    "explanation": "Named export cho phép export nhiều biến/hàm/component."
+  },
+  {
+    "id": 86,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`useReducer` phù hợp khi nào?",
+    "options": [
+      "State rất đơn giản 1 input",
+      "Logic state phức tạp hoặc nhiều action",
+      "Chỉ cho CSS",
+      "Thay React Router"
+    ],
+    "correctAnswer": "Logic state phức tạp hoặc nhiều action",
+    "explanation": "`useReducer` phù hợp cho state transition rõ ràng."
+  },
+  {
+    "id": 87,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Context update có thể làm gì?",
+    "options": [
+      "Không ảnh hưởng render",
+      "Re-render các consumer liên quan",
+      "Crash app",
+      "Chỉ update server"
+    ],
+    "correctAnswer": "Re-render các consumer liên quan",
+    "explanation": "Khi value của context thay đổi, các consumer sẽ re-render."
+  },
+  {
+    "id": 88,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Memoization trong React nhằm mục đích gì?",
+    "options": [
+      "Giảm bundle size",
+      "Tránh tính toán hoặc re-render không cần thiết",
+      "Tăng số hook",
+      "Đổi JSX thành HTML"
+    ],
+    "correctAnswer": "Tránh tính toán hoặc re-render không cần thiết",
+    "explanation": "Memoization giúp tối ưu hiệu năng trong trường hợp phù hợp."
+  },
+  {
+    "id": 89,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Suspense trong React thường dùng với gì?",
+    "options": [
+      "CSS animation",
+      "Lazy loading/fallback UI",
+      "Redux",
+      "Axios"
+    ],
+    "correctAnswer": "Lazy loading/fallback UI",
+    "explanation": "Suspense thường hiển thị fallback khi component/code đang được tải."
+  },
+  {
+    "id": 90,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "`React.lazy` dùng để làm gì?",
+    "options": [
+      "Tạo API",
+      "Code splitting component",
+      "Tạo store",
+      "Test component"
+    ],
+    "correctAnswer": "Code splitting component",
+    "explanation": "`React.lazy` tải component theo nhu cầu."
+  },
+  {
+    "id": 91,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Trong form React, `onChange` thường cập nhật gì?",
+    "options": [
+      "Props",
+      "State",
+      "Context",
+      "Key"
+    ],
+    "correctAnswer": "State",
+    "explanation": "`onChange` thường cập nhật state của controlled input."
+  },
+  {
+    "id": 92,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Câu nào đúng về `setState` với object trong class component?",
+    "options": [
+      "Luôn thay thế toàn bộ state",
+      "Merge shallow object state",
+      "Không hoạt động",
+      "Chỉ dùng cho function"
+    ],
+    "correctAnswer": "Merge shallow object state",
+    "explanation": "Trong class component, `setState` merge shallow object."
+  },
+  {
+    "id": 93,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Trong `useState`, setter sẽ làm gì khi truyền giá trị mới?",
+    "options": [
+      "Mutate trực tiếp DOM",
+      "Lên lịch cập nhật state",
+      "Reload trang",
+      "Gọi API"
+    ],
+    "correctAnswer": "Lên lịch cập nhật state",
+    "explanation": "Setter từ `useState` không cập nhật DOM trực tiếp mà lên lịch render lại."
+  },
+  {
+    "id": 94,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Câu nào đúng về StrictMode trong React dev?",
+    "options": [
+      "Không có tác dụng gì",
+      "Giúp phát hiện vấn đề tiềm ẩn trong development",
+      "Dùng cho production only",
+      "Chặn mọi warning"
+    ],
+    "correctAnswer": "Giúp phát hiện vấn đề tiềm ẩn trong development",
+    "explanation": "StrictMode giúp cảnh báo các pattern không an toàn khi phát triển."
+  },
+  {
+    "id": 95,
+    "category": "React",
+    "difficulty": "medium",
+    "question": "Mục tiêu chính của code splitting là gì?",
+    "options": [
+      "Tăng số file CSS",
+      "Giảm lượng JS tải ban đầu",
+      "Xóa router",
+      "Tăng số component"
+    ],
+    "correctAnswer": "Giảm lượng JS tải ban đầu",
+    "explanation": "Code splitting giúp tối ưu hiệu năng tải trang đầu."
+  },
+  {
+    "id": 96,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính CSS nào dùng để tạo layout 1 chiều linh hoạt?",
+    "options": [
+      "grid",
+      "flex",
+      "float",
+      "position"
+    ],
+    "correctAnswer": "flex",
+    "explanation": "`display: flex` tạo layout 1 chiều rất linh hoạt."
+  },
+  {
+    "id": 97,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào dùng để ẩn phần nội dung tràn ra ngoài?",
+    "options": [
+      "display:none",
+      "visibility:hidden",
+      "overflow:hidden",
+      "opacity:0"
+    ],
+    "correctAnswer": "overflow:hidden",
+    "explanation": "`overflow: hidden` sẽ ẩn phần nội dung tràn khỏi box."
+  },
+  {
+    "id": 98,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Trong box model, thứ tự đúng từ trong ra ngoài là gì?",
+    "options": [
+      "content -> border -> padding -> margin",
+      "content -> padding -> border -> margin",
+      "padding -> content -> border -> margin",
+      "margin -> border -> padding -> content"
+    ],
+    "correctAnswer": "content -> padding -> border -> margin",
+    "explanation": "Thứ tự chuẩn của box model là content, padding, border, margin."
+  },
+  {
+    "id": 99,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào giúp phần tử flex chiếm hết không gian còn lại?",
+    "options": [
+      "width:auto",
+      "flex:1",
+      "position:absolute",
+      "display:block"
+    ],
+    "correctAnswer": "flex:1",
+    "explanation": "`flex: 1` cho phép item giãn ra chiếm phần còn lại."
+  },
+  {
+    "id": 100,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Media query dùng để làm gì?",
+    "options": [
+      "Gọi API",
+      "Tạo giao diện responsive theo kích thước màn hình",
+      "Tạo animation",
+      "Tạo database"
+    ],
+    "correctAnswer": "Tạo giao diện responsive theo kích thước màn hình",
+    "explanation": "Media query là nền tảng cho responsive design."
+  },
+  {
+    "id": 101,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Trong flex direction mặc định là row, thuộc tính nào căn giữa theo trục ngang?",
+    "options": [
+      "align-items:center",
+      "justify-content:center",
+      "text-align:center",
+      "margin:auto"
+    ],
+    "correctAnswer": "justify-content:center",
+    "explanation": "Với flex row, trục ngang là main axis nên dùng `justify-content`."
+  },
+  {
+    "id": 102,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào dùng để căn giữa theo trục dọc trong flex row?",
+    "options": [
+      "align-items:center",
+      "justify-content:center",
+      "vertical-align:center",
+      "text-align:center"
+    ],
+    "correctAnswer": "align-items:center",
+    "explanation": "Với flex row, trục dọc là cross axis nên dùng `align-items`."
+  },
+  {
+    "id": 103,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thẻ HTML nào là semantic cho phần điều hướng?",
+    "options": [
+      "div",
+      "nav",
+      "section",
+      "aside"
+    ],
+    "correctAnswer": "nav",
+    "explanation": "`<nav>` dùng cho khu vực điều hướng."
+  },
+  {
+    "id": 104,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thẻ HTML nào phù hợp nhất cho tiêu đề chính của trang?",
+    "options": [
+      "div",
+      "span",
+      "h1",
+      "p"
+    ],
+    "correctAnswer": "h1",
+    "explanation": "`<h1>` là tiêu đề chính có ý nghĩa semantic."
+  },
+  {
+    "id": 105,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính CSS nào điều khiển thứ tự ưu tiên chồng lớp?",
+    "options": [
+      "overflow",
+      "z-index",
+      "opacity",
+      "order"
+    ],
+    "correctAnswer": "z-index",
+    "explanation": "`z-index` quyết định độ ưu tiên khi các phần tử chồng lên nhau."
+  },
+  {
+    "id": 106,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Position nào giúp phần tử bám theo viewport khi cuộn?",
+    "options": [
+      "absolute",
+      "relative",
+      "fixed",
+      "static"
+    ],
+    "correctAnswer": "fixed",
+    "explanation": "`position: fixed` bám theo viewport."
+  },
+  {
+    "id": 107,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Position nào định vị phần tử tương đối so với chính nó ban đầu?",
+    "options": [
+      "absolute",
+      "relative",
+      "fixed",
+      "sticky"
+    ],
+    "correctAnswer": "relative",
+    "explanation": "`position: relative` dịch chuyển phần tử so với vị trí ban đầu."
+  },
+  {
+    "id": 108,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Position absolute sẽ lấy mốc theo đâu nếu cha gần nhất có position khác static?",
+    "options": [
+      "viewport",
+      "body",
+      "cha đó",
+      "document root"
+    ],
+    "correctAnswer": "cha đó",
+    "explanation": "Absolute sẽ căn theo ancestor gần nhất có position khác `static`."
+  },
+  {
+    "id": 109,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào làm phần tử trong suốt hoàn toàn nhưng vẫn chiếm chỗ?",
+    "options": [
+      "display:none",
+      "visibility:hidden",
+      "opacity:0",
+      "remove()"
+    ],
+    "correctAnswer": "opacity:0",
+    "explanation": "`opacity: 0` làm trong suốt nhưng phần tử vẫn tồn tại trong layout."
+  },
+  {
+    "id": 110,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "`display: none` có đặc điểm gì?",
+    "options": [
+      "Ẩn nhưng vẫn chiếm chỗ",
+      "Ẩn và không chiếm chỗ",
+      "Chỉ ẩn text",
+      "Chỉ dùng cho img"
+    ],
+    "correctAnswer": "Ẩn và không chiếm chỗ",
+    "explanation": "`display: none` loại phần tử khỏi layout."
+  },
+  {
+    "id": 111,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào giúp bo góc phần tử?",
+    "options": [
+      "border-style",
+      "border-radius",
+      "box-shadow",
+      "outline"
+    ],
+    "correctAnswer": "border-radius",
+    "explanation": "`border-radius` dùng để bo góc."
+  },
+  {
+    "id": 112,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Pseudo-class nào áp dụng khi hover chuột?",
+    "options": [
+      ":focus",
+      ":active",
+      ":hover",
+      ":visited"
+    ],
+    "correctAnswer": ":hover",
+    "explanation": "`:hover` áp dụng style khi rê chuột lên phần tử."
+  },
+  {
+    "id": 113,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Pseudo-class nào áp dụng khi input đang được focus?",
+    "options": [
+      ":hover",
+      ":focus",
+      ":checked",
+      ":visited"
+    ],
+    "correctAnswer": ":focus",
+    "explanation": "`:focus` áp dụng khi phần tử nhận focus."
+  },
+  {
+    "id": 114,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào thường dùng để kiểm soát font chữ?",
+    "options": [
+      "font-family",
+      "text-transform",
+      "line-break",
+      "word-wrap"
+    ],
+    "correctAnswer": "font-family",
+    "explanation": "`font-family` xác định họ font."
+  },
+  {
+    "id": 115,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Trong responsive design, đơn vị nào thường linh hoạt hơn pixel cho text?",
+    "options": [
+      "px",
+      "pt",
+      "rem",
+      "cm"
+    ],
+    "correctAnswer": "rem",
+    "explanation": "`rem` giúp giao diện linh hoạt và dễ scale hơn."
+  },
+  {
+    "id": 116,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào giúp text xuống dòng khi từ quá dài?",
+    "options": [
+      "white-space: nowrap",
+      "word-break: break-word",
+      "overflow: visible",
+      "text-wrap: none"
+    ],
+    "correctAnswer": "word-break: break-word",
+    "explanation": "Thiết lập kiểu break giúp text dài không tràn layout."
+  },
+  {
+    "id": 117,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào thêm khoảng cách bên trong phần tử?",
+    "options": [
+      "margin",
+      "padding",
+      "gap",
+      "border"
+    ],
+    "correctAnswer": "padding",
+    "explanation": "`padding` là khoảng cách bên trong phần tử."
+  },
+  {
+    "id": 118,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào thêm khoảng cách bên ngoài phần tử?",
+    "options": [
+      "padding",
+      "margin",
+      "gap",
+      "inset"
+    ],
+    "correctAnswer": "margin",
+    "explanation": "`margin` là khoảng cách bên ngoài phần tử."
+  },
+  {
+    "id": 119,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "`alt` của thẻ img có ý nghĩa gì?",
+    "options": [
+      "Tăng kích thước ảnh",
+      "Cung cấp mô tả thay thế và hỗ trợ accessibility",
+      "Tạo lazy load",
+      "Nén ảnh"
+    ],
+    "correctAnswer": "Cung cấp mô tả thay thế và hỗ trợ accessibility",
+    "explanation": "`alt` quan trọng cho trợ năng và khi ảnh không tải được."
+  },
+  {
+    "id": 120,
+    "category": "HTML/CSS",
+    "difficulty": "medium",
+    "question": "Thuộc tính `gap` thường dùng với layout nào?",
+    "options": [
+      "flex/grid",
+      "position fixed",
+      "z-index",
+      "overflow"
+    ],
+    "correctAnswer": "flex/grid",
+    "explanation": "`gap` thường dùng để tạo khoảng cách giữa item trong flex hoặc grid."
+  },
+  {
+    "id": 121,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "HTTP status code nào biểu thị request thành công phổ biến?",
+    "options": [
+      "404",
+      "500",
+      "200",
+      "301"
+    ],
+    "correctAnswer": "200",
+    "explanation": "200 OK là mã thành công phổ biến."
+  },
+  {
+    "id": 122,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "HTTP status code 404 nghĩa là gì?",
+    "options": [
+      "Unauthorized",
+      "Not Found",
+      "Server Error",
+      "Bad Request"
+    ],
+    "correctAnswer": "Not Found",
+    "explanation": "404 nghĩa là tài nguyên không được tìm thấy."
+  },
+  {
+    "id": 123,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "Method nào thường dùng để lấy dữ liệu?",
+    "options": [
+      "POST",
+      "GET",
+      "PUT",
+      "DELETE"
+    ],
+    "correctAnswer": "GET",
+    "explanation": "GET dùng để lấy dữ liệu."
+  },
+  {
+    "id": 124,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "Method nào thường dùng để tạo mới dữ liệu?",
+    "options": [
+      "GET",
+      "POST",
+      "DELETE",
+      "OPTIONS"
+    ],
+    "correctAnswer": "POST",
+    "explanation": "POST thường dùng để tạo resource mới."
+  },
+  {
+    "id": 125,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "Method nào thường dùng để cập nhật toàn bộ tài nguyên?",
+    "options": [
+      "PATCH",
+      "PUT",
+      "GET",
+      "HEAD"
+    ],
+    "correctAnswer": "PUT",
+    "explanation": "PUT thường biểu thị cập nhật toàn bộ resource."
+  },
+  {
+    "id": 126,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "Method nào thường dùng để cập nhật một phần tài nguyên?",
+    "options": [
+      "PATCH",
+      "TRACE",
+      "GET",
+      "CONNECT"
+    ],
+    "correctAnswer": "PATCH",
+    "explanation": "PATCH thường dùng để cập nhật một phần resource."
+  },
+  {
+    "id": 127,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "JWT thường được dùng để làm gì?",
+    "options": [
+      "Render HTML",
+      "Xác thực/ủy quyền người dùng",
+      "Nén ảnh",
+      "Tạo CSS"
+    ],
+    "correctAnswer": "Xác thực/ủy quyền người dùng",
+    "explanation": "JWT hay dùng trong cơ chế auth token-based."
+  },
+  {
+    "id": 128,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "CORS liên quan đến điều gì?",
+    "options": [
+      "Tối ưu ảnh",
+      "Chính sách cross-origin của trình duyệt",
+      "Nén file JS",
+      "Tạo route"
+    ],
+    "correctAnswer": "Chính sách cross-origin của trình duyệt",
+    "explanation": "CORS kiểm soát request khác origin."
+  },
+  {
+    "id": 129,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "Status code 401 thường nghĩa là gì?",
+    "options": [
+      "Forbidden",
+      "Unauthorized",
+      "Conflict",
+      "Created"
+    ],
+    "correctAnswer": "Unauthorized",
+    "explanation": "401 thường là chưa được xác thực hợp lệ."
+  },
+  {
+    "id": 130,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "Status code 403 thường nghĩa là gì?",
+    "options": [
+      "Unauthorized",
+      "Forbidden",
+      "Not Found",
+      "Accepted"
+    ],
+    "correctAnswer": "Forbidden",
+    "explanation": "403 là có thể đã xác thực nhưng không có quyền truy cập."
+  },
+  {
+    "id": 131,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "Status code 500 nghĩa là gì?",
+    "options": [
+      "Client redirect",
+      "Server internal error",
+      "Token expired only",
+      "No content"
+    ],
+    "correctAnswer": "Server internal error",
+    "explanation": "500 là lỗi phía server."
+  },
+  {
+    "id": 132,
+    "category": "HTTP",
+    "difficulty": "medium",
+    "question": "Header nào thường dùng để gửi token Bearer?",
+    "options": [
+      "Content-Type",
+      "Authorization",
+      "Accept",
+      "Cache-Control"
+    ],
+    "correctAnswer": "Authorization",
+    "explanation": "Token thường được gửi trong header `Authorization`."
+  },
+  {
+    "id": 133,
+    "category": "Testing",
+    "difficulty": "medium",
+    "question": "Unit test dùng để làm gì?",
+    "options": [
+      "Test toàn bộ hệ thống production",
+      "Test đơn vị nhỏ như function/component",
+      "Chỉ test database",
+      "Chỉ test UI bằng tay"
+    ],
+    "correctAnswer": "Test đơn vị nhỏ như function/component",
+    "explanation": "Unit test tập trung vào từng đơn vị logic nhỏ."
+  },
+  {
+    "id": 134,
+    "category": "Testing",
+    "difficulty": "medium",
+    "question": "Mock trong testing dùng để làm gì?",
+    "options": [
+      "Xóa component",
+      "Mô phỏng dependency bên ngoài",
+      "Build production",
+      "Bật dark mode"
+    ],
+    "correctAnswer": "Mô phỏng dependency bên ngoài",
+    "explanation": "Mock giúp cô lập phần cần test."
+  },
+  {
+    "id": 135,
+    "category": "Testing",
+    "difficulty": "medium",
+    "question": "Assertion trong test là gì?",
+    "options": [
+      "Lệnh import",
+      "Điều kiện kiểm tra kết quả mong đợi",
+      "Hook của React",
+      "Lệnh build"
+    ],
+    "correctAnswer": "Điều kiện kiểm tra kết quả mong đợi",
+    "explanation": "Assertion xác nhận kết quả thực tế có đúng kỳ vọng không."
+  },
+  {
+    "id": 136,
+    "category": "Git",
+    "difficulty": "medium",
+    "question": "Lệnh nào lấy code mới nhất từ remote và merge về branch hiện tại?",
+    "options": [
+      "git push",
+      "git pull",
+      "git clone",
+      "git reset"
+    ],
+    "correctAnswer": "git pull",
+    "explanation": "`git pull` tương đương fetch + merge/rebase tùy cấu hình."
+  },
+  {
+    "id": 137,
+    "category": "Git",
+    "difficulty": "medium",
+    "question": "Lệnh nào dùng để gửi commit local lên remote?",
+    "options": [
+      "git fetch",
+      "git push",
+      "git init",
+      "git checkout"
+    ],
+    "correctAnswer": "git push",
+    "explanation": "`git push` gửi commit local lên remote."
+  },
+  {
+    "id": 138,
+    "category": "Git",
+    "difficulty": "medium",
+    "question": "Lệnh nào tạo branch mới và chuyển sang branch đó?",
+    "options": [
+      "git status",
+      "git branch",
+      "git checkout -b",
+      "git log"
+    ],
+    "correctAnswer": "git checkout -b",
+    "explanation": "`git checkout -b` tạo branch mới và checkout ngay."
+  },
+  {
+    "id": 139,
+    "category": "Git",
+    "difficulty": "medium",
+    "question": "Lệnh nào xem trạng thái file hiện tại?",
+    "options": [
+      "git diff",
+      "git log",
+      "git status",
+      "git show"
+    ],
+    "correctAnswer": "git status",
+    "explanation": "`git status` hiển thị trạng thái working tree và staging area."
+  },
+  {
+    "id": 140,
+    "category": "Git",
+    "difficulty": "medium",
+    "question": "Lệnh nào dùng để xem lịch sử commit?",
+    "options": [
+      "git commit",
+      "git log",
+      "git stash",
+      "git remote"
+    ],
+    "correctAnswer": "git log",
+    "explanation": "`git log` dùng để xem lịch sử commit."
+  },
+  {
+    "id": 141,
+    "category": "Git",
+    "difficulty": "medium",
+    "question": "Staging area trong Git là gì?",
+    "options": [
+      "Nơi lưu production",
+      "Khu vực tạm trước khi commit",
+      "Remote branch",
+      "Config file"
+    ],
+    "correctAnswer": "Khu vực tạm trước khi commit",
+    "explanation": "Các thay đổi được add vào staging trước khi commit."
+  },
+  {
+    "id": 142,
+    "category": "Build",
+    "difficulty": "medium",
+    "question": "Lệnh `npm install` dùng để làm gì?",
+    "options": [
+      "Chạy production",
+      "Cài package",
+      "Build CSS",
+      "Xóa node_modules"
+    ],
+    "correctAnswer": "Cài package",
+    "explanation": "`npm install` dùng để cài dependencies."
+  },
+  {
+    "id": 143,
+    "category": "Build",
+    "difficulty": "medium",
+    "question": "Lệnh `npm run build` thường dùng để làm gì?",
+    "options": [
+      "Chạy test",
+      "Tạo bản build production",
+      "Tạo git branch",
+      "Khởi tạo package"
+    ],
+    "correctAnswer": "Tạo bản build production",
+    "explanation": "Lệnh này tạo output tối ưu cho production."
+  },
+  {
+    "id": 144,
+    "category": "Build",
+    "difficulty": "medium",
+    "question": "SPA là viết tắt của gì?",
+    "options": [
+      "Single Page Application",
+      "Server Page App",
+      "Static Page API",
+      "State Page App"
+    ],
+    "correctAnswer": "Single Page Application",
+    "explanation": "SPA là ứng dụng web chủ yếu hoạt động trong một trang."
+  },
+  {
+    "id": 145,
+    "category": "Build",
+    "difficulty": "medium",
+    "question": "Tool nào thường dùng để quản lý package JavaScript?",
+    "options": [
+      "npm",
+      "Figma",
+      "Postman",
+      "Nginx"
+    ],
+    "correctAnswer": "npm",
+    "explanation": "`npm` là package manager phổ biến trong hệ sinh thái Node.js."
+  },
+  {
+    "id": 146,
+    "category": "Accessibility",
+    "difficulty": "medium",
+    "question": "Thuộc tính nào giúp liên kết label với input?",
+    "options": [
+      "for",
+      "name",
+      "placeholder",
+      "id only"
+    ],
+    "correctAnswer": "for",
+    "explanation": "Thuộc tính `for` của `label` liên kết với `id` của `input`."
+  },
+  {
+    "id": 147,
+    "category": "Accessibility",
+    "difficulty": "medium",
+    "question": "Lợi ích của semantic HTML là gì?",
+    "options": [
+      "Tăng màu sắc",
+      "Tăng khả năng hiểu cấu trúc cho trình duyệt và công cụ hỗ trợ",
+      "Giảm số file JS",
+      "Tạo API"
+    ],
+    "correctAnswer": "Tăng khả năng hiểu cấu trúc cho trình duyệt và công cụ hỗ trợ",
+    "explanation": "Semantic HTML tốt cho accessibility và SEO."
+  },
+  {
+    "id": 148,
+    "category": "Security",
+    "difficulty": "medium",
+    "question": "XSS là gì?",
+    "options": [
+      "Lỗi database",
+      "Chèn mã độc vào nội dung hiển thị trên trang",
+      "Lỗi build React",
+      "Lỗi DNS"
+    ],
+    "correctAnswer": "Chèn mã độc vào nội dung hiển thị trên trang",
+    "explanation": "XSS là lỗ hổng cho phép script độc chạy trên trình duyệt người dùng."
+  },
+  {
+    "id": 149,
+    "category": "Security",
+    "difficulty": "medium",
+    "question": "Để giảm nguy cơ XSS khi render HTML từ server trong React, cần làm gì?",
+    "options": [
+      "Luôn dùng dangerouslySetInnerHTML",
+      "Sanitize dữ liệu đầu vào/đầu ra",
+      "Tắt CORS",
+      "Dùng index làm key"
+    ],
+    "correctAnswer": "Sanitize dữ liệu đầu vào/đầu ra",
+    "explanation": "Cần sanitize HTML trước khi render để giảm rủi ro XSS."
+  },
+  {
+    "id": 150,
+    "category": "Responsive",
+    "difficulty": "medium",
+    "question": "Mobile-first nghĩa là gì?",
+    "options": [
+      "Thiết kế desktop trước",
+      "Ưu tiên thiết kế cho màn hình nhỏ trước rồi mở rộng lên",
+      "Chỉ hỗ trợ mobile",
+      "Chỉ viết media query max-width"
+    ],
+    "correctAnswer": "Ưu tiên thiết kế cho màn hình nhỏ trước rồi mở rộng lên",
+    "explanation": "Mobile-first là cách tiếp cận phổ biến trong responsive design."
+  }
+]

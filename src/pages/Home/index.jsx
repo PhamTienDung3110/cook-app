@@ -22,6 +22,9 @@ function Home() {
       <Card.Grid style={gridStyle}>
         <Link to="/react">React</Link>
       </Card.Grid>
+      <Card.Grid style={gridStyle}>
+        <Link to="/quiz">Bài thi trắc nghiệm</Link>
+      </Card.Grid>
     </Card>
   );
 }

@@ -2,98 +2,54 @@ import { Button, Card, Checkbox, Col, Row } from "antd";
 import { PlayCircleOutlined } from "@ant-design/icons";
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { QnAReact as QnAReactSenior } from "../../data/react/senior";
-import { QnAReact as QnAReactMiddle } from "../../data/react/middle";
+import QnAReactJunior from "../../data/QAReactJunior";
+import QnAReactMiddle from "../../data/QAReactMiddle";
+import QnAReactSenior from "../../data/QAReactSenior";
 
 function ReactPage() {
-  const [filterLevels, setFilterLevels] = useState({});
+  const [roles, setRoles] = useState({
+    senior: false,
+    middle: false,
+    junior: true,
+  });
   const navigate = useNavigate();
 
-  // Merge tất cả questions từ senior và middle
-  const allQuestions = useMemo(() => {
-    return [...QnAReactSenior, ...QnAReactMiddle];
-  }, []);
-
-  // Định nghĩa các chủ đề với tên hiển thị ngắn gọn
-  const topics = [
-    {
-      key: "react-rendering",
-      title: "Rendering",
-      description: "Reconciliation, Virtual DOM, Hydration, StrictMode"
-    },
-    {
-      key: "hooks-advanced",
-      title: "Hooks",
-      description: "useEffect, useLayoutEffect, Custom Hooks, Closures"
-    },
-    {
-      key: "performance-optimization",
-      title: "Performance",
-      description: "Memoization, Virtualization, Profiling, Bundle analysis"
-    },
-    {
-      key: "data-fetching",
-      title: "Data Fetching",
-      description: "React Query, RTK Query, Server vs Client fetching"
-    },
-    {
-      key: "state-management",
-      title: "State Management",
-      description: "Redux, Zustand, Context, State design patterns"
-    },
-    {
-      key: "auth-security",
-      title: "Security",
-      description: "XSS, CSRF, JWT, Role-based auth, Cookies"
-    },
-    {
-      key: "testing-quality",
-      title: "Testing",
-      description: "Unit tests, Integration tests, E2E, Test pyramid"
-    },
-    {
-      key: "architecture-leadership",
-      title: "Architecture",
-      description: "Code review, Refactoring, Tech debt, Tech stack decisions"
-    },
-    {
-      key: "system-design",
-      title: "System Design",
-      description: "Frontend architecture, Performance optimization, Migrations"
-    }
-  ];
-
-  const handlePracticeClick = (topic) => {
-    const topicFilters = getFilterLevels(topic.key);
-
-    // Tạo danh sách roles được chọn
-    const selectedRoles = [];
-    if (topicFilters.senior) selectedRoles.push('senior');
-    if (topicFilters.middle) selectedRoles.push('middle');
-    if (topicFilters.junior) selectedRoles.push('junior');
-
-    // Nếu không có role nào được chọn, mặc định chọn senior
-    const rolesParam = selectedRoles.length > 0 ? selectedRoles.join(',') : 'senior';
-
-    navigate(`/react/practice/${topic.key}?roles=${rolesParam}`);
+  const roleToExperienceLabel = {
+    junior: "1-2 năm",
+    middle: "3-5 năm",
+    senior: "6+ năm",
   };
 
-  const getFilterLevels = (topicKey) => {
-    return filterLevels[topicKey] || {
-      senior: true,
-      middle: true,
-      junior: false
-    };
+  const questionsByRole = {
+    junior: QnAReactJunior,
+    middle: QnAReactMiddle,
+    senior: QnAReactSenior,
   };
 
-  const handleFilterChange = (topicKey, level, checked) => {
-    setFilterLevels(prev => ({
-      ...prev,
-      [topicKey]: {
-        ...getFilterLevels(topicKey),
-        [level]: checked
-      }
-    }));
+  const getQuestionsByRole = (role) => questionsByRole[role] || [];
+
+  const selectedRoles = useMemo(
+    () =>
+      Object.entries(roles)
+        .filter(([, checked]) => checked)
+        .map(([role]) => role),
+    [roles]
+  );
+
+  const questions = useMemo(() => {
+    const qs = [];
+    if (roles.junior) qs.push(...QnAReactJunior);
+    if (roles.middle) qs.push(...QnAReactMiddle);
+    if (roles.senior) qs.push(...QnAReactSenior);
+
+    // fallback: nếu người dùng tắt hết (trường hợp hiếm), dùng junior làm mặc định.
+    if (qs.length === 0) return QnAReactJunior;
+    return qs;
+  }, [roles]);
+
+  const handlePracticeClick = () => {
+    const rolesParam = selectedRoles.length > 0 ? selectedRoles.join(",") : "junior";
+    navigate(`/react/practice?roles=${rolesParam}`);
   };
 
   return (
@@ -334,80 +290,79 @@ function ReactPage() {
         <div className="hero-header">
           <h1 className="hero-title">ReactJS Knowledge</h1>
           <p className="hero-subtitle">Master React concepts with interactive practice sessions</p>
-          <p className="hero-description">Choose your skill level and dive deep into React fundamentals, advanced patterns, and best practices</p>
+          <p className="hero-description">Chọn số năm kinh nghiệm và luyện tập các câu hỏi React theo bộ dữ liệu hiện tại</p>
         </div>
 
         <div className="max-w-7xl mx-auto">
-          <Row gutter={[24, 24]}>
-            {topics.map((topic) => {
-              const topicFilters = getFilterLevels(topic.key);
+          <div className="filter-section">
+            <div className="flex items-center justify-between gap-3">
+              <div className="text-sm font-semibold">
+                Chọn số năm kinh nghiệm (lọc theo level trong `src/data/QAReact.jsx`)
+              </div>
+              <Button
+                className="practice-button"
+                size="small"
+                onClick={handlePracticeClick}
+                icon={<PlayCircleOutlined />}
+              >
+                {questions.length}
+              </Button>
+            </div>
+            <div className="text-sm font-semibold mt-2">
+              Đang chọn:{" "}
+              {selectedRoles.length > 0
+                ? selectedRoles.map((r) => roleToExperienceLabel[r] || r).join(", ")
+                : roleToExperienceLabel.senior}
+            </div>
+          </div>
 
-              // Lọc câu hỏi theo level được chọn cho topic này
-              const questions = allQuestions.filter(q => {
-                if (q.type !== topic.key) return false;
-
-                if (topicFilters.senior && (!q.role || q.role === "senior")) return true;
-                if (topicFilters.middle && q.role === "middle") return true;
-                if (topicFilters.junior && q.role === "junior") return true;
-
-                return false;
-              });
-
+          <Row gutter={[24, 24]} style={{ marginTop: 16 }}>
+            {[
+              {
+                role: "junior",
+                label: roleToExperienceLabel.junior,
+                className: "junior-label",
+              },
+              {
+                role: "middle",
+                label: roleToExperienceLabel.middle,
+                className: "middle-label",
+              },
+              {
+                role: "senior",
+                label: roleToExperienceLabel.senior,
+                className: "senior-label",
+              },
+            ].map((levelCard) => {
+              const levelQuestions = getQuestionsByRole(levelCard.role);
               return (
-                <Col xs={24} sm={12} lg={8} key={topic.key}>
+                <Col xs={24} sm={12} lg={8} key={levelCard.role}>
                   <Card
                     className="topic-card"
+                    bordered={false}
                     title={
                       <div>
-                        <div className="card-title">{topic.key}</div>
-                        <div className="card-description">{topic.description}</div>
+                        <div className="card-title">
+                          <span className={levelCard.className}>{levelCard.label}</span>
+                        </div>
+                        <div className="card-description">
+                          {levelQuestions.length} câu hỏi
+                        </div>
                       </div>
                     }
-                    bordered={false}
                     extra={
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1">
-                          <Checkbox
-                            checked={topicFilters.junior}
-                            onChange={(e) => handleFilterChange(topic.key, 'junior', e.target.checked)}
-                            size="small"
-                            className="level-checkbox"
-                          >
-                            <span className="junior-label">Junior</span>
-                          </Checkbox>
-                          <Checkbox
-                            checked={topicFilters.middle}
-                            onChange={(e) => handleFilterChange(topic.key, 'middle', e.target.checked)}
-                            size="small"
-                            className="level-checkbox"
-                          >
-                            <span className="middle-label">Middle</span>
-                          </Checkbox>
-                          <Checkbox
-                            checked={topicFilters.senior}
-                            onChange={(e) => handleFilterChange(topic.key, 'senior', e.target.checked)}
-                            size="small"
-                            className="level-checkbox"
-                          >
-                            <span className="senior-label">Senior</span>
-                          </Checkbox>
-                        </div>
-                        <Button
-                          className="practice-button"
-                          size="small"
-                          onClick={() => handlePracticeClick(topic)}
-                          icon={<PlayCircleOutlined />}
-                        >
-                          {questions.length}
-                        </Button>
-                      </div>
+                      <Checkbox
+                        checked={roles[levelCard.role]}
+                        onChange={(e) =>
+                          setRoles((prev) => ({ ...prev, [levelCard.role]: e.target.checked }))
+                        }
+                        size="small"
+                        className="level-checkbox"
+                      />
                     }
                   >
-                    <div className="mb-1">
-                      <div className="text-xl font-mono font-bold text-black bg-gray-100 px-2 rounded inline-block">{topic.key}</div>
-                    </div>
                     <div className="questions-list">
-                      {questions.map((ele, index) => (
+                      {levelQuestions.slice(0, 10).map((ele, index) => (
                         <div className="question-item" key={ele.question}>
                           <span className="question-number">{index + 1}.</span>
                           {ele.question}

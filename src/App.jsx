@@ -20,8 +20,8 @@ function App() {
         <Route path="/vue" element={<VuePage />} />
         <Route path="/javascript" element={<JavascriptPage />} />
         <Route path="/css/practice/:type" element={<PracticeCSS />} />
-        <Route path="/react/practice/:type" element={<PracticeReact />} />
-        <Route path="/javascript/practice/:type" element={<PracticeJavascript />} />
+        <Route path="/react/practice" element={<PracticeReact />} />
+        <Route path="/javascript/practice" element={<PracticeJavascript />} />
         <Route path="/vue/practice" element={<PracticeVue />} />
         <Route path="/quiz" element={<QuizPage />} />
       </Routes>

@@ -3184,6 +3184,240 @@ export default function handler(req, res) {
     role: "senior",
     type: "system-design",
   },
+  // =================== JUNIOR KNOWLEDGE (ADDED) ===================
+  {
+    question: "redux là gì",
+    answer: `
+<h2>Giải thích</h2>
+<p>Redux là một <strong>thư viện quản lý state</strong> giúp ứng dụng có cấu trúc rõ ràng khi state thay đổi qua nhiều màn hình/component.</p>
+<p>Các phần quan trọng trong Redux:</p>
+<ul>
+  <li><strong>Store</strong>: nơi lưu toàn bộ <strong>state</strong> của ứng dụng.</li>
+  <li><strong>Action</strong>: mô tả “một sự kiện” xảy ra (thường có trường <code>type</code> và có thể kèm payload).</li>
+  <li><strong>Reducer</strong>: hàm pure nhận <em>prevState</em> + <em>action</em> và trả về <em>nextState</em>.</li>
+</ul>
+<p>Cốt lõi của Redux là luồng <strong>one-way data flow</strong>:</p>
+<ul>
+  <li><em>UI/logic</em> dispatch action</li>
+  <li><em>Reducer</em> tạo ra state mới</li>
+  <li><em>Store</em> cập nhật</li>
+  <li><em>UI</em> re-render theo state mới</li>
+</ul>
+<p>Ngoài ra, vì mọi thay đổi đều đi qua action/reducer nên state <strong>predictable</strong> hơn và debug dễ hơn (trace được “ai làm gì” bằng action log).</p>
+<h2>Trả lời phỏng vấn</h2>
+<p>“Redux là state management theo hướng tập trung: em có <strong>store</strong> làm nguồn dữ liệu chính. Mỗi khi có sự kiện, em <strong>dispatch action</strong> (type + payload), <strong>reducer</strong> (pure) sẽ tính ra <strong>state mới</strong>. Nhờ luồng <strong>one-way</strong> và reducer thuần nên state predictable, action log giúp debug nhanh.”</p>
+`,
+    role: "junior",
+    // type chỉ dùng cho bước derive role nội bộ; không ảnh hưởng UI vì role đã set sẵn.
+    type: "junior",
+  },
+  {
+    question: "các hoạt động của redux",
+    answer: `
+<h2>Giải thích</h2>
+<ol>
+  <li>
+    <strong>Dispatch action</strong>
+    <br/>
+    Khi user thao tác hoặc logic cần cập nhật, UI gửi một action vào Redux để mô tả “điều gì vừa xảy ra”.
+  </li>
+  <li>
+    <strong>Middleware (nếu có)</strong>
+    <br/>
+    Middleware nằm giữa dispatch và reducer để xử lý nghiệp vụ/bất đồng bộ, ví dụ gọi API, logging, hoặc các pattern như thunk.
+  </li>
+  <li>
+    <strong>Reducer xử lý</strong>
+    <br/>
+    Reducer nhận <em>prevState</em> + <em>action</em> và trả về <em>nextState</em>. Reducer nên là <strong>pure</strong> để đảm bảo kết quả dự đoán được.
+  </li>
+  <li>
+    <strong>Store cập nhật</strong>
+    <br/>
+    Store ghi nhận state mới.
+  </li>
+  <li>
+    <strong>UI re-render</strong>
+    <br/>
+    Các component subscribe vào store (ví dụ qua <code>react-redux</code>) sẽ render lại dựa trên state mới.
+  </li>
+</ol>
+<p><strong>Nguyên tắc:</strong> state không bị mutate trực tiếp; luôn tạo state mới từ reducer để giữ tính predictable và debug dễ.</p>
+<h2>Trả lời phỏng vấn</h2>
+<p>“Em hiểu luồng Redux là: <strong>dispatch action</strong> → (nếu có) <strong>middleware</strong> xử lý bất đồng bộ → <strong>reducer</strong> tính <strong>state mới</strong> theo action → store cập nhật → UI/consumer re-render theo state đó. Vì reducer thuần nên state minh bạch và debug tốt nhờ action log.”</p>
+`,
+    role: "junior",
+    type: "junior",
+  },
+  {
+    question: "lifecycle của react",
+    answer: `
+<h2>Giải thích</h2>
+<p>Lifecycle là vòng đời một component trải qua trong React, gồm 3 giai đoạn:</p>
+<ul>
+  <li><strong>Mount</strong>: component render lần đầu và xuất hiện trên DOM.</li>
+  <li><strong>Update</strong>: component re-render khi props/state thay đổi.</li>
+  <li><strong>Unmount</strong>: component bị gỡ khỏi DOM.</li>
+</ul>
+<p>Với <strong>function component</strong>, lifecycle thường được hiểu qua Hooks (đặc biệt là <code>useEffect</code>):</p>
+<ul>
+  <li><strong>Mount</strong>: effect chạy sau lần render đầu tiên.</li>
+  <li><strong>Update</strong>: effect chạy lại khi dependency array thay đổi (hoặc chạy mỗi render nếu không truyền deps).</li>
+  <li><strong>Unmount</strong>: React gọi <strong>cleanup</strong> (hàm return của useEffect) để hủy timer/subscription và dọn side-effect.</li>
+</ul>
+<p>Nếu cần đo DOM hoặc cập nhật layout đồng bộ trước paint, có thể dùng <code>useLayoutEffect</code> (nhưng cần cân nhắc hiệu năng).</p>
+<p>Lưu ý trong <strong>StrictMode</strong> (development), React có thể double-invoke effect để phát hiện side-effect không an toàn, nên khi debug cần hiểu sự khác nhau giữa dev/prod.</p>
+<h2>Trả lời phỏng vấn</h2>
+<p>“Lifecycle của React là mount/update/unmount. Với function component, em dùng <code>useEffect</code> để chạy logic sau render: dependency array quyết định effect chạy lại khi nào, và phần cleanup (return từ useEffect) chạy khi unmount để tránh memory leak. Nếu cần xử lý đồng bộ trước paint để đo/điều chỉnh layout thì em cân nhắc <code>useLayoutEffect</code>. Trong StrictMode dev, effect có thể chạy lại để detect bugs nên em không dựa vào số lần chạy trong dev.”</p>
+`,
+    role: "junior",
+    type: "junior",
+  },
+  {
+    question: "react.memo là gì",
+    answer: `
+<h2>Giải thích</h2>
+<p><code>React.memo</code> là một API dùng để <strong>memoize function component</strong>. React sẽ <strong>giảm re-render</strong> khi <strong>props đầu vào không thay đổi</strong>.</p>
+<p>Cơ chế so sánh:</p>
+<ul>
+  <li>Mặc định React dùng <strong>shallow comparison</strong> (so sánh nông) cho props.</li>
+  <li>Nếu reference của props (object/array/function) vẫn giữ nguyên và shallow compare thấy “không đổi” thì component con sẽ <strong>không render lại</strong>.</li>
+  <li>Nếu bạn tạo mới object/array inline trong component cha, reference sẽ thay đổi và memo sẽ không giúp nhiều.</li>
+</ul>
+<p>Tóm lại: <code>React.memo</code> hiệu quả nhất khi kết hợp với truyền props ổn định (dùng <code>useMemo</code>/<code>useCallback</code> khi cần) và tránh props mới mỗi render.</p>
+<h2>Trả lời phỏng vấn</h2>
+<p>“Em dùng <code>React.memo</code> để giảm re-render cho component con nặng. React sẽ shallow-compare props: nếu props không thay đổi thì component không render lại. Khi dùng memo, em cần đảm bảo props truyền xuống ổn định, tránh tạo object/array/function mới mỗi lần render của component cha, vì như vậy shallow compare sẽ thấy khác và memo không còn hiệu quả.”</p>
+`,
+    role: "junior",
+    type: "junior",
+  },
 ];
 
-export default QnAReact;
+// Gán lại `role` theo `type` để chia đúng theo level/năm kinh nghiệm cho UI.
+// Hiện tại dữ liệu đang có `role: "senior"` cho phần lớn câu hỏi; nên ta derive lại role
+// dựa trên chủ đề (`type`) để tạo đủ 3 nhóm: junior/middle/senior.
+const mapRoleFromType = (type) => {
+  const roleByType = {
+    // Cơ bản → Junior (0-2 năm)
+    "react-rendering": "junior",
+    "data-fetching": "junior",
+
+    // Trung cấp → Middle (3-5 năm)
+    "hooks-advanced": "middle",
+    "state-management": "middle",
+    "auth-security": "middle",
+    "testing-quality": "middle",
+
+    // Nâng cao → Senior (6+ năm)
+    "performance-optimization": "senior",
+    "architecture-leadership": "senior",
+    "system-design": "senior",
+  };
+
+  return roleByType[type] || undefined;
+};
+
+const QnAReactByLevel = QnAReact.map((q) => {
+  // Bỏ hẳn field `type` sau khi derive role, để dữ liệu chỉ còn `role`.
+  const { type, ...rest } = q;
+  const mappedRole = mapRoleFromType(type) || rest.role;
+  return {
+    ...rest,
+    role: mappedRole,
+  };
+});
+
+const stripHtml = (html) =>
+  html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const hasInterviewStructure = (answer) => {
+  // Trường hợp đã được viết sẵn format Giải thích/Trả lời phỏng vấn
+  return (
+    /<h2>\s*Giải thích\s*<\/h2>/i.test(answer) &&
+    /<h2>\s*Trả lời phỏng vấn\s*<\/h2>/i.test(answer)
+  );
+};
+
+const truncateText = (text, maxLen) => {
+  const t = (text || "").trim();
+  if (t.length <= maxLen) return t;
+  return t.slice(0, maxLen) + "...";
+};
+
+const extractFirstParagraph = (answer) => {
+  const pMatch = answer.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+  const raw = pMatch ? pMatch[1] : answer;
+  return truncateText(stripHtml(raw), 220);
+};
+
+const extractFirstListItems = (answer, maxItems = 5) => {
+  const listMatch = answer.match(/<(ul|ol)[^>]*>([\s\S]*?)<\/\1>/i);
+  if (!listMatch) return [];
+  const listContent = listMatch[2];
+  const liMatches = [...listContent.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)];
+  return liMatches
+    .slice(0, maxItems)
+    .map((m) => truncateText(stripHtml(m[1]), 160))
+    .filter(Boolean);
+};
+
+const extractFirstCodeBlock = (answer) => {
+  const preMatch = answer.match(/<pre[^>]*>([\s\S]*?)<\/pre>/i);
+  const codeMatch = answer.match(/<code[^>]*>([\s\S]*?)<\/code>/i);
+  const raw = preMatch ? preMatch[1] : codeMatch ? codeMatch[1] : "";
+  const cleaned = truncateText(stripHtml(raw).replace(/\n/g, " "), 180);
+  return cleaned;
+};
+
+const buildInterviewAnswer = (answer) => {
+  const definition = extractFirstParagraph(answer);
+  const items = extractFirstListItems(answer, 6);
+  const code = extractFirstCodeBlock(answer);
+
+  const parts = [];
+  if (definition) {
+    parts.push(`<p><strong>Trả lời:</strong> ${definition}</p>`);
+  }
+
+  if (items.length > 0) {
+    parts.push(
+      `<ul>${items.map((it) => `<li>${it}</li>`).join("")}</ul>`
+    );
+  }
+
+  if (code) {
+    parts.push(`<p><strong>Ví dụ:</strong></p><p><code>${code}</code></p>`);
+  }
+
+  // fallback nếu không extract được gì
+  if (parts.length === 0) {
+    const fallback = truncateText(stripHtml(answer), 320);
+    parts.push(`<p>${fallback}</p>`);
+  }
+
+  return parts.join("\n");
+};
+
+const formatAnswer = (answer) => {
+  if (hasInterviewStructure(answer)) return answer;
+  const interview = buildInterviewAnswer(answer);
+
+  return `
+<h2>Giải thích</h2>
+${answer}
+<h2>Trả lời phỏng vấn</h2>
+${interview}
+`;
+};
+
+const QnAReactFormatted = QnAReactByLevel.map((q) => ({
+  ...q,
+  answer: formatAnswer(q.answer),
+}));
+
+export default QnAReactFormatted;

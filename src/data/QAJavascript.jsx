@@ -58,27 +58,57 @@ const QAJavascript = [
     question: "Giải thích hoisting trong JavaScript.",
     questionENG: "What is hoisting in JavaScript?",
     answer: `
-<div>
-  <h2>Hoisting trong JavaScript</h2>
-  <p>Hoisting là cơ chế của JavaScript mà trong đó các khai báo biến và hàm được “nâng lên” đầu phạm vi hiện hành trong quá trình biên dịch, trước khi code thực thi. Điều này cho phép một số biến có thể được truy cập trước khi chúng được gán giá trị.</p>
-  <p>
-    - Với <code>var</code>: Chỉ có phần khai báo được hoisted, do đó nếu bạn truy cập biến trước khi gán giá trị sẽ nhận <code>undefined</code>.
-    <br>- Với <code>let</code> và <code>const</code>: Mặc dù khai báo cũng được hoisted, nhưng do tồn tại trong TDZ nên truy cập trước khi khai báo thực sự sẽ gây ra lỗi.
-  </p>
-  <p>Hiểu rõ hoisting giúp lập trình viên sắp xếp code hợp lý và tránh các lỗi do truy cập biến chưa được khởi tạo.</p>
-</div>
-    `,
+  <div>
+    <h2>Hoisting trong JavaScript</h2>
+    <p><strong>Hoisting</strong> là một cơ chế trong JavaScript mà các khai báo biến (<code>var</code>, <code>let</code>, <code>const</code>) và khai báo hàm được "nâng lên" đầu phạm vi (scope) trong quá trình biên dịch, trước khi mã được thực thi.</p>
+    <p><em>Chỉ có phần khai báo được hoisted, không phải phần gán giá trị.</em></p>
+  
+    <ul>
+      <li>
+        <strong>Với <code>var</code></strong>: Biến được hoisted, nhưng giá trị không được hoisted, nên nếu truy cập trước khi gán sẽ trả về <code>undefined</code>.
+      </li>
+      <li>
+        <strong>Với <code>let</code> và <code>const</code></strong>: Cũng được hoisted, nhưng nằm trong <strong>TDZ (Temporal Dead Zone)</strong>. Truy cập trong TDZ sẽ gây ra lỗi <code>ReferenceError</code>.
+      </li>
+    </ul>
+  
+    <h4>Ví dụ với <code>var</code>:</h4>
+    <pre><code>console.log(a); // undefined
+  var a = 10;</code></pre>
+  
+    <h4>Ví dụ với <code>let</code>:</h4>
+    <pre><code>console.log(b); // ReferenceError
+  let b = 20;</code></pre>
+  
+    <p><strong>Tóm lại</strong>, hiểu rõ hoisting giúp lập trình viên tránh lỗi truy cập biến chưa khởi tạo và tổ chức code hợp lý hơn.</p>
+  </div>
+  `,
     answerENG: `
-<div>
-  <h2>Hoisting in JavaScript</h2>
-  <p>Hoisting is a JavaScript mechanism where variable and function declarations are moved to the top of their respective scopes during the compilation phase, prior to code execution.</p>
-  <p>
-    - For <code>var</code>: Only the declaration is hoisted, so accessing the variable before its assignment results in <code>undefined</code>.
-    <br>- For <code>let</code> and <code>const</code>: Although declarations are hoisted, they remain in the temporal dead zone (TDZ) and accessing them early will throw an error.
-  </p>
-  <p>Understanding hoisting aids developers in structuring code to prevent issues related to premature variable access.</p>
-</div>
-    `,
+  <div>
+    <h2>Hoisting in JavaScript</h2>
+    <p><strong>Hoisting</strong> is a JavaScript mechanism in which variable (<code>var</code>, <code>let</code>, <code>const</code>) and function declarations are moved to the top of their scope during the compilation phase, before code execution.</p>
+    <p><em>Only the declaration is hoisted, not the assignment.</em></p>
+  
+    <ul>
+      <li>
+        <strong>For <code>var</code></strong>: The declaration is hoisted, so accessing the variable before assignment returns <code>undefined</code>.
+      </li>
+      <li>
+        <strong>For <code>let</code> and <code>const</code></strong>: Also hoisted, but exist in the <strong>TDZ (Temporal Dead Zone)</strong>. Accessing them early will result in a <code>ReferenceError</code>.
+      </li>
+    </ul>
+  
+    <h4>Example with <code>var</code>:</h4>
+    <pre><code>console.log(a); // undefined
+  var a = 10;</code></pre>
+  
+    <h4>Example with <code>let</code>:</h4>
+    <pre><code>console.log(b); // ReferenceError
+  let b = 20;</code></pre>
+  
+    <p><strong>In summary</strong>, understanding hoisting helps developers avoid bugs and write better structured code.</p>
+  </div>
+  `,
     type: "basic",
   },
   {
@@ -959,4 +989,127 @@ console.log(greeting);</code></pre>
   }
 ];
 
-export default QAJavascript;
+const stripHtml = (html) =>
+  html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const truncateText = (text, maxLen) => {
+  const t = (text || "").trim();
+  if (t.length <= maxLen) return t;
+  return t.slice(0, maxLen) + "...";
+};
+
+const extractFirstParagraph = (answer, maxLen = 220) => {
+  const pMatch = answer.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+  const raw = pMatch ? pMatch[1] : answer;
+  return truncateText(stripHtml(raw), maxLen);
+};
+
+const extractFirstListItems = (answer, maxItems = 5) => {
+  const listMatch = answer.match(/<(ul|ol)[^>]*>([\s\S]*?)<\/\1>/i);
+  if (!listMatch) return [];
+  const listContent = listMatch[2];
+  const liMatches = [...listContent.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)];
+  return liMatches
+    .slice(0, maxItems)
+    .map((m) => truncateText(stripHtml(m[1]), 160))
+    .filter(Boolean);
+};
+
+const extractFirstCodeBlock = (answer) => {
+  const preMatch = answer.match(/<pre[^>]*>([\s\S]*?)<\/pre>/i);
+  const codeMatch = answer.match(/<code[^>]*>([\s\S]*?)<\/code>/i);
+  const raw = preMatch ? preMatch[1] : codeMatch ? codeMatch[1] : "";
+  return truncateText(stripHtml(raw).replace(/\n/g, " "), 180);
+};
+
+const hasInterviewStructureVN = (answer) =>
+  /<h2>\s*Giải thích\s*<\/h2>/i.test(answer) &&
+  /<h2>\s*Trả lời phỏng vấn\s*<\/h2>/i.test(answer);
+
+const hasInterviewStructureEN = (answer) =>
+  /<h2>\s*Explanation\s*<\/h2>/i.test(answer) &&
+  /<h2>\s*Interview Answer\s*<\/h2>/i.test(answer);
+
+const buildInterviewAnswerVN = (answer) => {
+  const definition = extractFirstParagraph(answer);
+  const items = extractFirstListItems(answer, 6);
+  const code = extractFirstCodeBlock(answer);
+
+  const parts = [];
+  if (definition) parts.push(`<p><strong>Trả lời:</strong> ${definition}</p>`);
+
+  if (items.length > 0) {
+    parts.push(`<ul>${items.map((it) => `<li>${it}</li>`).join("")}</ul>`);
+  }
+
+  if (code) {
+    parts.push(`<p><strong>Ví dụ:</strong></p><p><code>${code}</code></p>`);
+  }
+
+  if (parts.length === 0) {
+    const fallback = truncateText(stripHtml(answer), 320);
+    parts.push(`<p>${fallback}</p>`);
+  }
+
+  return parts.join("\n");
+};
+
+const buildInterviewAnswerEN = (answer) => {
+  const definition = extractFirstParagraph(answer);
+  const items = extractFirstListItems(answer, 6);
+  const code = extractFirstCodeBlock(answer);
+
+  const parts = [];
+  if (definition)
+    parts.push(`<p><strong>Interview answer:</strong> ${definition}</p>`);
+
+  if (items.length > 0) {
+    parts.push(`<ul>${items.map((it) => `<li>${it}</li>`).join("")}</ul>`);
+  }
+
+  if (code) {
+    parts.push(`<p><strong>Example:</strong></p><p><code>${code}</code></p>`);
+  }
+
+  if (parts.length === 0) {
+    const fallback = truncateText(stripHtml(answer), 320);
+    parts.push(`<p>${fallback}</p>`);
+  }
+
+  return parts.join("\n");
+};
+
+const formatAnswerVN = (answer) => {
+  if (hasInterviewStructureVN(answer)) return answer;
+  const interview = buildInterviewAnswerVN(answer);
+  return `
+<h2>Giải thích</h2>
+${answer}
+<h2>Trả lời phỏng vấn</h2>
+${interview}
+`;
+};
+
+const formatAnswerEN = (answer) => {
+  if (hasInterviewStructureEN(answer)) return answer;
+  const interview = buildInterviewAnswerEN(answer);
+  return `
+<h2>Explanation</h2>
+${answer}
+<h2>Interview Answer</h2>
+${interview}
+`;
+};
+
+const QAJavascriptFormatted = QAJavascript.map((q) => ({
+  ...q,
+  answer: formatAnswerVN(q.answer),
+  answerENG: formatAnswerEN(q.answerENG),
+}));
+
+export default QAJavascriptFormatted;

@@ -1,7 +1,9 @@
 import { Carousel, Collapse, Switch } from "antd";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import QAJavascript from "../../data/QAJavascript";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import QAJavascriptJunior from "../../data/QAJavascriptJunior";
+import QAJavascriptMiddle from "../../data/QAJavascriptMiddle";
+import QAJavascriptSenior from "../../data/QAJavascriptSenior";
 
 const contentStyle = {
   margin: 0,
@@ -20,66 +22,137 @@ function shuffleArray(array) {
   return array;
 }
 function PracticeJavascript() {
-  const { type } = useParams();
-  console.log(type);
+  const [searchParams] = useSearchParams();
+  const rolesParam = searchParams.get("roles") || "junior";
+
+  const roles = useMemo(
+    () => rolesParam.split(",").map((r) => r.trim()).filter(Boolean),
+    [rolesParam]
+  );
 
   const [listQnA, setListQnA] = useState([]);
   const [currentQnA, setCurrentQnA] = useState([{}]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isVn, setIsVn] = useState(true);
   // const [textAnswerChatGpt, setTextAnswerChatGpt] = useState('');
 
   useEffect(() => {
-    const listQnAByType = QAJavascript.filter((ele) => ele.type == type);
-    const shuffleQnA = shuffleArray([...listQnAByType]);
-    setListQnA(shuffleQnA); // shuffle once and set listQnA
-    const currentQnATemp = [
-      {
-        key: "1",
-        id: shuffleQnA[0]?.id,
-        label: isVn ? shuffleQnA[0].question : shuffleQnA[0].questionENG,
-        children: (
-          <div dangerouslySetInnerHTML={{ __html: isVn ? shuffleQnA[0].answer :  shuffleQnA[0].answerENG }} />
-        ),
-      },
-    ];
-    setCurrentQnA(currentQnATemp);
-  }, [type]);
+    const roleToExperienceLabel = {
+      junior: "1-2 năm",
+      middle: "3-5 năm",
+      senior: "6+ năm",
+    };
+    let filtered = [];
+    if (roles.includes("junior")) filtered = filtered.concat(QAJavascriptJunior);
+    if (roles.includes("middle")) filtered = filtered.concat(QAJavascriptMiddle);
+    if (roles.includes("senior")) filtered = filtered.concat(QAJavascriptSenior);
 
-  useEffect(() => {
-    const abcde = listQnA.find(ele => ele.id == currentQnA[0].id);
-    if(abcde) {
-      const currr = [{
-        key: "1",
-        id: abcde?.id,
-        label: isVn ? abcde?.question : abcde?.questionENG,
-        children: (
-          <div dangerouslySetInnerHTML={{ __html: isVn ? abcde?.answer :  abcde?.answerENG }} />
-        ),
-      }]
-      setCurrentQnA(currr);
+    if (filtered.length === 0) {
+      // fallback mặc định
+      filtered = QAJavascriptJunior;
     }
-  },[isVn])
+
+    const shuffleQnA = shuffleArray([...filtered]);
+    setListQnA(shuffleQnA);
+    setCurrentIndex(0);
+    setCurrentQnA([
+      {
+        key: "0",
+        label: shuffleQnA[0] ? (isVn ? shuffleQnA[0].question : shuffleQnA[0].questionENG) : "",
+        children: shuffleQnA[0] ? (
+          <div
+            className="answer-content"
+            dangerouslySetInnerHTML={{ __html: isVn ? shuffleQnA[0].answer : shuffleQnA[0].answerENG }}
+          />
+        ) : null,
+      },
+    ]);
+
+    return () => {
+      // no-op; giữ lại để tránh linter warning về hook cleanup nếu cần
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roles]);
 
   const handleCarouselChange = (current) => {
-    const currentQnATemp = [
+    setCurrentIndex(current);
+  };
+
+  useEffect(() => {
+    const q = listQnA[currentIndex];
+    if (!q) return;
+    setCurrentQnA([
       {
-        key: "1",
-        id: listQnA[current].id,
-        label: isVn ? listQnA[current].question : listQnA[current].questionENG,
+        key: "0",
+        id: q.id,
+        label: isVn ? q.question : q.questionENG,
         children: (
-          <div dangerouslySetInnerHTML={{ __html: isVn ? listQnA[current].answer : listQnA[current].answerENG }} />
+          <div className="answer-content" dangerouslySetInnerHTML={{ __html: isVn ? q.answer : q.answerENG }} />
         ),
       },
-    ];
-    setCurrentQnA(currentQnATemp);
+    ]);
+  }, [currentIndex, isVn, listQnA]);
+
+  const roleToExperienceLabel = {
+    junior: "1-2 năm",
+    middle: "3-5 năm",
+    senior: "6+ năm",
   };
+
+  const titleRoles = roles.length > 0 ? roles.map((r) => roleToExperienceLabel[r] || r).join(", ") : roleToExperienceLabel.junior;
 
   return (
     <>
+      <style>{`
+        .answer-content h1 {
+          margin-top: 0.5rem !important;
+          margin-bottom: 0.5rem !important;
+        }
+        .answer-content h2 {
+          margin-top: 0.5rem !important;
+          margin-bottom: 0.5rem !important;
+        }
+        .answer-content h3 {
+          margin-top: 0.4rem !important;
+          margin-bottom: 0.4rem !important;
+        }
+        .answer-content h4 {
+          margin-top: 0.35rem !important;
+          margin-bottom: 0.35rem !important;
+        }
+        .answer-content h5 {
+          margin-top: 0.3rem !important;
+          margin-bottom: 0.3rem !important;
+        }
+        .answer-content h6 {
+          margin-top: 0.25rem !important;
+          margin-bottom: 0.25rem !important;
+        }
+        ::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: #c1c1c1;
+          border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #a8a8a8;
+        }
+        ::-webkit-scrollbar-corner {
+          background: #f1f1f1;
+        }
+        * {
+          scrollbar-width: thin;
+          scrollbar-color: #c1c1c1 #f1f1f1;
+        }
+      `}</style>
       <div className="flex items-center justify-between px-10">
-        <h2 className=" text-center text-3xl text-bold my-6">
-          Practice Javascript
-        </h2>
+        <h2 className="text-center text-3xl text-bold my-6">Practice Javascript ({titleRoles})</h2>
         <Switch checkedChildren="VN" unCheckedChildren="ENG" value={isVn} onChange={(e) => setIsVn(e)} />
       </div>
       <div className="mx-10 flex gap-5">
@@ -100,7 +173,7 @@ function PracticeJavascript() {
             ))}
           </Carousel>
           <div className="mt-5">
-            <Collapse items={currentQnA} defaultActiveKey={["0"]} />
+            {listQnA.length > 0 ? <Collapse items={currentQnA} defaultActiveKey={["0"]} /> : null}
           </div>
         </div>
         {/* <div className="w-5/12">

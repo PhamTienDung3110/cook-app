@@ -1,8 +1,9 @@
 import { Carousel, Collapse } from "antd";
 import { useEffect, useState, useMemo } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { QnAReact as QnAReactSenior } from "../../data/react/senior";
-import { QnAReact as QnAReactMiddle } from "../../data/react/middle";
+import { useSearchParams } from "react-router-dom";
+import QnAReactJunior from "../../data/QAReactJunior";
+import QnAReactMiddle from "../../data/QAReactMiddle";
+import QnAReactSenior from "../../data/QAReactSenior";
 
 const contentStyle = {
   margin: 0,
@@ -21,34 +22,19 @@ function shuffleArray(array) {
   return array;
 }
 function PracticeReact() {
-  const { type } = useParams();
   const [searchParams] = useSearchParams();
-  const rolesParam = searchParams.get("roles") || "senior";
+  const rolesParam = searchParams.get("roles") || "junior";
   const roles = useMemo(
     () => rolesParam.split(",").filter((role) => role.trim()),
     [rolesParam]
   );
 
-  // Merge tất cả questions từ senior và middle
-  const allQuestions = useMemo(() => {
-    return [...QnAReactSenior, ...QnAReactMiddle];
-  }, []);
-
-  // Mapping từ type key sang tên hiển thị ngắn gọn
-  const getTopicName = (topicKey) => {
-    const topicNames = {
-      "react-rendering": "Rendering",
-      "hooks-advanced": "Hooks",
-      "performance-optimization": "Performance",
-      "data-fetching": "Data Fetching",
-      "state-management": "State Management",
-      "auth-security": "Security",
-      "testing-quality": "Testing",
-      "architecture-leadership": "Architecture",
-      "system-design": "System Design"
-    };
-    return topicNames[topicKey] || topicKey;
+  const roleToExperienceLabel = {
+    junior: "1-2 năm",
+    middle: "3-5 năm",
+    senior: "6+ năm",
   };
+  const selectedLabels = roles.map((r) => roleToExperienceLabel[r] || r);
 
   const [listQnA, setListQnA] = useState([]);
   const [currentQnA, setCurrentQnA] = useState([{}]);
@@ -56,48 +42,33 @@ function PracticeReact() {
   // const [textAnswerChatGpt, setTextAnswerChatGpt] = useState('');
 
   useEffect(() => {
-    // Filter theo type và roles được chọn
-    let listQnAByType = allQuestions.filter(ele => {
-      if (ele.type !== type) return false;
+    let listQnAByRoles = [];
+    if (roles.includes("junior")) listQnAByRoles.push(...QnAReactJunior);
+    if (roles.includes("middle")) listQnAByRoles.push(...QnAReactMiddle);
+    if (roles.includes("senior")) listQnAByRoles.push(...QnAReactSenior);
 
-      // Nếu roles bao gồm senior và question không có role hoặc role là senior
-      if (roles.includes('senior') && (!ele.role || ele.role === "senior")) return true;
+    // fallback: nếu người dùng tắt hết (trường hợp hiếm) thì dùng junior.
+    if (listQnAByRoles.length === 0) listQnAByRoles = [...QnAReactJunior];
 
-      // Nếu roles bao gồm middle và question có role là middle
-      if (roles.includes('middle') && ele.role === "middle") return true;
-
-      // Nếu roles bao gồm junior và question có role là junior
-      if (roles.includes('junior') && ele.role === "junior") return true;
-
-      return false;
-    });
-
-    // Nếu không có câu hỏi nào, fallback về senior
-    if (listQnAByType.length === 0) {
-      listQnAByType = allQuestions.filter(ele =>
-        ele.type === type && (!ele.role || ele.role === "senior")
-      );
-    }
-
-    const shuffleQnA = shuffleArray([...listQnAByType]);
+    const shuffleQnA = shuffleArray([...listQnAByRoles]);
     setListQnA(shuffleQnA);
 
     if (shuffleQnA.length > 0) {
       const currentQnATemp = [
         {
-          key: "1",
+          key: "0",
           label: shuffleQnA[0].question,
           children: <div className="answer-content" dangerouslySetInnerHTML={{ __html: shuffleQnA[0].answer }} />,
         },
       ];
       setCurrentQnA(currentQnATemp);
     }
-  }, [type, roles, allQuestions]);
+  }, [roles]);
 
   const handleCarouselChange = (current) => {
     const currentQnATemp = [
       {
-        key: "1",
+        key: "0",
         label: listQnA[current].question,
         children: <div className="answer-content" dangerouslySetInnerHTML={{ __html: listQnA[current].answer }} />,
       },
@@ -184,7 +155,7 @@ function PracticeReact() {
         }
       `}</style>
       <h2 className="text-center text-3xl text-bold my-6">
-        Practice: {getTopicName(type)} ({roles.map(role => role.charAt(0).toUpperCase() + role.slice(1)).join(', ')})
+        Practice: {selectedLabels.length > 0 ? selectedLabels.join(", ") : roleToExperienceLabel.senior}
       </h2>
       <div className="mx-10 flex gap-5">
         {/* <div className="w-7/12"> */}
@@ -212,7 +183,7 @@ function PracticeReact() {
           ) : (
             <div className="text-center py-10">
               <p className="text-lg text-gray-500">
-                Không có câu hỏi nào cho cấp độ {roles} trong chủ đề này.
+                Không có câu hỏi nào cho cấp độ đã chọn.
               </p>
             </div>
           )}

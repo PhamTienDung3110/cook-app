@@ -9,6 +9,8 @@ import PracticeJavascript from "./pages/javascriptPage/Practice";
 import CSSPage from "./pages/cssPage";
 import PracticeCSS from "./pages/cssPage/Practice";
 import QuizPage from "./pages/Quiz";
+import NodejsPage from "./pages/nodejsPage";
+import PracticeNodejs from "./pages/nodejsPage/Practice";
 
 function App() {
   return (
@@ -19,9 +21,11 @@ function App() {
         <Route path="/css" element={<CSSPage />} />
         <Route path="/vue" element={<VuePage />} />
         <Route path="/javascript" element={<JavascriptPage />} />
+        <Route path="/nodejs" element={<NodejsPage />} />
         <Route path="/css/practice/:type" element={<PracticeCSS />} />
         <Route path="/react/practice" element={<PracticeReact />} />
         <Route path="/javascript/practice" element={<PracticeJavascript />} />
+        <Route path="/nodejs/practice" element={<PracticeNodejs />} />
         <Route path="/vue/practice" element={<PracticeVue />} />
         <Route path="/quiz" element={<QuizPage />} />
       </Routes>

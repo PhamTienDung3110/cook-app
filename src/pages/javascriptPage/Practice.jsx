@@ -151,13 +151,13 @@ function PracticeJavascript() {
           scrollbar-color: #c1c1c1 #f1f1f1;
         }
       `}</style>
-      <div className="flex items-center justify-between px-10">
+      <div className="flex items-center justify-between px-3 md:px-10 gap-3">
         <h2 className="text-center text-3xl text-bold my-6">Practice Javascript ({titleRoles})</h2>
         <Switch checkedChildren="VN" unCheckedChildren="ENG" value={isVn} onChange={(e) => setIsVn(e)} />
       </div>
-      <div className="mx-10 flex gap-5">
+      <div className="mx-3 md:mx-10 flex flex-col md:flex-row gap-5">
         {/* <div className="w-7/12"> */}
-        <div className="w-screen">
+        <div className="w-full">
           <Carousel
             arrows
             dotPosition="left"

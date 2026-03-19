@@ -3,6 +3,7 @@ const QAJavascript = [
     id: 1,
     question: "Giải thích sự khác biệt giữa `var`, `let`, và `const`.",
     questionENG: "Explain the differences between `var`, `let`, and `const` in JavaScript.",
+    role: "junior",
     answer: `
 <div>
   <h2>Khác biệt giữa var, let, và const</h2>
@@ -57,6 +58,7 @@ const QAJavascript = [
     id: 2,
     question: "Giải thích hoisting trong JavaScript.",
     questionENG: "What is hoisting in JavaScript?",
+    role: "junior",
     answer: `
   <div>
     <h2>Hoisting trong JavaScript</h2>
@@ -115,6 +117,7 @@ const QAJavascript = [
     id: 3,
     question: "Giải thích sự khác biệt giữa `null` và `undefined`.",
     questionENG: "Explain the difference between `null` and `undefined`.",
+    role: "junior",
     answer: `
 <div>
   <h2>Null và Undefined</h2>
@@ -157,6 +160,7 @@ const QAJavascript = [
     id: 4,
     question: "Giải thích event loop và cách hoạt động của nó trong JavaScript.",
     questionENG: "What is the event loop in JavaScript and how does it work?",
+    role: "middle",
     answer: `
 <div>
   <h2>Event Loop trong JavaScript</h2>
@@ -189,6 +193,7 @@ const QAJavascript = [
     id: 5,
     question: "Giải thích closures trong JavaScript.",
     questionENG: "What are closures in JavaScript?",
+    role: "middle",
     answer: `
 <div>
   <h2>Closures trong JavaScript</h2>
@@ -239,6 +244,7 @@ console.log(counter()); // 2</code></pre>
     id: 6,
     question: "Giải thích cách hoạt động của `this` trong JavaScript, đặc biệt là trong các hàm arrow và hàm thông thường.",
     questionENG: "Explain `this` in JavaScript. How does `this` work in arrow functions compared to regular functions?",
+    role: "middle",
     answer: `
 <div>
   <h2>Khái niệm về this trong JavaScript</h2>
@@ -273,6 +279,7 @@ console.log(counter()); // 2</code></pre>
     id: 7,
     question: "Giải thích sự khác biệt giữa `==` và `===` trong JavaScript.",
     questionENG: "What is the difference between `==` and `===` in JavaScript?",
+    role: "junior",
     answer: `
 <div>
   <h2>Sự khác biệt giữa == và ===</h2>
@@ -311,6 +318,7 @@ console.log(counter()); // 2</code></pre>
     id: 8,
     question: "Giải thích cơ chế kế thừa theo prototype trong JavaScript.",
     questionENG: "Explain prototypal inheritance in JavaScript.",
+    role: "middle",
     answer: `
 <div>
   <h2>Prototypal Inheritance</h2>
@@ -332,6 +340,7 @@ console.log(counter()); // 2</code></pre>
     id: 9,
     question: "Giải thích Promise trong JavaScript là gì.",
     questionENG: "What is a Promise in JavaScript?",
+    role: "junior",
     answer: `
 <div>
   <h2>Promise trong JavaScript</h2>
@@ -362,6 +371,7 @@ console.log(counter()); // 2</code></pre>
     id: 10,
     question: "Giải thích async/await trong JavaScript.",
     questionENG: "What are async/await in JavaScript?",
+    role: "junior",
     answer: `
 <div>
   <h2>Async/Await trong JavaScript</h2>
@@ -384,6 +394,7 @@ console.log(counter()); // 2</code></pre>
     id: 11,
     question: "Giải thích cách hoạt động của phương thức `bind` trong JavaScript.",
     questionENG: "How does the `bind` method work in JavaScript?",
+    role: "middle",
     answer: `
 <div>
   <h2>Phương thức bind()</h2>
@@ -414,6 +425,7 @@ console.log(boundGetX()); // 42</code></pre>
     id: 12,
     question: "Giải thích sự khác biệt giữa các phương thức `call()` và `apply()` trong JavaScript.",
     questionENG: "What is the difference between `call()` and `apply()` methods?",
+    role: "junior",
     answer: `
 <div>
   <h2>call() vs apply()</h2>
@@ -442,6 +454,7 @@ console.log(boundGetX()); // 42</code></pre>
     id: 13,
     question: "Giải thích higher-order functions trong JavaScript và cho ví dụ.",
     questionENG: "What are higher-order functions in JavaScript? Can you give an example?",
+    role: "middle",
     answer: `
 <div>
   <h2>Higher-order Functions</h2>
@@ -464,6 +477,7 @@ console.log(boundGetX()); // 42</code></pre>
     id: 14,
     question: "Giải thích sự khác biệt giữa `forEach`, `map`, `filter`, và `reduce` trong JavaScript.",
     questionENG: "What is the difference between `forEach`, `map`, `filter`, and `reduce` in JavaScript?",
+    role: "junior",
     answer: `
 <div>
   <h2>forEach, map, filter, reduce</h2>
@@ -494,6 +508,7 @@ console.log(boundGetX()); // 42</code></pre>
     id: 15,
     question: "Giải thích cách hoạt động của `setTimeout` và `setInterval`.",
     questionENG: "Explain how the `setTimeout` and `setInterval` functions work.",
+    role: "junior",
     answer: `
 <div>
   <h2>setTimeout và setInterval</h2>
@@ -516,6 +531,7 @@ console.log(boundGetX()); // 42</code></pre>
     id: 16,
     question: "Giải thích sự khác biệt giữa các phương thức `slice()` và `splice()` trong mảng JavaScript.",
     questionENG: "What is the difference between `slice()` and `splice()` methods in JavaScript arrays?",
+    role: "junior",
     answer: `
 <div>
   <h2>slice() vs splice()</h2>
@@ -538,6 +554,7 @@ console.log(boundGetX()); // 42</code></pre>
     id: 17,
     question: "Giải thích arrow functions trong JavaScript và sự khác biệt so với hàm thông thường.",
     questionENG: "What are arrow functions and how do they differ from regular functions?",
+    role: "junior",
     answer: `
 <div>
   <h2>Arrow Functions</h2>
@@ -568,6 +585,7 @@ console.log(boundGetX()); // 42</code></pre>
     id: 18,
     question: "Làm thế nào để ngăn một đối tượng bị thay đổi trong JavaScript?",
     questionENG: "How can you prevent an object from being modified in JavaScript?",
+    role: "middle",
     answer: `
 <div>
   <h2>Ngăn Chặn Thay Đổi Đối Tượng</h2>
@@ -598,6 +616,7 @@ console.log(boundGetX()); // 42</code></pre>
     id: 19,
     question: "Những tính năng mới của ES6 (ES2015) là gì?",
     questionENG: "What are the new features introduced in ES6 (ES2015)?",
+    role: "junior",
     answer: `
 <div>
   <h2>ES6 (ES2015) Features</h2>
@@ -638,6 +657,7 @@ console.log(boundGetX()); // 42</code></pre>
     id: 20,
     question: "Giải thích cách hoạt động của destructuring trong JavaScript.",
     questionENG: "Explain how destructuring works in JavaScript.",
+    role: "junior",
     answer: `
 <div>
   <h2>Destructuring trong JavaScript</h2>
@@ -674,6 +694,7 @@ const { name, age } = obj;
     id: 21,
     question: "JavaScript module là gì và làm thế nào để sử dụng chúng?",
     questionENG: "What is a JavaScript module, and how do you use them?",
+    role: "middle",
     answer: `
 <div>
   <h2>JavaScript Modules</h2>
@@ -716,6 +737,7 @@ console.log(pi, square(5));</code></pre>
     id: 22,
     question: "Giải thích promise chain và cách xử lý lỗi trong chuỗi promise.",
     questionENG: "What is a promise chain? Can you explain how to handle errors in promise chains?",
+    role: "middle",
     answer: `
 <div>
   <h2>Promise Chain</h2>
@@ -738,6 +760,7 @@ console.log(pi, square(5));</code></pre>
     id: 23,
     question: "Giải thích khái niệm debouncing và throttling trong JavaScript.",
     questionENG: "Explain the concept of debouncing and throttling in JavaScript.",
+    role: "middle",
     answer: `
 <div>
   <h2>Debouncing và Throttling</h2>
@@ -760,6 +783,7 @@ console.log(pi, square(5));</code></pre>
     id: 24,
     question: "Mục đích của phương thức `Object.freeze()` trong JavaScript là gì?",
     questionENG: "What is the purpose of `Object.freeze()` in JavaScript?",
+    role: "middle",
     answer: `
 <div>
   <h2>Object.freeze()</h2>
@@ -790,6 +814,7 @@ console.log(pi, square(5));</code></pre>
     id: 25,
     question: "Giải thích cách JavaScript quản lý bộ nhớ và thực hiện garbage collection.",
     questionENG: "Explain how JavaScript handles memory management and garbage collection.",
+    role: "senior",
     answer: `
 <div>
   <h2>Memory Management và Garbage Collection</h2>
@@ -811,6 +836,7 @@ console.log(pi, square(5));</code></pre>
     id: 26,
     question: "Giải thích spread operator (`...`) và cách sử dụng nó trong JavaScript.",
     questionENG: "What is the spread operator (`...`) and how is it used in JavaScript?",
+    role: "junior",
     answer: `
 <div>
   <h2>Spread Operator</h2>
@@ -855,6 +881,7 @@ const mergedObj = { ...obj1, ...obj2 };</code></pre>
     id: 27,
     question: "Giải thích template literal và cách sử dụng chúng trong JavaScript.",
     questionENG: "What is a template literal and how do you use it?",
+    role: "junior",
     answer: `
 <div>
   <h2>Template Literals</h2>
@@ -891,6 +918,7 @@ console.log(greeting);</code></pre>
     id: 28,
     question: "Giải thích cách JavaScript xử lý các thao tác bất đồng bộ.",
     questionENG: "How does JavaScript handle asynchronous code execution?",
+    role: "middle",
     answer: `
 <div>
   <h2>Xử lý Asynchronous trong JavaScript</h2>
@@ -923,6 +951,7 @@ console.log(greeting);</code></pre>
     id: 29,
     question: "Giải thích sự khác biệt giữa các hàm đồng bộ và bất đồng bộ.",
     questionENG: "What are the differences between synchronous and asynchronous functions?",
+    role: "junior",
     answer: `
 <div>
   <h2>Synchronous vs Asynchronous Functions</h2>
@@ -959,6 +988,7 @@ console.log(greeting);</code></pre>
     id: 30,
     question: "Giải thích mục đích sử dụng của `Object.create()` trong JavaScript.",
     questionENG: "What is the use of `Object.create()` in JavaScript?",
+    role: "middle",
     answer: `
 <div>
   <h2>Object.create()</h2>

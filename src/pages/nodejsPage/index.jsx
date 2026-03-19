@@ -1,12 +1,12 @@
 import { Button, Card, Checkbox, Col, Row } from "antd";
 import { PlayCircleOutlined } from "@ant-design/icons";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import QAJavascriptJunior from "../../data/QAJavascriptJunior";
-import QAJavascriptMiddle from "../../data/QAJavascriptMiddle";
-import QAJavascriptSenior from "../../data/QAJavascriptSenior";
+import QANodejsJunior from "../../data/QANodejsJunior";
+import QANodejsMiddle from "../../data/QANodejsMiddle";
+import QANodejsSenior from "../../data/QANodejsSenior";
 
-function JavascriptPage() {
+function NodejsPage() {
   const [roles, setRoles] = useState({
     senior: false,
     middle: false,
@@ -23,9 +23,9 @@ function JavascriptPage() {
 
   const questionsByRole = useMemo(() => {
     return {
-      junior: QAJavascriptJunior,
-      middle: QAJavascriptMiddle,
-      senior: QAJavascriptSenior,
+      junior: QANodejsJunior,
+      middle: QANodejsMiddle,
+      senior: QANodejsSenior,
     };
   }, []);
 
@@ -49,7 +49,7 @@ function JavascriptPage() {
 
   const handlePracticeClick = () => {
     const rolesParam = selectedRoles.length > 0 ? selectedRoles.join(",") : "junior";
-    navigate(`/javascript/practice?roles=${rolesParam}`);
+    navigate(`/nodejs/practice?roles=${rolesParam}`);
   };
 
   return (
@@ -192,14 +192,8 @@ function JavascriptPage() {
           background: rgba(249, 250, 251, 0.5);
         }
         @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         /* Responsive design */
@@ -224,8 +218,8 @@ function JavascriptPage() {
 
       <div className="page-container">
         <div className="hero-header">
-          <h1 className="hero-title">JavaScript Knowledge</h1>
-          <p className="hero-subtitle">Master JS concepts with interactive practice</p>
+          <h1 className="hero-title">NodeJS Knowledge</h1>
+          <p className="hero-subtitle">Master Node concepts with interactive practice</p>
           <p className="hero-description">Chọn level (tương đương 1-2/3-5/6+ năm) và luyện tập</p>
         </div>
 
@@ -233,7 +227,12 @@ function JavascriptPage() {
           <div className="filter-section">
             <div className="flex items-center justify-between gap-3">
               <div className="text-sm font-semibold">Chọn số năm kinh nghiệm</div>
-              <Button className="practice-button" size="small" onClick={handlePracticeClick} icon={<PlayCircleOutlined />}>
+              <Button
+                className="practice-button"
+                size="small"
+                onClick={handlePracticeClick}
+                icon={<PlayCircleOutlined />}
+              >
                 {questions.length}
               </Button>
             </div>
@@ -268,7 +267,9 @@ function JavascriptPage() {
                     extra={
                       <Checkbox
                         checked={roles[levelCard.role]}
-                        onChange={(e) => setRoles((prev) => ({ ...prev, [levelCard.role]: e.target.checked }))}
+                        onChange={(e) =>
+                          setRoles((prev) => ({ ...prev, [levelCard.role]: e.target.checked }))
+                        }
                         size="small"
                         className="level-checkbox"
                       />
@@ -293,4 +294,5 @@ function JavascriptPage() {
   );
 }
 
-export default JavascriptPage;
+export default NodejsPage;
+

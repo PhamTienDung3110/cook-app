@@ -23,6 +23,9 @@ function Home() {
         <Link to="/react">React</Link>
       </Card.Grid>
       <Card.Grid style={gridStyle}>
+        <Link to="/nodejs">NodeJS</Link>
+      </Card.Grid>
+      <Card.Grid style={gridStyle}>
         <Link to="/quiz">Bài thi trắc nghiệm</Link>
       </Card.Grid>
     </Card>

@@ -154,12 +154,12 @@ function PracticeReact() {
           scrollbar-color: #c1c1c1 #f1f1f1;
         }
       `}</style>
-      <h2 className="text-center text-3xl text-bold my-6">
+      <h2 className="text-center text-3xl text-bold my-6 px-3">
         Practice: {selectedLabels.length > 0 ? selectedLabels.join(", ") : roleToExperienceLabel.senior}
       </h2>
-      <div className="mx-10 flex gap-5">
+      <div className="mx-3 md:mx-10 flex flex-col md:flex-row gap-5">
         {/* <div className="w-7/12"> */}
-        <div>
+        <div className="w-full">
           {listQnA.length > 0 ? (
             <>
               <Carousel

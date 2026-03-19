@@ -1,11 +1,7 @@
 import QAJavascript from "./QAJavascript";
 
-import { getQAJavascriptRole } from "./QAJavascriptRole";
-
-// Chia level theo nội dung câu hỏi (không dựa vào id).
-const QAJavascriptSenior = QAJavascript.filter(
-  (q) => getQAJavascriptRole(q.question, q.questionENG) === "senior"
-);
+// Chia level theo role ngay trên dataset.
+const QAJavascriptSenior = QAJavascript.filter((q) => q.role === "senior");
 
 export default QAJavascriptSenior;
 
